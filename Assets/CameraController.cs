@@ -26,7 +26,6 @@ public class CameraController : MonoBehaviour
         // verticalInput = Math.Clamp(verticalInput, -90, 90);
         
         Quaternion rotation = Quaternion.Euler(verticalInput, horizontalInput, 0);
-        Debug.Log("verticalInput:" + verticalInput + " hInput:" + horizontalInput);
         Vector3 newPosition = targetPosition + rotation * offset;
 
         _transform.position = newPosition;
