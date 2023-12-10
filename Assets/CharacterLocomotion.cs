@@ -15,14 +15,12 @@ public class CharacterLocomotion : MonoBehaviour
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _animator = GetComponentInChildren<Animator>();
+        _animator = GetComponent<Animator>();
 
         if (_animator == null)
         {
             Debug.LogError("Can't find animator!!!");
         }
-
-        _animator.applyRootMotion = false;
     }
 
     
@@ -35,20 +33,17 @@ public class CharacterLocomotion : MonoBehaviour
         Vector3 horizontalVelocity = horizontal * maxVelocity * transform.right;
 
         Vector3 resultVelocity = forwardVelocity + horizontalVelocity;
-        _rigidbody.MovePosition(_rigidbody.position + resultVelocity * Time.deltaTime);
+        // _rigidbody.MovePosition(_rigidbody.position + resultVelocity * Time.deltaTime);
 
         float speed = resultVelocity.magnitude;
         Debug.Log("Speed:" + speed);
         if ( speed < Mathf.Epsilon)
         {
             _animator.SetBool(_isIdleHash, true);
-            
-            Debug.Log("IsIdle: true");
         }
         else
         {
             _animator.SetBool(_isIdleHash, false);
-            Debug.Log("IsIdle: false");
         }
         
         _animator.SetFloat(_speed, speed);
