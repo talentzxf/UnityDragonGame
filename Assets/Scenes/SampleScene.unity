@@ -10961,6 +10961,7 @@ GameObject:
   - component: {fileID: 1957855776}
   - component: {fileID: 1957855777}
   - component: {fileID: 1957855778}
+  - component: {fileID: 1957855779}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -10998,8 +10999,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 5
---- !u!143 &1957855778
-CharacterController:
+--- !u!54 &1957855778
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957855775}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!136 &1957855779
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -11008,14 +11025,10 @@ CharacterController:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Radius: 0.25
+  m_Height: 1.5761223
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8088684, z: 0}
 --- !u!1 &1958064668 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6361748694572543943, guid: 50eda778057c85b4db6f93ba693c28a1, type: 3}
@@ -11557,7 +11570,7 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: 50eda778057c85b4db6f93ba693c28a1, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 7ff0cf27ed8e9684b9bdd381bab1f846, type: 2}
+      objectReference: {fileID: 9100000, guid: 0ae05a0015bb29a41bdfe002331048c5, type: 2}
     - target: {fileID: 7026134587718898032, guid: 50eda778057c85b4db6f93ba693c28a1, type: 3}
       propertyPath: m_UpdateWhenOffscreen
       value: 1
