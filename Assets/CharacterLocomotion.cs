@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CharacterLocomotion : MonoBehaviour
 {
@@ -6,15 +8,21 @@ public class CharacterLocomotion : MonoBehaviour
 
     private Animator _animator;
     private Transform _camera;
+    private CharacterController _character;
 
     private int _isIdleHash = Animator.StringToHash("isIdle");
     private int _speed = Animator.StringToHash("speed");
+    private int _climb = Animator.StringToHash("climb");
+    private int _climbdown = Animator.StringToHash("climbDown");
     private Transform _mainCameraTransform;
+
+    private bool isOnDragon = false;
 
     void Start()
     {
         _animator = GetComponent<Animator>();
         _mainCameraTransform = Camera.main.transform;
+        _character = GetComponent<CharacterController>();
 
         if (_animator == null)
         {
@@ -22,9 +30,46 @@ public class CharacterLocomotion : MonoBehaviour
         }
     }
 
+    private Transform dragonTransform;
+    public void Climb(Vector3 startPosition, GameObject dragonGO)
+    {
+        dragonTransform = dragonGO.transform;
+        Vector3 forwardDir = dragonTransform.right;
+        isOnDragon = true;
+        // Align rotation
+        transform.position = startPosition;
+        transform.forward = forwardDir;
 
+        climbStartForward = forwardDir;
+
+        _character.enabled = false;
+
+        _animator.SetTrigger(_climb);
+    }
+
+    private Vector3 climbStartForward;
     void Update()
     {
+        if (Input.GetKey(KeyCode.M))
+        {
+            _character.enabled = true;
+            _animator.SetTrigger(_climbdown);
+            isOnDragon = false;
+        }
+
+        if (isOnDragon)
+        {
+            float climbUpProgress = _animator.GetFloat("ClimbUpProgress");
+            Vector3 currentForward = Vector3.Lerp(climbStartForward, dragonTransform.forward, climbUpProgress);
+            transform.forward = currentForward;
+
+            if (climbUpProgress > 0.99f)
+            {
+                transform.SetParent(dragonTransform);
+            }
+            return;
+        }
+
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
 
