@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using DefaultNamespace;
 using UnityEngine;
 
@@ -91,6 +92,20 @@ public class CharacterLocomotion : MonoBehaviour
 
     private Vector3 climbStartForward;
 
+    IEnumerator FixPlayerPosition(float durationSeconds)
+    {
+        Vector3 startPosition = transform.position;
+        Vector3 endPosition = Utility.RecursiveFind(dragonTransform, sitPoint).position;
+        
+        float percentage = 0.0f;
+        while (percentage < durationSeconds && isClimbing)
+        {
+            transform.position = Vector3.Slerp(startPosition, endPosition, percentage);
+            percentage += Time.deltaTime;
+            yield return null;
+        }
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.M))
@@ -111,13 +126,14 @@ public class CharacterLocomotion : MonoBehaviour
 
             if (climbUpProgress > 0.99f)
             {
-                transform.position = Utility.RecursiveFind(dragonTransform, sitPoint).position;
+                StartCoroutine(FixPlayerPosition(0.5f));
                 Transform bone08 = Utility.RecursiveFind(dragonTransform, dragonNeckName);
                 transform.SetParent(bone08);
                 isOnDragon = true;
             }
         }
-        else
+        
+        if(!isClimbing && !isOnDragon)
         {
             float vertical = Input.GetAxis("Vertical");
             float horizontal = Input.GetAxis("Horizontal");
