@@ -1,20 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterLocomotion : MonoBehaviour
 {
-    [SerializeField] private float maxVelocity = 5f;
+    private float rotationSpeed = 10.0f;
+    private float maxVelocity = 1f;
 
     private Animator _animator;
     private Transform _camera;
 
     private int _isIdleHash = Animator.StringToHash("isIdle");
     private int _speed = Animator.StringToHash("speed");
+    private Transform _mainCameraTransform;
 
     void Start()
     {
         _animator = GetComponent<Animator>();
+        _mainCameraTransform = Camera.main.transform;
 
         if (_animator == null)
         {
@@ -22,7 +23,7 @@ public class CharacterLocomotion : MonoBehaviour
         }
     }
 
-    
+
     void Update()
     {
         float vertical = Input.GetAxis("Vertical");
@@ -34,19 +35,23 @@ public class CharacterLocomotion : MonoBehaviour
         Vector3 resultVelocity = forwardVelocity + horizontalVelocity;
 
         float speed = resultVelocity.magnitude;
-        
-        if ( speed < Mathf.Epsilon)
+
+        if (speed < Mathf.Epsilon)
         {
             _animator.SetBool(_isIdleHash, true);
         }
         else
         {
-            // Lerp rotate the character.
-            
-            
             _animator.SetBool(_isIdleHash, false);
+            
+            // Lerp rotate the character.   
+            Quaternion targetRotation = Quaternion.LookRotation(_mainCameraTransform.forward, Vector3.up);
+            Quaternion resultRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            resultRotation.x = 0;
+            resultRotation.z = 0;
+            transform.rotation = resultRotation;
         }
-        
+
         _animator.SetFloat(_speed, speed);
     }
 }

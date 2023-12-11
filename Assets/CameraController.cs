@@ -1,4 +1,3 @@
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -22,7 +21,6 @@ public class CameraController : MonoBehaviour
         {
             _targetTransform = playerAnimator.GetBoneTransform(HumanBodyBones.Neck);
         }
-
 
         distance = (_targetTransform.position - _transform.position).magnitude;
     }
