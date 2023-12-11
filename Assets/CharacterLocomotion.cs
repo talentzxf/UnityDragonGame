@@ -1,10 +1,13 @@
-using System.Collections;
+using System;
+using DefaultNamespace;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class CharacterLocomotion : MonoBehaviour
 {
-    private float rotationSpeed = 10.0f;
+    [SerializeField] private float rotationSpeed = 10.0f;
+    [SerializeField] private String dragonNeckName = "Bone.008";
+    [SerializeField] private String leftFootName = "LeftFoot";
+    [SerializeField] private String rightFootName = "RightFoot";
 
     private Animator _animator;
     private Transform _camera;
@@ -16,7 +19,40 @@ public class CharacterLocomotion : MonoBehaviour
     private int _climbdown = Animator.StringToHash("climbDown");
     private Transform _mainCameraTransform;
 
-    private bool isOnDragon = false;
+    private bool isClimbing = false;
+    private bool isOnDragon;
+
+    private Transform _leftFootIK;
+    private Transform _rightFootIK;
+
+    Transform GetLeftFootIK()
+    {
+        if (_leftFootIK == null)
+        {
+            _leftFootIK = Utility.RecursiveFind(dragonTransform, leftFootName);
+        }
+
+        return _leftFootIK;
+    }
+
+    Transform GetRightFootIK()
+    {
+        if (_rightFootIK == null)
+        {
+            _rightFootIK = Utility.RecursiveFind(dragonTransform, rightFootName);
+        }
+
+        return _rightFootIK;
+    }
+
+    private void OnAnimatorIK(int layerIndex)
+    {
+        float climbUpProgress = _animator.GetFloat("ClimbUpProgress");
+        _animator.SetIKPositionWeight(AvatarIKGoal.LeftFoot, climbUpProgress);
+        _animator.SetIKPositionWeight(AvatarIKGoal.RightFoot, climbUpProgress);
+        _animator.SetIKPosition(AvatarIKGoal.LeftFoot, GetLeftFootIK().position);
+        _animator.SetIKPosition(AvatarIKGoal.RightFoot, GetRightFootIK().position);
+    }
 
     void Start()
     {
@@ -31,11 +67,12 @@ public class CharacterLocomotion : MonoBehaviour
     }
 
     private Transform dragonTransform;
+
     public void Climb(Vector3 startPosition, GameObject dragonGO)
     {
         dragonTransform = dragonGO.transform;
         Vector3 forwardDir = dragonTransform.right;
-        isOnDragon = true;
+        isClimbing = true;
         // Align rotation
         transform.position = startPosition;
         transform.forward = forwardDir;
@@ -48,16 +85,18 @@ public class CharacterLocomotion : MonoBehaviour
     }
 
     private Vector3 climbStartForward;
+
     void Update()
     {
         if (Input.GetKey(KeyCode.M))
         {
             _character.enabled = true;
             _animator.SetTrigger(_climbdown);
+            isClimbing = false;
             isOnDragon = false;
         }
 
-        if (isOnDragon)
+        if (isClimbing && !isOnDragon)
         {
             float climbUpProgress = _animator.GetFloat("ClimbUpProgress");
             Vector3 currentForward = Vector3.Lerp(climbStartForward, dragonTransform.forward, climbUpProgress);
@@ -65,43 +104,46 @@ public class CharacterLocomotion : MonoBehaviour
 
             if (climbUpProgress > 0.99f)
             {
-                transform.SetParent(dragonTransform);
+                Transform bone08 = Utility.RecursiveFind(dragonTransform, dragonNeckName);
+                transform.SetParent(bone08);
+                isOnDragon = true;
             }
-            return;
-        }
-
-        float vertical = Input.GetAxis("Vertical");
-        float horizontal = Input.GetAxis("Horizontal");
-
-        Vector3 forwardVelocity = vertical * _mainCameraTransform.forward;
-        Vector3 horizontalVelocity = horizontal * _mainCameraTransform.right;
-
-        Vector3 resultVelocity = forwardVelocity + horizontalVelocity;
-
-        float speed = resultVelocity.magnitude;
-
-        if (speed < Mathf.Epsilon)
-        {
-            _animator.SetBool(_isIdleHash, true);
         }
         else
         {
-            _animator.SetBool(_isIdleHash, false);
+            float vertical = Input.GetAxis("Vertical");
+            float horizontal = Input.GetAxis("Horizontal");
 
-            // Lerp rotate the character.
-            Vector3 characterDir = forwardVelocity + horizontalVelocity;
+            Vector3 forwardVelocity = vertical * _mainCameraTransform.forward;
+            Vector3 horizontalVelocity = horizontal * _mainCameraTransform.right;
+
+            Vector3 resultVelocity = forwardVelocity + horizontalVelocity;
+
+            float speed = resultVelocity.magnitude;
+
+            if (speed < Mathf.Epsilon)
+            {
+                _animator.SetBool(_isIdleHash, true);
+            }
+            else
+            {
+                _animator.SetBool(_isIdleHash, false);
+
+                // Lerp rotate the character.
+                Vector3 characterDir = forwardVelocity + horizontalVelocity;
 
 
-            Quaternion targetRotation = Quaternion.LookRotation(characterDir, Vector3.up);
-            Quaternion resultRotation =
-                Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                Quaternion targetRotation = Quaternion.LookRotation(characterDir, Vector3.up);
+                Quaternion resultRotation =
+                    Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-            // Keep the character always up.
-            resultRotation.x = 0;
-            resultRotation.z = 0;
-            transform.rotation = resultRotation;
+                // Keep the character always up.
+                resultRotation.x = 0;
+                resultRotation.z = 0;
+                transform.rotation = resultRotation;
+            }
+
+            _animator.SetFloat(_speed, speed);
         }
-
-        _animator.SetFloat(_speed, speed);
     }
 }
