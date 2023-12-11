@@ -516,6 +516,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4665859685083966, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
       insertIndex: -1
       addedObject: {fileID: 623186590}
+    - targetCorrespondingSourceObject: {fileID: 4665859685083966, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1110311805}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1494583877365688, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
       insertIndex: -1
@@ -2835,7 +2838,7 @@ Transform:
   m_GameObject: {fileID: 623186589}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0037, y: -0, z: -0}
+  m_LocalPosition: {x: 0.0037, y: 0.00668, z: 0.00414}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5440,6 +5443,37 @@ MonoBehaviour:
   boneID: 32
   ikEnabled: 0
   ikWeight: 1
+--- !u!1 &1110311804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1110311805}
+  m_Layer: 0
+  m_Name: SitPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1110311805
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110311804}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.00043275568, y: 0.0033051774, z: 0.0061095213}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1424431019}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1116538353 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4914353234715049567, guid: 50eda778057c85b4db6f93ba693c28a1, type: 3}
@@ -10094,6 +10128,7 @@ MonoBehaviour:
   dragonNeckName: Bone.008
   leftFootName: LeftFoot
   rightFootName: RightFoot
+  sitPoint: SitPoint
 --- !u!143 &1653542677
 CharacterController:
   m_ObjectHideFlags: 0

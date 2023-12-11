@@ -8,6 +8,7 @@ public class CharacterLocomotion : MonoBehaviour
     [SerializeField] private String dragonNeckName = "Bone.008";
     [SerializeField] private String leftFootName = "LeftFoot";
     [SerializeField] private String rightFootName = "RightFoot";
+    [SerializeField] private String sitPoint = "SitPoint";
 
     private Animator _animator;
     private Transform _camera;
@@ -48,10 +49,14 @@ public class CharacterLocomotion : MonoBehaviour
     private void OnAnimatorIK(int layerIndex)
     {
         float climbUpProgress = _animator.GetFloat("ClimbUpProgress");
-        _animator.SetIKPositionWeight(AvatarIKGoal.LeftFoot, climbUpProgress);
-        _animator.SetIKPositionWeight(AvatarIKGoal.RightFoot, climbUpProgress);
-        _animator.SetIKPosition(AvatarIKGoal.LeftFoot, GetLeftFootIK().position);
-        _animator.SetIKPosition(AvatarIKGoal.RightFoot, GetRightFootIK().position);
+        if (climbUpProgress > 0.5)
+        {
+            _animator.SetIKPositionWeight(AvatarIKGoal.LeftFoot, climbUpProgress);
+            _animator.SetIKPositionWeight(AvatarIKGoal.RightFoot, climbUpProgress);
+            
+            _animator.SetIKPosition(AvatarIKGoal.LeftFoot, GetLeftFootIK().position);
+            _animator.SetIKPosition(AvatarIKGoal.RightFoot, GetRightFootIK().position);            
+        }
     }
 
     void Start()
@@ -88,12 +93,14 @@ public class CharacterLocomotion : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.M))
         {
+            Debug.Log("Clicked M, climbing down");
             _character.enabled = true;
             _animator.SetTrigger(_climbdown);
             isClimbing = false;
             isOnDragon = false;
+            transform.SetParent(null);
         }
 
         if (isClimbing && !isOnDragon)
@@ -104,6 +111,7 @@ public class CharacterLocomotion : MonoBehaviour
 
             if (climbUpProgress > 0.99f)
             {
+                transform.position = Utility.RecursiveFind(dragonTransform, sitPoint).position;
                 Transform bone08 = Utility.RecursiveFind(dragonTransform, dragonNeckName);
                 transform.SetParent(bone08);
                 isOnDragon = true;
