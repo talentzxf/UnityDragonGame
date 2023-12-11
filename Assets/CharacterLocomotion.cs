@@ -3,7 +3,6 @@ using UnityEngine;
 public class CharacterLocomotion : MonoBehaviour
 {
     private float rotationSpeed = 10.0f;
-    private float maxVelocity = 1f;
 
     private Animator _animator;
     private Transform _camera;
@@ -29,8 +28,8 @@ public class CharacterLocomotion : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
 
-        Vector3 forwardVelocity = vertical * maxVelocity * transform.forward;
-        Vector3 horizontalVelocity = horizontal * maxVelocity * transform.right;
+        Vector3 forwardVelocity = vertical * _mainCameraTransform.forward;
+        Vector3 horizontalVelocity = horizontal * _mainCameraTransform.right;
 
         Vector3 resultVelocity = forwardVelocity + horizontalVelocity;
 
@@ -43,11 +42,15 @@ public class CharacterLocomotion : MonoBehaviour
         else
         {
             _animator.SetBool(_isIdleHash, false);
-            
-            // Lerp rotate the character.   
-            Quaternion targetRotation = Quaternion.LookRotation(_mainCameraTransform.forward, Vector3.up);
-            Quaternion resultRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            
+
+            // Lerp rotate the character.
+            Vector3 characterDir = forwardVelocity + horizontalVelocity;
+
+
+            Quaternion targetRotation = Quaternion.LookRotation(characterDir, Vector3.up);
+            Quaternion resultRotation =
+                Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
             // Keep the character always up.
             resultRotation.x = 0;
             resultRotation.z = 0;
