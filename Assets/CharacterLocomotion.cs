@@ -73,9 +73,11 @@ public class CharacterLocomotion : MonoBehaviour
     }
 
     private Transform dragonTransform;
+    private GameObject _dragonGO;
 
     public void Climb(Vector3 startPosition, GameObject dragonGO)
     {
+        _dragonGO = dragonGO;
         dragonTransform = dragonGO.transform;
         Vector3 forwardDir = dragonTransform.right;
         isClimbing = true;
@@ -116,6 +118,7 @@ public class CharacterLocomotion : MonoBehaviour
             isClimbing = false;
             isOnDragon = false;
             transform.SetParent(null);
+            _dragonGO.GetComponent<DragonController>().SetMounted(false);
         }
 
         if (isClimbing && !isOnDragon)
@@ -130,6 +133,8 @@ public class CharacterLocomotion : MonoBehaviour
                 Transform bone08 = Utility.RecursiveFind(dragonTransform, dragonNeckName);
                 transform.SetParent(bone08);
                 isOnDragon = true;
+
+                _dragonGO.GetComponent<DragonController>().SetMounted(true);
             }
         }
         
