@@ -47,6 +47,8 @@ public class CharacterLocomotion : MonoBehaviour
             // Lerp rotate the character.   
             Quaternion targetRotation = Quaternion.LookRotation(_mainCameraTransform.forward, Vector3.up);
             Quaternion resultRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            
+            // Keep the character always up.
             resultRotation.x = 0;
             resultRotation.z = 0;
             transform.rotation = resultRotation;
