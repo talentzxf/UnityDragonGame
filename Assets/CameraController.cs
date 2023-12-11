@@ -57,8 +57,6 @@ public class CameraController : MonoBehaviour
 
         xAngle = Math.Clamp(xAngle, -89, 89);
 
-        Debug.Log("xAngle:" + xAngle);
-        
         Quaternion rotation = Quaternion.Euler(xAngle, yAngle, 0);
         Vector3 newPosition = targetPosition + (rotation * Vector3.forward).normalized * distance;
         
