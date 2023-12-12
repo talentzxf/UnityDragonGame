@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
-using DefaultNamespace.VZLocomotion;
 using UnityEngine;
+using Object = System.Object;
 
 public abstract class ICharacterLocomotionProcessor
 {
     protected Transform _transform;
     protected GameObject _go;
     protected CharacterLocomotion _loco;
+    protected Animator _animator;
 
     public virtual void Setup(CharacterLocomotion locomotion)
     {
@@ -18,12 +19,23 @@ public abstract class ICharacterLocomotionProcessor
 
     public abstract void Update();
 
-    public virtual void OnActive(params System.Object[] parameters)
+    public virtual void OnActive(params Object[] parameters)
     {
     }
 
     public virtual void OnAnimatorIK(int layerIndex)
     {
+    }
+}
+
+public abstract class AnimatedCharactorLocomotionProcessor : ICharacterLocomotionProcessor
+{
+    protected Animator _animator;
+
+    public override void Setup(CharacterLocomotion locomotion)
+    {
+        base.Setup(locomotion);
+        _animator = _go.GetComponent<Animator>();
     }
 }
 
@@ -64,7 +76,7 @@ public class CharacterLocomotion : MonoBehaviour
         Type type = Type.GetType(startProcessorName);
         var setProcessorMethod = GetType().GetMethod("SetProcessor");
         var genericMethod = setProcessorMethod.MakeGenericMethod(type);
-        genericMethod.Invoke(this, null);
+        genericMethod.Invoke(this, new object[] {null});
     }
 
     public void Climb(Vector3 startPosition, GameObject dragonGO)
@@ -72,7 +84,7 @@ public class CharacterLocomotion : MonoBehaviour
         SetProcessor<ClimbDragonProcessor>(startPosition, dragonGO);
     }
 
-    public bool SetProcessor<T>(params System.Object[] parameters) where T : ICharacterLocomotionProcessor, new()
+    public bool SetProcessor<T>(params Object[] parameters) where T : ICharacterLocomotionProcessor, new()
     {
         T processor = GetProcessor<T>();
         if (processor != null)
