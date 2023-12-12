@@ -24,6 +24,13 @@ namespace DefaultNamespace.VZLocomotion
         private Transform _leftFootIK;
         private Transform _rightFootIK;
 
+        public override void Setup(CharacterLocomotion locomotion)
+        {
+            base.Setup(locomotion);
+            _animator = _go.GetComponent<Animator>();
+            _character = _go.GetComponent<CharacterController>();
+        }
+
         IEnumerator FixPlayerPosition(float durationSeconds)
         {
             Vector3 startPosition = _transform.position;
@@ -72,7 +79,6 @@ namespace DefaultNamespace.VZLocomotion
         }
 
         public override void OnActive(params System.Object[] parameters)
-            // public override void OnActive(Vector3 startPosition, GameObject dragonGO)
         {
             Vector3 startPosition = (Vector3) parameters[0];
             GameObject dragonGO = parameters[1] as GameObject;
@@ -105,7 +111,7 @@ namespace DefaultNamespace.VZLocomotion
                 _transform.SetParent(bone08);
                 _dragonGO.GetComponent<DragonController>().SetMounted(true);
 
-                _loco.SetProcessor(typeof(OnDragonProcessor), dragonTransform);
+                _loco.SetProcessor<OnDragonProcessor>(dragonTransform);
             }
         }
     }

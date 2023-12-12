@@ -8,11 +8,13 @@ namespace DefaultNamespace.VZLocomotion
         private Animator _animator;
 
         private int _climbdown = Animator.StringToHash("climbDown");
+        private Transform _dragonTransform;
         private GameObject _dragonGO;
 
         public override void OnActive(params object[] parameters)
         {
-            _dragonGO = parameters[0] as GameObject;
+            _dragonTransform = parameters[0] as Transform;
+            _dragonGO = _dragonTransform.gameObject;
         }
 
         public override void Setup(CharacterLocomotion locomotion)

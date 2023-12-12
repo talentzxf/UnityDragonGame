@@ -20,7 +20,6 @@ public abstract class ICharacterLocomotionProcessor
 
     public virtual void OnActive(params System.Object[] parameters)
     {
-        
     }
 
     public virtual void OnAnimatorIK(int layerIndex)
@@ -30,10 +29,9 @@ public abstract class ICharacterLocomotionProcessor
 
 public class CharacterLocomotion : MonoBehaviour
 {
-    private OnGroundProcessor _onGroundProcessor;
-    private ClimbDragonProcessor _climbDragonProcessor;
+    private Dictionary<Type, ICharacterLocomotionProcessor> _processorsMap =
+        new Dictionary<Type, ICharacterLocomotionProcessor>();
 
-    private List<ICharacterLocomotionProcessor> _processors;
     private ICharacterLocomotionProcessor _currentProcessor;
 
     private void OnAnimatorIK(int layerIndex)
@@ -44,37 +42,39 @@ public class CharacterLocomotion : MonoBehaviour
         }
     }
 
-    void SetupProcessor<T>(T processor) where T : ICharacterLocomotionProcessor
+    T GetProcessor<T>() where T : ICharacterLocomotionProcessor, new()
     {
-        processor.Setup(this);
-        _processors.Add(processor);
+        Type processorType = typeof(T);
+        if (_processorsMap.ContainsKey(processorType))
+        {
+            return _processorsMap.GetValueOrDefault(processorType) as T;
+        }
+
+        T newProcessor = new T();
+        newProcessor.Setup(this);
+        _processorsMap.Add(processorType, newProcessor);
+
+        return newProcessor;
     }
 
     void Start()
     {
-        SetupProcessor(_onGroundProcessor);
-        SetupProcessor(_climbDragonProcessor);
-
-        SetProcessor(typeof(OnGroundProcessor));
+        SetProcessor<OnGroundProcessor>();
     }
 
     public void Climb(Vector3 startPosition, GameObject dragonGO)
     {
-        SetProcessor(typeof(ClimbDragonProcessor), startPosition, dragonGO);
+        SetProcessor<ClimbDragonProcessor>(startPosition, dragonGO);
     }
 
-    public bool SetProcessor(Type processorType, params System.Object[] parameters)
+    public bool SetProcessor<T>(params System.Object[] parameters) where T: ICharacterLocomotionProcessor, new()
     {
-        foreach (var _processor in _processors)
+        T processor = GetProcessor<T>();
+        if (processor != null)
         {
-            if (_processor.GetType() == processorType)
-            {
-                _currentProcessor = _processor;
-                _currentProcessor.OnActive(parameters);
-                return true;
-            }
+            _currentProcessor = processor;
+            _currentProcessor.OnActive(parameters);            
         }
-
         return false;
     }
 
