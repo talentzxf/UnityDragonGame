@@ -32,7 +32,8 @@ namespace DefaultNamespace.VZLocomotion
                 _character.enabled = true;
                 _animator.SetTrigger(_climbdown);
                 _transform.SetParent(null);
-                _dragonGO.GetComponent<DragonController>().SetMounted(false);
+                
+                _dragonGO.GetComponent<CharacterLocomotion>().SetProcessor<DragonIdleProcessor>();
             }
         }
     }

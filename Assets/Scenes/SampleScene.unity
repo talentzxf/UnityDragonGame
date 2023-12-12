@@ -500,6 +500,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 95753153542478106, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6ac3ba167f6d7d34e821dee44b288914, type: 2}
+    - target: {fileID: 95753153542478106, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 114428407355665034, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -528,7 +536,7 @@ PrefabInstance:
       addedObject: {fileID: 991692448}
     - targetCorrespondingSourceObject: {fileID: 1494583877365688, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 991692450}
+      addedObject: {fileID: 991692453}
   m_SourcePrefab: {fileID: 100100000, guid: 8431058aa84a65044bbe46298ab86574, type: 3}
 --- !u!1 &96177418 stripped
 GameObject:
@@ -4921,7 +4929,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &991692450
+--- !u!114 &991692453
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4930,9 +4938,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 991692444}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 423b8fc89f469af49beacaca8fd08e04, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e6296ff894f6a145983a2289646d148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startProcessorName: DragonIdleProcessor
 --- !u!1 &993788660 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8223034693115555393, guid: 50eda778057c85b4db6f93ba693c28a1, type: 3}
@@ -10127,23 +10136,6 @@ MonoBehaviour:
   editorViewMorphBits: 15
   editorViewRigidBodies: 0
   editorViewMorphNameType: 0
---- !u!114 &1653542671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 255892684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e6296ff894f6a145983a2289646d148, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 10
-  dragonNeckName: Bone.008
-  leftFootName: LeftFoot
-  rightFootName: RightFoot
-  sitPoint: SitPoint
 --- !u!143 &1653542677
 CharacterController:
   m_ObjectHideFlags: 0
@@ -10170,6 +10162,19 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.8, z: 0}
+--- !u!114 &1653542680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255892684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e6296ff894f6a145983a2289646d148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startProcessorName: OnGroundProcessor
 --- !u!1 &1655463581 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8514194430339843247, guid: 50eda778057c85b4db6f93ba693c28a1, type: 3}
@@ -11939,10 +11944,10 @@ PrefabInstance:
       addedObject: {fileID: 1653542669}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 50eda778057c85b4db6f93ba693c28a1, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1653542671}
+      addedObject: {fileID: 1653542677}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 50eda778057c85b4db6f93ba693c28a1, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1653542677}
+      addedObject: {fileID: 1653542680}
     - targetCorrespondingSourceObject: {fileID: -5828743455716085410, guid: 50eda778057c85b4db6f93ba693c28a1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 795995802}

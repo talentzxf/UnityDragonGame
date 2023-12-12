@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DefaultNamespace.VZLocomotion.DragonProcessors;
 using UnityEngine;
 
 namespace DefaultNamespace.VZLocomotion
@@ -109,7 +110,7 @@ namespace DefaultNamespace.VZLocomotion
                 _loco.StartCoroutine(FixPlayerPosition(0.5f));
                 Transform bone08 = Utility.RecursiveFind(dragonTransform, dragonNeckName);
                 _transform.SetParent(bone08);
-                _dragonGO.GetComponent<DragonController>().SetMounted(true);
+                _dragonGO.GetComponent<CharacterLocomotion>().SetProcessor<DragonMountedProcessor>();
 
                 _loco.SetProcessor<OnDragonProcessor>(dragonTransform);
             }

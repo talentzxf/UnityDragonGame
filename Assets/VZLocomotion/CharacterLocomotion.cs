@@ -29,6 +29,8 @@ public abstract class ICharacterLocomotionProcessor
 
 public class CharacterLocomotion : MonoBehaviour
 {
+    [SerializeField] private String startProcessorName = "OnGroundProcessor";
+
     private Dictionary<Type, ICharacterLocomotionProcessor> _processorsMap =
         new Dictionary<Type, ICharacterLocomotionProcessor>();
 
@@ -59,7 +61,10 @@ public class CharacterLocomotion : MonoBehaviour
 
     void Start()
     {
-        SetProcessor<OnGroundProcessor>();
+        Type type = Type.GetType(startProcessorName);
+        var setProcessorMethod = GetType().GetMethod("SetProcessor");
+        var genericMethod = setProcessorMethod.MakeGenericMethod(type);
+        genericMethod.Invoke(this, null);
     }
 
     public void Climb(Vector3 startPosition, GameObject dragonGO)
@@ -67,14 +72,15 @@ public class CharacterLocomotion : MonoBehaviour
         SetProcessor<ClimbDragonProcessor>(startPosition, dragonGO);
     }
 
-    public bool SetProcessor<T>(params System.Object[] parameters) where T: ICharacterLocomotionProcessor, new()
+    public bool SetProcessor<T>(params System.Object[] parameters) where T : ICharacterLocomotionProcessor, new()
     {
         T processor = GetProcessor<T>();
         if (processor != null)
         {
             _currentProcessor = processor;
-            _currentProcessor.OnActive(parameters);            
+            _currentProcessor.OnActive(parameters);
         }
+
         return false;
     }
 
