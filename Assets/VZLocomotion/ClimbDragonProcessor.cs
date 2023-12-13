@@ -108,6 +108,8 @@ public class ClimbDragonProcessor : OnDragonLocomotionProcessor
         _character.enabled = false;
 
         _animator.SetTrigger(_climb);
+
+        Camera.main.GetComponent<CameraController>().LerpToDistance(2.0f);
     }
 
     public override void Update()

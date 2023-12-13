@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Numerics;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
@@ -15,6 +16,27 @@ public class CameraController : MonoBehaviour
 
     private float xAngle = 0.0f;
     private float yAngle = 0.0f;
+
+
+    public void LerpToDistance(float distanceFactor)
+    {
+        StartCoroutine(InternalLerpToDistance(distanceFactor));
+    }
+    
+    private IEnumerator InternalLerpToDistance(float distanceFactor)
+    {
+        float startDistance = distance;
+        float targetDistance = distance * distanceFactor;
+
+        float t = 0.0f;
+        while (t<1.0f)
+        {
+            distance = Mathf.Lerp(startDistance, targetDistance, t);
+            t += 0.1f;
+
+            yield return null;
+        }
+    }
 
     private void Start()
     {
