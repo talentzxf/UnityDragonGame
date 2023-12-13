@@ -18,22 +18,23 @@ public class CameraController : MonoBehaviour
     private float yAngle = 0.0f;
 
 
-    public void LerpToDistance(float distanceFactor)
+    public void LerpToDistance(float distanceFactor, float totalTime)
     {
-        StartCoroutine(InternalLerpToDistance(distanceFactor));
+        StartCoroutine(InternalLerpToDistance(distanceFactor, totalTime));
     }
-    
-    private IEnumerator InternalLerpToDistance(float distanceFactor)
+
+    private IEnumerator InternalLerpToDistance(float distanceFactor, float durationSeconds)
     {
         float startDistance = distance;
         float targetDistance = distance * distanceFactor;
+        float percentage = 0.0f;
 
-        float t = 0.0f;
-        while (t<1.0f)
+        while (percentage < durationSeconds)
         {
-            distance = Mathf.Lerp(startDistance, targetDistance, t);
-            t += 0.1f;
+            distance = Mathf.Lerp(startDistance, targetDistance, percentage / durationSeconds);
 
+            Debug.Log("New Distance:" + distance);
+            percentage += Time.deltaTime;
             yield return null;
         }
     }
@@ -81,7 +82,7 @@ public class CameraController : MonoBehaviour
 
         Quaternion rotation = Quaternion.Euler(xAngle, yAngle, 0);
         Vector3 newPosition = targetPosition + (rotation * Vector3.forward).normalized * distance;
-        
+
 #endif
         _transform.position = newPosition;
         _transform.LookAt(targetPosition);

@@ -83,11 +83,11 @@ public class ClimbDragonProcessor : OnDragonLocomotionProcessor
         Vector3 startPosition = _transform.position;
         Vector3 endPosition = Utility.RecursiveFind(_dragonTransform, sitPoint).position;
 
-        float percentage = 0.0f;
-        while (percentage < durationSeconds)
+        float progress = 0.0f;
+        while (progress < durationSeconds)
         {
-            _transform.position = Vector3.Slerp(startPosition, endPosition, percentage);
-            percentage += Time.deltaTime;
+            _transform.position = Vector3.Slerp(startPosition, endPosition, progress/durationSeconds);
+            progress += Time.deltaTime;
             yield return null;
         }
     }
@@ -109,7 +109,7 @@ public class ClimbDragonProcessor : OnDragonLocomotionProcessor
 
         _animator.SetTrigger(_climb);
 
-        Camera.main.GetComponent<CameraController>().LerpToDistance(2.0f);
+        Camera.main.GetComponent<CameraController>().LerpToDistance(3.0f, 3.0f);
     }
 
     public override void Update()
