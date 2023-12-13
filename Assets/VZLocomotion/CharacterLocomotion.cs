@@ -8,7 +8,6 @@ public abstract class ICharacterLocomotionProcessor
     protected Transform _transform;
     protected GameObject _go;
     protected CharacterLocomotion _loco;
-    protected Animator _animator;
 
     public virtual void Setup(CharacterLocomotion locomotion)
     {
@@ -77,11 +76,6 @@ public class CharacterLocomotion : MonoBehaviour
         var setProcessorMethod = GetType().GetMethod("SetProcessor");
         var genericMethod = setProcessorMethod.MakeGenericMethod(type);
         genericMethod.Invoke(this, new object[] {null});
-    }
-
-    public void Climb(Vector3 startPosition, GameObject dragonGO)
-    {
-        SetProcessor<ClimbDragonProcessor>(startPosition, dragonGO);
     }
 
     public bool SetProcessor<T>(params Object[] parameters) where T : ICharacterLocomotionProcessor, new()

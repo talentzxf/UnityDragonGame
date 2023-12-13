@@ -1,19 +1,11 @@
 using UnityEngine;
 
-public class OnDragonProcessor : AnimatedCharactorLocomotionProcessor
+public class OnDragonProcessor : OnDragonLocomotionProcessor
 {
     private CharacterController _character;
     private Animator _animator;
 
     private int _climbdown = Animator.StringToHash("climbDown");
-    private Transform _dragonTransform;
-    private GameObject _dragonGO;
-
-    public override void OnActive(params object[] parameters)
-    {
-        _dragonTransform = parameters[0] as Transform;
-        _dragonGO = _dragonTransform.gameObject;
-    }
 
     public override void Setup(CharacterLocomotion locomotion)
     {

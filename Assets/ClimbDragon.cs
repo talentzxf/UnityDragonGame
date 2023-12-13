@@ -3,6 +3,7 @@ using UnityEngine;
 public class ClimbDragon : MonoBehaviour
 {
     private Transform dragonTransform;
+
     private void Start()
     {
         dragonTransform = transform.parent;
@@ -13,7 +14,8 @@ public class ClimbDragon : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             CharacterLocomotion characterLocomotion = other.GetComponent<CharacterLocomotion>();
-            
-            characterLocomotion.Climb(transform.position, dragonTransform.gameObject); }
+
+            characterLocomotion.SetProcessor<ClimbDragonProcessor>(dragonTransform.gameObject, transform.position);
+        }
     }
 }
