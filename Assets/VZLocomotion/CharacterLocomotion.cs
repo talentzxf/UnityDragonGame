@@ -18,6 +18,10 @@ public abstract class ICharacterLocomotionProcessor
 
     public abstract void Update();
 
+    public virtual void FixedUpdate()
+    {
+    }
+
     public virtual void OnActive(params Object[] parameters)
     {
     }
@@ -95,6 +99,14 @@ public class CharacterLocomotion : MonoBehaviour
         if (_currentProcessor != null)
         {
             _currentProcessor.Update();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (_currentProcessor != null)
+        {
+            _currentProcessor.FixedUpdate();
         }
     }
 }
