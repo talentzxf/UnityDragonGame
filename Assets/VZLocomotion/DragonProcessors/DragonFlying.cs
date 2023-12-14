@@ -64,30 +64,30 @@ namespace VZLocomotion.DragonProcessors
         private Vector3 movepos, targetDir, DownwardDirection; //where to move to
 
         [Header("Flying")] private float
-            FlyingDirectionSpeed =
-                2f; //how much influence our direction relative to the camera will influence our flying
+            FlyingDirectionSpeed = 15f; //how much influence our direction relative to the camera will influence our flying
 
         private float FlyingRotationSpeed = 6f; //how fast we turn in air overall
-        private float FlyingUpDownSpeed = 0.1f; //how fast we rotate up and down
-        private float FlyingLeftRightSpeed = 0.1f; //how fast we rotate left and right
-        private float FlyingRollSpeed = 0.1f; //how fast we roll
+        private float FlyingUpDownSpeed = 10.0f; //how fast we rotate up and down
+        private float FlyingLeftRightSpeed = 8.0f; //how fast we rotate left and right
+        private float FlyingRollSpeed = 6f; //how fast we roll
 
         private float FlyingAcceleration = 4f; //how much we accelerate to max speed
-        private float FlyingDecelleration = 1f; //how quickly we slow down when flying
+        private float FlyingDecelleration = 0.1f; //how quickly we slow down when flying
         private float FlyingSpeed = 20; //our max flying speed
         private float FlyingMinSpeed = 6; //our flying slow down speed
 
         private float FlyingAdjustmentSpeed = 2; //how quickly our velocity adjusts to the flying speed
         private float FlyingAdjustmentLerp = 0; //the lerp for our adjustment amount
 
-        [Header("Flying Physics")] private float FlyingGravityAmt = 2f; //how much gravity will pull us down when flying
-        private float GlideGravityAmt = 4f; //how much gravity affects us when just gliding
-        private float FlyingGravBuildSpeed = 3f; //how much our gravity is lerped when stopping flying
+        [Header("Flying Physics")] 
+        private float FlyingGravityAmt = 2f; //how much gravity will pull us down when flying
+        private float GlideGravityAmt = 6f; //how much gravity affects us when just gliding
+        private float FlyingGravBuildSpeed = 0.2f; //how much our gravity is lerped when stopping flying
 
-        private float FlyingVelocityGain = 2f; //how much velocity we gain for flying downwards
-        private float FlyingVelocityLoss = 1f; //how much velocity we lose for flying upwards
+        private float FlyingVelocityGain = 1f; //how much velocity we gain for flying downwards
+        private float FlyingVelocityLoss = 0.5f; //how much velocity we lose for flying upwards
         private float FlyingLowerLimit = -6f; //how much we fly down before a boost
-        private float FlyingUpperLimit = 4f; //how much we fly up before a boost;
+        private float FlyingUpperLimit = 7f; //how much we fly up before a boost;
         private float GlideTime = 10f; //how long we glide for when not flying before we start to fall
 
         private float FlyingTimer; //the time before the animation stops flying
@@ -100,10 +100,15 @@ namespace VZLocomotion.DragonProcessors
             base.OnActive(parameters);
             _rigidbody = _go.GetComponent<Rigidbody>();
             _rigidbody.useGravity = false; // Don't use gravity when flying.
+            _rigidbody.freezeRotation = false;
 
             Cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
             // CamY = Cam.transform.parent.parent.transform;
             CamY = Cam; // VZ: TODO, Understand what CamY is.
+            
+            FlyingTimer = GlideTime;
+            ActGravAmt = 0.0f;
+            FlownAdjustmentLerp = -1;
         }
 
         public override void Update()
