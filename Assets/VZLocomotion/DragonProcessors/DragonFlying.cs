@@ -38,10 +38,9 @@ namespace VZLocomotion.DragonProcessors
 
         private int speedFWD = Animator.StringToHash("SpeedFWD");
 
-        private InputHandler _input;
+        private InputHandler _input = new InputHandler();
 
-        [Header("Physics")]
-        public float
+        [Header("Physics")] public float
             HandleReturnSpeed; //how quickly our handle on our character is returned to normal after a force is added (such as jumping
 
         private float ActGravAmt; //the actual gravity that is applied to our character
@@ -64,8 +63,7 @@ namespace VZLocomotion.DragonProcessors
         private float ActSpeed; //our actual speed
         private Vector3 movepos, targetDir, DownwardDirection; //where to move to
 
-        [Header("Flying")]
-        private float
+        [Header("Flying")] private float
             FlyingDirectionSpeed =
                 2f; //how much influence our direction relative to the camera will influence our flying
 
@@ -76,10 +74,10 @@ namespace VZLocomotion.DragonProcessors
 
         private float FlyingAcceleration = 4f; //how much we accelerate to max speed
         private float FlyingDecelleration = 1f; //how quickly we slow down when flying
-        private float FlyingSpeed; //our max flying speed
-        private float FlyingMinSpeed; //our flying slow down speed
+        private float FlyingSpeed = 20; //our max flying speed
+        private float FlyingMinSpeed = 6; //our flying slow down speed
 
-        private float FlyingAdjustmentSpeed; //how quickly our velocity adjusts to the flying speed
+        private float FlyingAdjustmentSpeed = 2; //how quickly our velocity adjusts to the flying speed
         private float FlyingAdjustmentLerp = 0; //the lerp for our adjustment amount
 
         [Header("Flying Physics")] private float FlyingGravityAmt = 2f; //how much gravity will pull us down when flying
@@ -264,8 +262,11 @@ namespace VZLocomotion.DragonProcessors
         //rotate towards the velocity direction
         void RotateToVelocity(float d, float spd)
         {
-            Quaternion SlerpRot = Quaternion.LookRotation(_rigidbody.velocity.normalized);
-            _transform.rotation = Quaternion.Slerp(_transform.rotation, SlerpRot, spd * d);
+            if (_rigidbody.velocity.normalized.magnitude > 0)
+            {
+                Quaternion SlerpRot = Quaternion.LookRotation(_rigidbody.velocity.normalized);
+                _transform.rotation = Quaternion.Slerp(_transform.rotation, SlerpRot, spd * d);
+            }
         }
 
 
