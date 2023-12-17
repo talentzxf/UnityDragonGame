@@ -72,9 +72,9 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
             // Keep track of the player avatars for easy access
             _spawnedCharacters.Add(player, networkPlayerObject);
-            
-            Debug.Log("Player joined:" + player.PlayerId);
         }
+        
+        Debug.Log("Player joined:" + player.PlayerId);
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -84,6 +84,8 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             runner.Despawn(networkObject);
             _spawnedCharacters.Remove(player);
         }
+        
+        Debug.Log("Player left:" + player.PlayerId);
     }
 
     private bool _mouseButton0;
@@ -112,7 +114,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         data.buttons.Set(NetworkInputData.MOUSEBUTTON0, _mouseButton0);
         _mouseButton0 = false;
         
-        data.buttons.Set(NetworkInputData.MOUSEBUTTON1, _mouseButton0);
+        data.buttons.Set(NetworkInputData.MOUSEBUTTON1, _mouseButton1);
         _mouseButton1 = false;
 
         input.Set(data);
@@ -155,36 +157,36 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
-        
+        Debug.Log("On Session List updated!");
     }
 
     public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
     {
-        
+        Debug.Log("OnCustomAuthenticationResponse!");
     }
 
     public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
     {
-        
+        Debug.Log("OnHostMigration!");
     }
 
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data)
     {
-        
+        Debug.Log("OnReliableDataReceived!");
     }
 
     public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)
     {
-        
+        Debug.Log("OnReliableDataProgress!");
     }
 
     public void OnSceneLoadDone(NetworkRunner runner)
     {
-        
+        Debug.Log("OnSceneLoadDone!");
     }
 
     public void OnSceneLoadStart(NetworkRunner runner)
     {
-        
+        Debug.Log("OnSceneLoadStart!");
     }
 }
