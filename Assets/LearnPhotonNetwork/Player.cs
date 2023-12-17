@@ -1,5 +1,7 @@
 using Fusion;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : NetworkBehaviour
 {
@@ -41,6 +43,37 @@ public class Player : NetworkBehaviour
     public override void Spawned()
     {
         _changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
+    }
+
+    private TextMeshProUGUI _messages;
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority, HostMode = RpcHostMode.SourceIsHostPlayer)]
+    public void RPC_SendMessage(string message, RpcInfo info = default)
+    {
+        RPC_RelayMessage(message, info.Source);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All, HostMode = RpcHostMode.SourceIsServer)]
+    public void RPC_RelayMessage(string message, PlayerRef messageSource)
+    {
+        if (_messages == null)
+        {
+            _messages = FindObjectOfType<TextMeshProUGUI>();
+        }
+        if (messageSource == Runner.LocalPlayer)
+            message = $"You said: {message}\n";
+        else
+            message = $"Some other player said: {message}\n";
+        
+        _messages.text += message;
+    }
+
+    private void Update()
+    {
+        if (Object.HasInputAuthority && Input.GetKeyDown(KeyCode.R))
+        {
+            RPC_SendMessage("Hello Mate!");
+        }
     }
 
     public override void FixedUpdateNetwork()
