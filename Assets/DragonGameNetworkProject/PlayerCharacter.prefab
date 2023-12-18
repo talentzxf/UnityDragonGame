@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8680307425377536726}
   - component: {fileID: 657553727272487884}
   - component: {fileID: 8573603061945693866}
+  - component: {fileID: 5958847492965003288}
   m_Layer: 0
   m_Name: PlayerCharacter
   m_TagString: Untagged
@@ -55,6 +56,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 8680307425377536726}
   - {fileID: 8573603061945693866}
+  - {fileID: 5958847492965003288}
 --- !u!114 &8680307425377536726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +116,20 @@ MonoBehaviour:
   GravityValue: -9.8
   rotationSpeed: 50
   camera: {fileID: 0}
+--- !u!114 &5958847492965003288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7068099313803907375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f74f50eba049fd499aaa3b0ebbbff79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enableAutoSync: 1
+  _autoSyncInterval: 2
 --- !u!1001 &4850378303274289338
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System.Globalization;
 using Fusion;
 using UnityEngine;
 
@@ -5,7 +6,7 @@ public class PlayerMovementNetwork : NetworkBehaviour
 {
     private CharacterController _cc;
 
-    public float speed = 2f;
+    private float maxSpeed = 2f;
 
     private bool _jumpPressed;
     public float JumpForce = 5f;
@@ -15,7 +16,12 @@ public class PlayerMovementNetwork : NetworkBehaviour
 
     private Vector3 _velocity;
 
-    public Camera camera;
+    private Camera camera;
+
+    private Animator _animator;
+    
+    private int _isIdleHash = Animator.StringToHash("isIdle");
+    private int _speed = Animator.StringToHash("speed");
 
     void Update()
     {
@@ -35,6 +41,7 @@ public class PlayerMovementNetwork : NetworkBehaviour
     private void Awake()
     {
         _cc = GetComponent<CharacterController>();
+        _animator = GetComponentInChildren<Animator>();
     }
 
     public override void FixedUpdateNetwork()
@@ -52,7 +59,7 @@ public class PlayerMovementNetwork : NetworkBehaviour
 
         var cameraRotationY = Quaternion.Euler(0, camera.transform.rotation.eulerAngles.y, 0);
         Vector3 move = cameraRotationY * new Vector3(horizontal, 0, vertical) * Runner.DeltaTime *
-                       speed;
+                       maxSpeed;
 
         _velocity.y += GravityValue * Runner.DeltaTime;
         if (_jumpPressed && _cc.isGrounded)
@@ -78,6 +85,18 @@ public class PlayerMovementNetwork : NetworkBehaviour
             resultRotation.z = 0;
             transform.rotation = resultRotation;
         }
+
+        float speed = _cc.velocity.magnitude;
+        if (speed < Mathf.Epsilon)
+        {
+            _animator.SetBool(_isIdleHash, true);
+        }
+        else
+        {
+            _animator.SetBool(_isIdleHash, false);
+        }
+        
+        _animator.SetFloat(_speed, speed);
 
         _jumpPressed = false;
     }
