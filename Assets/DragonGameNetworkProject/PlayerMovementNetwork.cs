@@ -1,4 +1,3 @@
-using System.Globalization;
 using Fusion;
 using UnityEngine;
 
@@ -7,27 +6,14 @@ public class PlayerMovementNetwork : NetworkBehaviour
     private CharacterController _cc;
 
     private float maxSpeed = 2f;
-
-    private bool _jumpPressed;
-    public float JumpForce = 5f;
-    public float GravityValue = -9.8f;
-
-    public float rotationSpeed = 50.0f;
-
-    private Vector3 _velocity;
+    public float rotationSpeed = 10.0f;
 
     private Camera camera;
 
     private Animator _animator;
-    
+
     private int _isIdleHash = Animator.StringToHash("isIdle");
     private int _speed = Animator.StringToHash("speed");
-
-    void Update()
-    {
-        if (Input.GetButtonDown("Jump"))
-            _jumpPressed = true;
-    }
 
     public override void Spawned()
     {
@@ -41,42 +27,51 @@ public class PlayerMovementNetwork : NetworkBehaviour
     private void Awake()
     {
         _cc = GetComponent<CharacterController>();
-        _animator = GetComponentInChildren<Animator>();
+        _animator = GetComponent<Animator>();
     }
 
     public override void FixedUpdateNetwork()
     {
+        if (HasStateAuthority)
+        {
+            _animator.applyRootMotion = true;
+        }
+        else
+        {
+            _animator.applyRootMotion = false;
+        }
+        
         if (HasStateAuthority == false)
             return;
-
-        if (_cc.isGrounded)
-        {
-            _velocity = new Vector3(0, -1, 0);
-        }
 
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
 
-        var cameraRotationY = Quaternion.Euler(0, camera.transform.rotation.eulerAngles.y, 0);
-        Vector3 move = cameraRotationY * new Vector3(horizontal, 0, vertical) * Runner.DeltaTime *
-                       maxSpeed;
+        Vector3 forwardVelocity = vertical * camera.transform.forward;
+        Vector3 horizontalVelocity = horizontal * camera.transform.right;
 
-        _velocity.y += GravityValue * Runner.DeltaTime;
-        if (_jumpPressed && _cc.isGrounded)
-            _velocity.y += JumpForce;
+        Vector3 resultVelocityXY = forwardVelocity + horizontalVelocity;
 
-        Vector3 resultMove = move + _velocity * Runner.DeltaTime;
-        _cc.Move(resultMove);
-
-        if (move != Vector3.zero)
+        Vector3 resultVelocity = resultVelocityXY;
+        
+        if (!_cc.isGrounded)
         {
-            Vector3 forwardVelocity = vertical * camera.transform.forward;
-            Vector3 horizontalVelocity = horizontal * camera.transform.right;
+            resultVelocity += Vector3.down;
+        }
+
+        // _cc.Move(resultVelocity * Runner.DeltaTime);
+
+        float speed = resultVelocityXY.magnitude;
+        if (speed < Mathf.Epsilon)
+        {
+            _animator.SetBool(_isIdleHash, true);
+        }
+        else
+        {
+            _animator.SetBool(_isIdleHash, false);
 
             // Lerp rotate the character.
-            Vector3 characterDir = forwardVelocity + horizontalVelocity;
-
-            Quaternion targetRotation = Quaternion.LookRotation(characterDir, Vector3.up);
+            Quaternion targetRotation = Quaternion.LookRotation(resultVelocityXY, Vector3.up);
             Quaternion resultRotation =
                 Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Runner.DeltaTime);
 
@@ -86,18 +81,6 @@ public class PlayerMovementNetwork : NetworkBehaviour
             transform.rotation = resultRotation;
         }
 
-        float speed = _cc.velocity.magnitude;
-        if (speed < Mathf.Epsilon)
-        {
-            _animator.SetBool(_isIdleHash, true);
-        }
-        else
-        {
-            _animator.SetBool(_isIdleHash, false);
-        }
-        
         _animator.SetFloat(_speed, speed);
-
-        _jumpPressed = false;
     }
 }

@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
 using Fusion;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class AnimatorStateSync : NetworkBehaviour
 {
