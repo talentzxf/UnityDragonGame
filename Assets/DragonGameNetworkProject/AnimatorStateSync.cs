@@ -50,7 +50,7 @@ public class AnimatorStateSync : NetworkBehaviour
 
     protected void Awake()
     {
-        _animator = GetComponentInChildren<Animator>();
+        _animator = GetComponent<Animator>();
         _layerCount = _animator != null ? _animator.layerCount : 0;
     }
 

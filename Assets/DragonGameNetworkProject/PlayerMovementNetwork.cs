@@ -52,12 +52,12 @@ public class PlayerMovementNetwork : NetworkBehaviour
 
         Vector3 resultVelocityXY = forwardVelocity + horizontalVelocity;
 
-        Vector3 resultVelocity = resultVelocityXY;
+        // Vector3 resultVelocity = resultVelocityXY;
         
-        if (!_cc.isGrounded)
-        {
-            resultVelocity += Vector3.down;
-        }
+        // if (!_cc.isGrounded)
+        // {
+        //     resultVelocity += Vector3.down;
+        // }
 
         // _cc.Move(resultVelocity * Runner.DeltaTime);
 
