@@ -10,7 +10,7 @@ public class PlayerMovementNetwork : NetworkBehaviour
 
     private Camera camera;
 
-    private Animator _animator;
+    private NetworkMecanimAnimator _networkAnimator;
 
     private int _isIdleHash = Animator.StringToHash("isIdle");
     private int _speed = Animator.StringToHash("speed");
@@ -27,18 +27,18 @@ public class PlayerMovementNetwork : NetworkBehaviour
     private void Awake()
     {
         _cc = GetComponent<CharacterController>();
-        _animator = GetComponent<Animator>();
+        _networkAnimator = GetComponent<NetworkMecanimAnimator>();
     }
 
     public override void FixedUpdateNetwork()
     {
         if (HasStateAuthority)
         {
-            _animator.applyRootMotion = true;
+            _networkAnimator.Animator.applyRootMotion = true;
         }
         else
         {
-            _animator.applyRootMotion = false;
+            _networkAnimator.Animator.applyRootMotion = false;
         }
         
         if (HasStateAuthority == false)
@@ -64,11 +64,11 @@ public class PlayerMovementNetwork : NetworkBehaviour
         float speed = resultVelocityXY.magnitude;
         if (speed < Mathf.Epsilon)
         {
-            _animator.SetBool(_isIdleHash, true);
+            _networkAnimator.Animator.SetBool("isIdle", true);
         }
         else
         {
-            _animator.SetBool(_isIdleHash, false);
+            _networkAnimator.Animator.SetBool("isIdle", false);
 
             // Lerp rotate the character.
             Quaternion targetRotation = Quaternion.LookRotation(resultVelocityXY, Vector3.up);
@@ -81,6 +81,6 @@ public class PlayerMovementNetwork : NetworkBehaviour
             transform.rotation = resultRotation;
         }
 
-        _animator.SetFloat(_speed, speed);
+        _networkAnimator.Animator.SetFloat(_speed, speed);
     }
 }
