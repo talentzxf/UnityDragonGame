@@ -37,8 +37,7 @@ public class OnGroundProcessor : AnimatedCharactorLocomotionProcessor
 
             // Lerp rotate the character.
             Vector3 characterDir = forwardVelocity + horizontalVelocity;
-
-
+            
             Quaternion targetRotation = Quaternion.LookRotation(characterDir, Vector3.up);
             Quaternion resultRotation =
                 Quaternion.Slerp(_transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
