@@ -176,6 +176,7 @@ public class WelcomeUI : Behaviour
         if (showAlert)
         {
             GUI.ModalWindow(0, new Rect(Screen.width / 2 - 150, Screen.height / 2 - 75, 300, 150), ShowAlertWindow, "Alert");
+            return;
         }
 
         GUILayout.BeginArea(new Rect(leftBoxMargin, margin, width, Screen.height));
