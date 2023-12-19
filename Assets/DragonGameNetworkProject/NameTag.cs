@@ -7,17 +7,24 @@ public class NameTag : NetworkBehaviour
 {
     public string NameTagName = "NameTag";
 
-    public Transform avatarTransform;
+    private Transform avatarTransform;
     private TextMeshPro nameText;
     private string _userId;
+    private float avatarHeight = 1.6f;
+    
 
     void Update()
     {
         if (nameText != null)
         {
-            nameText.transform.position = avatarTransform.position + avatarTransform.up;
+            nameText.transform.position = avatarTransform.position + avatarHeight * avatarTransform.up;
             nameText.transform.LookAt(Camera.main.transform);
         }
+    }
+
+    public override void Despawned(NetworkRunner runner, bool hasState)
+    {
+        Destroy(nameText);
     }
 
     public override void Spawned()
@@ -38,7 +45,8 @@ public class NameTag : NetworkBehaviour
         var nameTextGO = new GameObject("NameTag");
         nameTextGO.transform.parent = canvasGO.transform;
         nameText = nameTextGO.AddComponent<TextMeshPro>();
-        nameText.fontSize = 10;
+        nameText.fontSize = 1;
+        nameText.alignment = TextAlignmentOptions.Center;
 
         PlayerMovementNetwork playerMovementNetwork = gameObject.GetComponentInChildren<PlayerMovementNetwork>();
         if (nameText != null && playerMovementNetwork != null)
@@ -48,6 +56,12 @@ public class NameTag : NetworkBehaviour
             var runner = no.Runner;
             var userId = runner.GetPlayerUserId(no.InputAuthority);
             nameText.text = userId;
+
+            var _cc = GetComponentInChildren<CharacterController>();
+            if (_cc)
+            {
+                avatarHeight = _cc.height;                
+            }            
         }
     }
 }
