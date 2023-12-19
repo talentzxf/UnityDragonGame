@@ -203,7 +203,7 @@ public class NetworkBootStrap : Behaviour
                 enabled = false;
 
                 // destroy this and GUI (if exists), and return
-                var gui = GetComponent<FusionBootstrapDebugGUI>();
+                var gui = GetComponent<WelcomeUI>();
                 if (gui)
                 {
                     Destroy(gui);
@@ -257,9 +257,9 @@ public class NetworkBootStrap : Behaviour
             }
             default:
             {
-                if (TryGetComponent<FusionBootstrapDebugGUI>(out _) == false)
+                if (TryGetComponent<WelcomeUI>(out _) == false)
                 {
-                    gameObject.AddComponent<FusionBootstrapDebugGUI>();
+                    gameObject.AddComponent<WelcomeUI>();
                 }
 
                 break;
