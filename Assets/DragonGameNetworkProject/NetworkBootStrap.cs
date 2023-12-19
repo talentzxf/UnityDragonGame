@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Fusion;
+using Fusion.Photon.Realtime;
 using Fusion.Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Behaviour = Fusion.Behaviour;
+using Random = UnityEngine.Random;
 #if UNITY_EDITOR
   using UnityEditor;
 #endif
@@ -703,6 +705,8 @@ public class NetworkBootStrap : Behaviour
             sceneInfo.AddSceneRef(scene, LoadSceneMode.Additive);
         }
 
+        string randomUID = "VincentZhang" + Random.value.ToString();
+
         return runner.StartGame(new StartGameArgs
         {
             GameMode = gameMode,
@@ -713,6 +717,7 @@ public class NetworkBootStrap : Behaviour
             SceneManager = sceneManager,
             Updater = updater,
             ObjectProvider = objectProvider,
+            AuthValues = new AuthenticationValues(randomUID)
         });
     }
 }
