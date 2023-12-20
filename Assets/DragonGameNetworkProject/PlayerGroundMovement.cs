@@ -1,16 +1,18 @@
 using Fusion;
+using Fusion.Addons.FSM;
 using UnityEngine;
 
-public class PlayerMovementNetwork : NetworkBehaviour
+public class PlayerGroundMovement : StateBehaviour
 {
     private CharacterController _cc;
+    private NetworkMecanimAnimator _networkAnimator;
+
+    private Transform _transform;
 
     private float maxSpeed = 2f;
     public float rotationSpeed = 10.0f;
 
     private Camera camera;
-
-    private NetworkMecanimAnimator _networkAnimator;
 
     private int _isIdleHash = Animator.StringToHash("isIdle");
     private int _speed = Animator.StringToHash("speed");
@@ -20,17 +22,15 @@ public class PlayerMovementNetwork : NetworkBehaviour
         if (HasStateAuthority)
         {
             camera = Camera.main;
-            camera.GetComponent<FirstPersonCamera>().SetCameraTarget(gameObject);
+            camera.GetComponent<FirstPersonCamera>().SetCameraTarget(_cc.gameObject);
+
+            _cc = GetComponentInChildren<CharacterController>();
+            _networkAnimator = GetComponentInChildren<NetworkMecanimAnimator>();
+            _transform = _cc.transform;
         }
     }
-
-    private void Awake()
-    {
-        _cc = GetComponent<CharacterController>();
-        _networkAnimator = GetComponent<NetworkMecanimAnimator>();
-    }
-
-    public override void FixedUpdateNetwork()
+    
+    protected override void OnFixedUpdate()
     {
         if (HasStateAuthority)
         {
@@ -64,21 +64,21 @@ public class PlayerMovementNetwork : NetworkBehaviour
         float speed = resultVelocityXY.magnitude;
         if (speed < Mathf.Epsilon)
         {
-            _networkAnimator.Animator.SetBool("isIdle", true);
+            _networkAnimator.Animator.SetBool(_isIdleHash, true);
         }
         else
         {
-            _networkAnimator.Animator.SetBool("isIdle", false);
+            _networkAnimator.Animator.SetBool(_isIdleHash, false);
 
             // Lerp rotate the character.
             Quaternion targetRotation = Quaternion.LookRotation(resultVelocityXY, Vector3.up);
             Quaternion resultRotation =
-                Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Runner.DeltaTime);
+                Quaternion.Slerp(_transform.rotation, targetRotation, rotationSpeed * Runner.DeltaTime);
 
             // Keep the character always up.
             resultRotation.x = 0;
             resultRotation.z = 0;
-            transform.rotation = resultRotation;
+            _transform.rotation = resultRotation;
         }
 
         _networkAnimator.Animator.SetFloat(_speed, speed);
