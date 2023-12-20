@@ -103,6 +103,8 @@ public class NetworkBootStrap : Behaviour
     /// </summary>
     [InlineHelp] public string DefaultRoomName = string.Empty; // empty/null means Random Room Name
 
+    [InlineHelp] public string NickName = string.Empty;
+
     /// <summary>
     /// Will automatically enable <see cref="FusionStats"/> once peers have finished connecting.
     /// </summary>
@@ -704,9 +706,7 @@ public class NetworkBootStrap : Behaviour
         {
             sceneInfo.AddSceneRef(scene, LoadSceneMode.Additive);
         }
-
-        string randomUID = "VincentZhang" + Random.value.ToString();
-
+        
         return runner.StartGame(new StartGameArgs
         {
             GameMode = gameMode,
@@ -717,7 +717,7 @@ public class NetworkBootStrap : Behaviour
             SceneManager = sceneManager,
             Updater = updater,
             ObjectProvider = objectProvider,
-            AuthValues = new AuthenticationValues(randomUID)
+            AuthValues = new AuthenticationValues(NickName)
         });
     }
 }

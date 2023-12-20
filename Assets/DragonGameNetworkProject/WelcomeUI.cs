@@ -213,25 +213,33 @@ public class WelcomeUI : Behaviour
                     {
                         GUILayout.Label("Room:", GUILayout.Height(height), GUILayout.Width(width * .33f));
                         nds.DefaultRoomName = GUILayout.TextField(nds.DefaultRoomName, 25, GUILayout.Height(height));
+
                     }
                     GUILayout.EndHorizontal();
-
-                    if (GUILayout.Button("Start Single Player", GUILayout.Height(height)))
+                    
+                    GUILayout.BeginHorizontal();
                     {
-                        nds.StartSinglePlayer();
+                        GUILayout.Label("NickName:", GUILayout.Height(height), GUILayout.Width(width * .33f));
+                        nds.NickName = GUILayout.TextField(nds.NickName, 25, GUILayout.Height(height));
                     }
-
-                    if (GUILayout.Button("Start Shared Client", GUILayout.Height(height)))
+                    GUILayout.EndHorizontal();
+                        
+                    if (GUILayout.Button("Join or Create Room", GUILayout.Height(height)))
                     {
-                        if (nds.DefaultRoomName.IsNullOrEmpty())
+                        if (nds.DefaultRoomName.IsNullOrEmpty() || nds.NickName.IsNullOrEmpty())
                         {
-                            alertString = "Room name is empty?";
+                            alertString = "RoomName/NickName is empty?";
                             showAlert = true;
                         }
                         else
                         {
                             nds.StartSharedClient();
                         }
+                    }
+                    
+                    if (GUILayout.Button("Start Single Player", GUILayout.Height(height)))
+                    {
+                        nds.StartSinglePlayer();
                     }
                 }
                 else

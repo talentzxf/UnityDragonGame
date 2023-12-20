@@ -16,10 +16,20 @@ public class NameTag : NetworkBehaviour
     {
         if (nameText != null)
         {
-            var targetPoint = avatarTransform.position + avatarHeight * avatarTransform.up;
+            var targetPoint = avatarTransform.position + (avatarHeight * 1.1f) * avatarTransform.up;
             
             Vector3 screenPoint = Camera.main.WorldToScreenPoint(targetPoint);
-            nameText.transform.position = screenPoint;
+            
+            bool isOutOfScreen = (screenPoint.x < 0 || screenPoint.x > Screen.width || screenPoint.y < 0 || screenPoint.y > Screen.height);
+            if (!isOutOfScreen)
+            {
+                nameText.enabled = true;
+                nameText.transform.position = screenPoint;                
+            }
+            else
+            {
+                nameText.enabled = false;
+            }
         }
     }
 
@@ -46,7 +56,7 @@ public class NameTag : NetworkBehaviour
         var nameTextGO = new GameObject("NameTag");
         nameTextGO.transform.parent = canvasGO.transform;
         nameText = nameTextGO.AddComponent<TextMeshProUGUI>();
-        nameText.fontSize = 10;
+        nameText.fontSize = 20;
         nameText.alignment = TextAlignmentOptions.Center;
 
         PlayerMovementNetwork playerMovementNetwork = gameObject.GetComponentInChildren<PlayerMovementNetwork>();
