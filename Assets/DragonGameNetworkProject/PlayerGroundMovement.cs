@@ -21,17 +21,18 @@ public class PlayerGroundMovement : StateBehaviour
     {
         if (HasStateAuthority)
         {
-            _cc = GetComponentInChildren<CharacterController>();
+            GameObject outParent = GetComponentInParent<PlayerLocomotion>().gameObject;
 
-            _networkAnimator = GetComponentInChildren<NetworkMecanimAnimator>();
+            _cc = outParent.GetComponentInChildren<CharacterController>();
+            _networkAnimator = outParent.GetComponentInChildren<NetworkMecanimAnimator>();
             _transform = _cc.transform;
-            
-            camera = Camera.main;   
+
+            camera = Camera.main;
             FirstPersonCamera fpsCamera = camera.GetComponent<FirstPersonCamera>();
             fpsCamera.SetCameraTarget(_cc.gameObject);
         }
     }
-    
+
     protected override void OnFixedUpdate()
     {
         if (HasStateAuthority)
@@ -42,7 +43,7 @@ public class PlayerGroundMovement : StateBehaviour
         {
             _networkAnimator.Animator.applyRootMotion = false;
         }
-        
+
         if (HasStateAuthority == false)
             return;
 
@@ -55,7 +56,7 @@ public class PlayerGroundMovement : StateBehaviour
         Vector3 resultVelocityXY = forwardVelocity + horizontalVelocity;
 
         // Vector3 resultVelocity = resultVelocityXY;
-        
+
         // if (!_cc.isGrounded)
         // {
         //     resultVelocity += Vector3.down;

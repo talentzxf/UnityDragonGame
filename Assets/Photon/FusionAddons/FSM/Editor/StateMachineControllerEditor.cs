@@ -1,4 +1,6 @@
-﻿using Fusion.Editor;
+﻿#if UNITY_EDITOR
+
+using Fusion.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -70,3 +72,4 @@ namespace Fusion.Addons.FSM.Editor
 		}
 	}
 }
+#endif

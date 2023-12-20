@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class FirstPersonCamera : MonoBehaviour
@@ -10,6 +11,25 @@ public class FirstPersonCamera : MonoBehaviour
     private float yAngle;
 
     private float distance;
+    
+    public void LerpToDistance(float distanceFactor, float totalTime)
+    {
+        StartCoroutine(InternalLerpToDistance(distanceFactor, totalTime));
+    }
+
+    private IEnumerator InternalLerpToDistance(float distanceFactor, float durationSeconds)
+    {
+        float startDistance = distance;
+        float targetDistance = distance * distanceFactor;
+        float percentage = 0.0f;
+
+        while (percentage < durationSeconds)
+        {
+            distance = Mathf.Lerp(startDistance, targetDistance, percentage / durationSeconds);
+            percentage += Time.deltaTime;
+            yield return null;
+        }
+    }
 
     public void SetCameraTarget(GameObject playerGO)
     {

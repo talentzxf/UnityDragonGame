@@ -16,7 +16,7 @@ public class PlayerClimbDragon : StateBehaviour
     private NetworkMecanimAnimator _animator;
 
     private Vector3 climbStartForward;
-    
+
     public void Setup(GameObject dragonGO, Vector3 startPosition)
     {
         dragonTransform = dragonGO.transform;
@@ -27,22 +27,23 @@ public class PlayerClimbDragon : StateBehaviour
         climbStartForward = forwardDir;
 
         _cc.enabled = false;
-        
+
         _animator.Animator.SetBool(_climb, true);
-        
-        Camera.main.GetComponent<CameraController>().LerpToDistance(3.0f, 3.0f);
+
+        Camera.main.GetComponent<FirstPersonCamera>().LerpToDistance(3.0f, 3.0f);
     }
-    
+
     public override void Spawned()
     {
         if (HasStateAuthority)
         {
-            _cc = GetComponentInChildren<CharacterController>();
+            GameObject outParent = GetComponentInParent<PlayerLocomotion>().gameObject;
+            _cc = outParent.GetComponentInChildren<CharacterController>();
             _transform = _cc.transform;
-            _animator = GetComponentInChildren<NetworkMecanimAnimator>();
+            _animator = outParent.GetComponentInChildren<NetworkMecanimAnimator>();
         }
     }
-    
+
     IEnumerator FixPlayerPosition(float durationSeconds)
     {
         Vector3 startPosition = _transform.position;
@@ -51,24 +52,34 @@ public class PlayerClimbDragon : StateBehaviour
         float progress = 0.0f;
         while (progress < durationSeconds)
         {
-            _transform.position = Vector3.Slerp(startPosition, endPosition, progress/durationSeconds);
+            _transform.position = Vector3.Slerp(startPosition, endPosition, progress / durationSeconds);
             progress += Time.deltaTime;
             yield return null;
         }
     }
-    
+
     protected override void OnFixedUpdate()
     {
+        if (!HasStateAuthority)
+        {
+            return;
+        }
+
         float climbUpProgress = _animator.Animator.GetFloat("ClimbUpProgress");
         Vector3 currentForward = Vector3.Lerp(climbStartForward, dragonTransform.forward, climbUpProgress);
         _transform.forward = currentForward;
+
+        if (climbUpProgress > 0.0)
+        {
+            _animator.Animator.SetBool(_climb, false);
+        }
 
         if (climbUpProgress > 0.99f)
         {
             StartCoroutine(FixPlayerPosition(0.5f));
             Transform bone08 = Utility.RecursiveFind(dragonTransform, dragonNeckName);
             _transform.SetParent(bone08);
-            dragonGO.GetComponent<CharacterLocomotion>().SetProcessor<DragonMounted>();
+            // dragonGO.GetComponent<CharacterLocomotion>().SetProcessor<DragonMounted>();
 
             // _loco.SetProcessor<OnDragonProcessor>(_dragonGO);
         }
