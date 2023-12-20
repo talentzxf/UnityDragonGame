@@ -21,12 +21,14 @@ public class PlayerGroundMovement : StateBehaviour
     {
         if (HasStateAuthority)
         {
-            camera = Camera.main;
-            camera.GetComponent<FirstPersonCamera>().SetCameraTarget(_cc.gameObject);
-
             _cc = GetComponentInChildren<CharacterController>();
+
             _networkAnimator = GetComponentInChildren<NetworkMecanimAnimator>();
             _transform = _cc.transform;
+            
+            camera = Camera.main;   
+            FirstPersonCamera fpsCamera = camera.GetComponent<FirstPersonCamera>();
+            fpsCamera.SetCameraTarget(_cc.gameObject);
         }
     }
     
