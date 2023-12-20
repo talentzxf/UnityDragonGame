@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class NameTag : NetworkBehaviour
 {
-    public string NameTagName = "NameTag";
-
     private Transform avatarTransform;
     private TextMeshProUGUI nameText;
     private string _userId;
