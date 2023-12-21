@@ -19,7 +19,7 @@ namespace DragonGameNetworkProject
             dragonTransform = this.dragonGO.transform;
         }
 
-        private void OnAnimatorIK(int layerIndex)
+        public override void OnAnimatorIK(int layerIndex)
         {
             float climbUpProgress = networkAnimator.Animator.GetFloat("ClimbUpProgress");
             if (climbUpProgress > 0.5)

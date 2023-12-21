@@ -1,3 +1,4 @@
+using System;
 using Fusion;
 using UnityEngine;
 
@@ -12,7 +13,12 @@ namespace DragonGameNetworkProject
         public bool enabledByDefault = false;
 
         protected CharacterMovementController controller;
-        
+
+        public virtual void OnAnimatorIK(int layerIndex)
+        {
+            
+        }
+
         public override void Spawned()
         {
             if (HasStateAuthority)
