@@ -1,13 +1,16 @@
 using System;
 using ExitGames.Client.Photon.StructWrapping;
+using Fusion;
 using UnityEngine;
 
 namespace DragonGameNetworkProject
 {
-    public class CharacterMovementController : MonoBehaviour
+    public class CharacterMovementController : NetworkBehaviour
     {
+#if UNITY_EDITOR
         public AbstractCharacterMovement currentEnabled;
-        
+#endif
+
         private AbstractCharacterMovement[] movements;
 
         private void Awake()
@@ -35,7 +38,9 @@ namespace DragonGameNetworkProject
                 if (movement.IsType<T>())
                 {
                     movement.enabled = true;
+#if UNITY_EDITOR
                     currentEnabled = movement;
+#endif
                 }
                 else
                 {
@@ -44,6 +49,7 @@ namespace DragonGameNetworkProject
             }
         }
 
+#if UNITY_EDITOR
         private void Update()
         {
             foreach (var movement in movements)
@@ -54,5 +60,6 @@ namespace DragonGameNetworkProject
                 }
             }
         }
+#endif
     }
 }
