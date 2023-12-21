@@ -14,7 +14,7 @@ namespace DragonGameNetworkProject
 
         private Vector3 climbStartForward;
 
-        void PrepareToClimb(GameObject dragonGO, Vector3 startPosition)
+        public void PrepareToClimb(GameObject dragonGO, Vector3 startPosition)
         {
             if (!HasStateAuthority)
             {
