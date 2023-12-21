@@ -57,20 +57,15 @@ public class NameTag : NetworkBehaviour
         nameText.fontSize = 20;
         nameText.alignment = TextAlignmentOptions.Center;
 
-        PlayerGroundMovement playerGroundMovement = gameObject.GetComponentInChildren<PlayerGroundMovement>();
-        if (nameText != null && playerGroundMovement != null)
+        CharacterController cc = gameObject.GetComponentInChildren<CharacterController>();
+        if (nameText != null && cc != null)
         {
-            avatarTransform = playerGroundMovement.transform;
+            avatarTransform = cc.transform;
             var no = GetComponent<NetworkObject>();
             var runner = no.Runner;
             var userId = runner.GetPlayerUserId(no.InputAuthority);
             nameText.text = userId;
-
-            var _cc = GetComponentInChildren<CharacterController>();
-            if (_cc)
-            {
-                avatarHeight = _cc.height;                
-            }            
+            avatarHeight = cc.height;
         }
     }
 }

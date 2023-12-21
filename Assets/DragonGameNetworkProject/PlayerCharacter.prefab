@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 5138612695425009242}
   - component: {fileID: 594154694073896456}
   - component: {fileID: 2037521199117911177}
-  - component: {fileID: 2582452056120188283}
-  - component: {fileID: 4132684453844944911}
   - component: {fileID: 3993294238667375042}
+  - component: {fileID: 3540312855959566505}
   m_Layer: 0
   m_Name: PlayerCharacter
   m_TagString: Untagged
@@ -57,9 +56,8 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 594154694073896456}
   - {fileID: 2037521199117911177}
-  - {fileID: 2582452056120188283}
-  - {fileID: 4132684453844944911}
   - {fileID: 3993294238667375042}
+  - {fileID: 3540312855959566505}
   - {fileID: 7030957579734586408}
   - {fileID: 1567227689365279528}
 --- !u!114 &594154694073896456
@@ -90,32 +88,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c39b613ea15b77f4ca369b492308ae9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2582452056120188283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7844063035658194730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2615d364a70f4817830b874e07a6cc81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enableLogging: 0
---- !u!114 &4132684453844944911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7844063035658194730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f992508c5096bb04aa8e9d89ee848689, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerGroundMovement: {fileID: 0}
 --- !u!114 &3993294238667375042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,11 +100,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10f93fa8cff631a4fb270c060223be79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _priority: 0
-  _checkPriorityOnExit: 1
-  _cc: {fileID: 4770567877710750891}
-  _networkAnimator: {fileID: 1567227689365279528}
   rotationSpeed: 10
+--- !u!114 &3540312855959566505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7844063035658194730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e37d45351c10c24693269fc30869be9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4908636286951382556
 PrefabInstance:
   m_ObjectHideFlags: 0
