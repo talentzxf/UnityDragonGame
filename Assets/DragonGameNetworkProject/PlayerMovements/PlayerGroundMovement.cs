@@ -1,3 +1,4 @@
+using System;
 using Fusion;
 using UnityEngine;
 
@@ -12,16 +13,16 @@ namespace DragonGameNetworkProject
 
         private int _isIdleHash = Animator.StringToHash("isIdle");
         private int _speed = Animator.StringToHash("speed");
+
         public override void Spawned()
         {
+            enabledByDefault = true;
             base.Spawned();
             if (HasStateAuthority)
             {
                 camera = Camera.main;
                 FirstPersonCamera fpsCamera = camera.GetComponent<FirstPersonCamera>();
                 fpsCamera.SetCameraTarget(cc.gameObject);
-
-                enabledByDefault = true;
             }
         }
 

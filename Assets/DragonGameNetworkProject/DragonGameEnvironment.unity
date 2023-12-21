@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.42221254, g: 0.64316183, b: 0.793691, a: 1}
+  m_IndirectSpecularColor: {r: 0.42222098, g: 0.64365846, b: 0.7936594, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -626,6 +626,70 @@ Transform:
   m_Children: []
   m_Father: {fileID: 201706615}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &630196541
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5435777560002105052, guid: 4c4a1099a4098674da0e287543f5704d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 41.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435777560002105052, guid: 4c4a1099a4098674da0e287543f5704d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435777560002105052, guid: 4c4a1099a4098674da0e287543f5704d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 59.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435777560002105052, guid: 4c4a1099a4098674da0e287543f5704d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435777560002105052, guid: 4c4a1099a4098674da0e287543f5704d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435777560002105052, guid: 4c4a1099a4098674da0e287543f5704d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435777560002105052, guid: 4c4a1099a4098674da0e287543f5704d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435777560002105052, guid: 4c4a1099a4098674da0e287543f5704d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435777560002105052, guid: 4c4a1099a4098674da0e287543f5704d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435777560002105052, guid: 4c4a1099a4098674da0e287543f5704d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5438766324754826718, guid: 4c4a1099a4098674da0e287543f5704d, type: 3}
+      propertyPath: m_Name
+      value: RedDragon1.1 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129874256334206663, guid: 4c4a1099a4098674da0e287543f5704d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 843358070178148441, guid: 4c4a1099a4098674da0e287543f5704d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1114362299}
+  m_SourcePrefab: {fileID: 100100000, guid: 4c4a1099a4098674da0e287543f5704d, type: 3}
 --- !u!1 &867932012
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,6 +1056,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 894822543}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1114362293 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 843358070178148441, guid: 4c4a1099a4098674da0e287543f5704d, type: 3}
+  m_PrefabInstance: {fileID: 630196541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1114362299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114362293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fad3296e3c10d4647b684711ba1f42af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1143006923
 GameObject:
   m_ObjectHideFlags: 0
@@ -3855,3 +3936,4 @@ SceneRoots:
   - {fileID: 1214732536}
   - {fileID: 2122471597}
   - {fileID: 867932015}
+  - {fileID: 630196541}

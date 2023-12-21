@@ -30,7 +30,7 @@ namespace DragonGameNetworkProject
             
             networkAnimator.Animator.SetBool(_climb, true);
             
-            Camera.main.GetComponent<CameraController>().LerpToDistance(3.0f, 3.0f);
+            Camera.main.GetComponent<FirstPersonCamera>().LerpToDistance(3.0f, 3.0f);
         }
 
         IEnumerator FixPlayerPosition(float durationSeconds)
@@ -49,6 +49,15 @@ namespace DragonGameNetworkProject
         
         public override void FixedUpdateNetwork()
         {
+            if (HasStateAuthority)
+            {
+                networkAnimator.Animator.applyRootMotion = true;
+            }
+            else
+            {
+                networkAnimator.Animator.applyRootMotion = false;
+            }
+            
             if (!HasStateAuthority)
                 return;
             
@@ -64,12 +73,6 @@ namespace DragonGameNetworkProject
             if (climbUpProgress > 0.99f)
             {
                 StartCoroutine(FixPlayerPosition(0.5f));
-                Transform bone08 = Utility.RecursiveFind(dragonTransform, dragonNeckName);
-                ccTransform.SetParent(bone08);
-                
-                // _dragonGO.GetComponent<CharacterLocomotion>().SetProcessor<DragonMounted>();
-                //
-                // _loco.SetProcessor<OnDragonProcessor>(_dragonGO);
             }
         }
 

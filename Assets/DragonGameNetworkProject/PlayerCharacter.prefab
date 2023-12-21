@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 2037521199117911177}
   - component: {fileID: 3993294238667375042}
   - component: {fileID: 3540312855959566505}
+  - component: {fileID: 1789335940329270478}
   m_Layer: 0
   m_Name: PlayerCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,6 +59,7 @@ MonoBehaviour:
   - {fileID: 2037521199117911177}
   - {fileID: 3993294238667375042}
   - {fileID: 3540312855959566505}
+  - {fileID: 1789335940329270478}
   - {fileID: 7030957579734586408}
   - {fileID: 1567227689365279528}
 --- !u!114 &594154694073896456
@@ -100,6 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10f93fa8cff631a4fb270c060223be79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enabledByDefault: 0
   rotationSpeed: 10
 --- !u!114 &3540312855959566505
 MonoBehaviour:
@@ -113,6 +116,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e37d45351c10c24693269fc30869be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enabledByDefault: 0
+--- !u!114 &1789335940329270478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7844063035658194730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f3e69c0cce5496a895804b69c5dbb1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentEnabled: {fileID: 0}
 --- !u!1001 &4908636286951382556
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -164,6 +181,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 91f8d19a34643864296118d19397dfcc, type: 3}
       propertyPath: m_Name
       value: "\u3010\u8299\u5B81\u5A1C_\u8352\u3011"
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 91f8d19a34643864296118d19397dfcc, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 91f8d19a34643864296118d19397dfcc, type: 3}
       propertyPath: m_Controller
