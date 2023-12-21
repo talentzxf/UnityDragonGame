@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 5138612695425009242}
   - component: {fileID: 594154694073896456}
   - component: {fileID: 2037521199117911177}
-  - component: {fileID: 3993294238667375042}
-  - component: {fileID: 3540312855959566505}
   - component: {fileID: 1789335940329270478}
   m_Layer: 0
   m_Name: PlayerCharacter
@@ -57,8 +55,6 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 594154694073896456}
   - {fileID: 2037521199117911177}
-  - {fileID: 3993294238667375042}
-  - {fileID: 3540312855959566505}
   - {fileID: 1789335940329270478}
   - {fileID: 7030957579734586408}
   - {fileID: 1567227689365279528}
@@ -90,33 +86,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c39b613ea15b77f4ca369b492308ae9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3993294238667375042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7844063035658194730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10f93fa8cff631a4fb270c060223be79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enabledByDefault: 0
-  rotationSpeed: 10
---- !u!114 &3540312855959566505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7844063035658194730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e37d45351c10c24693269fc30869be9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enabledByDefault: 0
 --- !u!114 &1789335940329270478
 MonoBehaviour:
   m_ObjectHideFlags: 0

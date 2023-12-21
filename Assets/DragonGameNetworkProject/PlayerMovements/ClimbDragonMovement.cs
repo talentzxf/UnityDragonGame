@@ -3,14 +3,11 @@ using UnityEngine;
 
 namespace DragonGameNetworkProject
 {
-    public class ClimbDragonMovement : AbstractCharacterMovement
+    public class ClimbDragonMovement : OnDragonBase
     {
         private string sitPoint = "SitPoint";
         private string dragonNeckName = "Bone.008";
         private int _climb = Animator.StringToHash("climb");
-
-        private GameObject dragonGO;
-        private Transform dragonTransform;
 
         private Vector3 climbStartForward;
 
@@ -21,8 +18,8 @@ namespace DragonGameNetworkProject
                 return;
             }
             
-            this.dragonGO = dragonGO;
-            dragonTransform = this.dragonGO.transform;
+            Prepare(dragonGO);
+            
             Vector3 forwardDir = dragonTransform.right;
 
             climbStartForward = forwardDir;
@@ -73,6 +70,9 @@ namespace DragonGameNetworkProject
             if (climbUpProgress > 0.99f)
             {
                 StartCoroutine(FixPlayerPosition(0.5f));
+                
+                controller.GetMovement<OnDragonMovement>().Prepare(dragonGO);
+                controller.SwitchTo<OnDragonMovement>();
             }
         }
 

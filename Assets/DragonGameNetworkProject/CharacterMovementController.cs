@@ -11,11 +11,23 @@ namespace DragonGameNetworkProject
         public AbstractCharacterMovement currentEnabled;
 #endif
 
-        private AbstractCharacterMovement[] movements;
+        private AbstractCharacterMovement[] _movements;
 
-        private void Awake()
+        private AbstractCharacterMovement[] movements
         {
-            movements = GetComponents<AbstractCharacterMovement>();
+            get
+            {
+                if (_movements == null)
+                {
+                    RefreshComponents();
+                }
+                return _movements;
+            }
+        }
+
+        private void RefreshComponents()
+        {
+            _movements = gameObject.GetComponents<AbstractCharacterMovement>();
         }
 
         public T GetMovement<T>() where T : AbstractCharacterMovement
@@ -28,16 +40,21 @@ namespace DragonGameNetworkProject
                 }
             }
 
-            return default;
+            T newMovement = gameObject.AddComponent<T>();
+
+            RefreshComponents();
+            return newMovement;
         }
 
         public void SwitchTo<T>() where T : AbstractCharacterMovement
         {
+            bool movementFound = false;
             foreach (var movement in movements)
             {
                 if (movement.IsType<T>())
                 {
                     movement.enabled = true;
+                    movementFound = true;
 #if UNITY_EDITOR
                     currentEnabled = movement;
 #endif
@@ -46,6 +63,13 @@ namespace DragonGameNetworkProject
                 {
                     movement.enabled = false;
                 }
+            }
+
+            if (!movementFound)
+            {
+                T newMovement = gameObject.AddComponent<T>();
+                newMovement.enabled = true;
+                RefreshComponents();
             }
         }
 

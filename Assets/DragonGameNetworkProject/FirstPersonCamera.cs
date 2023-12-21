@@ -26,8 +26,7 @@ public class FirstPersonCamera : MonoBehaviour
         while (percentage < durationSeconds)
         {
             distance = Mathf.Lerp(startDistance, targetDistance, percentage / durationSeconds);
-
-            Debug.Log("New Distance:" + distance);
+            
             percentage += Time.deltaTime;
             yield return null;
         }

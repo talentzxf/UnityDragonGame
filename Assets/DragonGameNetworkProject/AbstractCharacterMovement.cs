@@ -10,6 +10,8 @@ namespace DragonGameNetworkProject
         protected Transform ccTransform;
 
         public bool enabledByDefault = false;
+
+        protected CharacterMovementController controller;
         
         public override void Spawned()
         {
@@ -21,6 +23,8 @@ namespace DragonGameNetworkProject
                 ccTransform = cc.transform;
 
                 enabled = enabledByDefault;
+
+                controller = GetComponent<CharacterMovementController>();
             }
         }
     }
