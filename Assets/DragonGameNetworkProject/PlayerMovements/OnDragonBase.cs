@@ -1,3 +1,4 @@
+using Fusion;
 using UnityEngine;
 
 namespace DragonGameNetworkProject
@@ -10,13 +11,23 @@ namespace DragonGameNetworkProject
         private Transform _leftFootIK;
         private Transform _rightFootIK;
 
-        protected GameObject dragonGO;
-        protected Transform dragonTransform;
+        [Networked] protected NetworkObject dragonNO { set; get; }
+        
+        private Transform _dragonTransform;
 
-        public void Prepare(GameObject dragonGO)
+        protected Transform dragonTransform
         {
-            this.dragonGO = dragonGO;
-            dragonTransform = this.dragonGO.transform;
+            get
+            {
+                if (_dragonTransform == null)
+                    _dragonTransform = dragonNO.transform;
+                return _dragonTransform;
+            }
+        }
+
+        public void Prepare(NetworkObject dragonNO)
+        {
+            this.dragonNO = dragonNO;
         }
 
         public override void OnAnimatorIK(int layerIndex)

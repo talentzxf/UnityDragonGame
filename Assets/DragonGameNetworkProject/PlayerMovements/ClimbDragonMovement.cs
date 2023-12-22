@@ -1,4 +1,5 @@
 using System.Collections;
+using Fusion;
 using UnityEngine;
 
 namespace DragonGameNetworkProject
@@ -10,40 +11,40 @@ namespace DragonGameNetworkProject
         private int _climb = Animator.StringToHash("climb");
 
         private Vector3 climbStartForward;
-
+        
         public void PrepareToClimb(GameObject dragonGO, Vector3 startPosition)
         {
             if (!HasStateAuthority)
             {
                 return;
             }
-            
-            Prepare(dragonGO);
-            
+
+            Prepare(dragonGO.GetComponent<NetworkObject>());
+
             Vector3 forwardDir = dragonTransform.right;
 
             climbStartForward = forwardDir;
             cc.enabled = false;
-            
+
             networkAnimator.Animator.SetBool(_climb, true);
-            
+
             Camera.main.GetComponent<FirstPersonCamera>().LerpToDistance(3.0f, 3.0f);
         }
 
         IEnumerator FixPlayerPosition(float durationSeconds)
         {
             Vector3 startPosition = ccTransform.position;
-            Vector3 endPosition = Utility.RecursiveFind(dragonGO.transform, sitPoint).position;
-            
+            Vector3 endPosition = Utility.RecursiveFind(dragonTransform, sitPoint).position;
+
             float progress = 0.0f;
             while (progress < durationSeconds)
             {
-                ccTransform.position = Vector3.Slerp(startPosition, endPosition, progress/durationSeconds);
+                ccTransform.position = Vector3.Slerp(startPosition, endPosition, progress / durationSeconds);
                 progress += Time.deltaTime;
                 yield return null;
             }
         }
-        
+
         public override void FixedUpdateNetwork()
         {
             if (HasStateAuthority)
@@ -54,10 +55,10 @@ namespace DragonGameNetworkProject
             {
                 networkAnimator.Animator.applyRootMotion = false;
             }
-            
+
             if (!HasStateAuthority)
                 return;
-            
+
             float climbUpProgress = networkAnimator.Animator.GetFloat("ClimbUpProgress");
             Vector3 currentForward = Vector3.Lerp(climbStartForward, dragonTransform.forward, climbUpProgress);
             ccTransform.forward = currentForward;
@@ -70,11 +71,10 @@ namespace DragonGameNetworkProject
             if (climbUpProgress > 0.99f)
             {
                 StartCoroutine(FixPlayerPosition(0.5f));
-                
-                controller.GetMovement<OnDragonMovement>().Prepare(dragonGO);
+
+                controller.GetMovement<OnDragonMovement>().Prepare(dragonNO);
                 controller.SwitchTo<OnDragonMovement>();
             }
         }
-
     }
 }

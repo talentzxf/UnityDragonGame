@@ -16,7 +16,6 @@ namespace DragonGameNetworkProject
 
         public override void Spawned()
         {
-            enabledByDefault = true;
             base.Spawned();
             if (HasStateAuthority)
             {

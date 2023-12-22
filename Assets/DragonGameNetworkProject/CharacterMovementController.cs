@@ -1,13 +1,11 @@
-using System;
 using ExitGames.Client.Photon.StructWrapping;
 using Fusion;
-using UnityEngine;
 
 namespace DragonGameNetworkProject
 {
     public class CharacterMovementController : NetworkBehaviour
     {
-        public AbstractCharacterMovement currentMovement;
+        [Networked] public AbstractCharacterMovement currentMovement { set; get; }
 
         private AbstractCharacterMovement[] _movements;
 
@@ -19,7 +17,16 @@ namespace DragonGameNetworkProject
                 {
                     RefreshComponents();
                 }
+
                 return _movements;
+            }
+        }
+        
+        public override void Spawned()
+        {
+            foreach (var movement in movements)
+            {
+                movement.enabled = false;
             }
         }
 
@@ -37,6 +44,7 @@ namespace DragonGameNetworkProject
                     return movement as T;
                 }
             }
+
             return default;
         }
 
@@ -55,16 +63,20 @@ namespace DragonGameNetworkProject
                 }
             }
         }
-        
-        // private void Update()
-        // {
-        //     foreach (var movement in movements)
-        //     {
-        //         if (movement.enabled)
-        //         {
-        //             currentEnabled = movement;
-        //         }
-        //     }
-        // }
+
+        private void Update()
+        {
+            foreach (var movement in movements)
+            {
+                if (movement == currentMovement)
+                {
+                    movement.enabled = true;
+                }
+                else
+                {
+                    movement.enabled = false;
+                }
+            }
+        }
     }
 }
