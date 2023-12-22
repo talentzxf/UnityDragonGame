@@ -17,11 +17,8 @@ namespace DragonGameNetworkProject
             {
                 return;
             }
-
-            dragonNO = dragonGO.GetComponentInParent<NetworkObject>();
+            Prepare(dragonGO.GetComponentInParent<NetworkObject>());
             dragonNO.RequestStateAuthority(); // The dragon is mine now. Claim the authority.
-
-            Prepare(dragonGO.GetComponent<NetworkObject>());
 
             Vector3 forwardDir = dragonTransform.right;
 
@@ -47,7 +44,7 @@ namespace DragonGameNetworkProject
             controller.GetMovement<OnDragonMovement>().Prepare(dragonNO);
             controller.SwitchTo<OnDragonMovement>();
             
-            dragonNO.GetComponent<DragonMovementController>().SwitchTo<DragonMountedMovement>();            
+            dragonNO.GetComponentInParent<DragonMovementController>().SwitchTo<DragonMountedMovement>();            
         }
 
         public override void FixedUpdateNetwork()
