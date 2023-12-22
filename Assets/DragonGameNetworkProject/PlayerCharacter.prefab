@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 2037521199117911177}
   - component: {fileID: 1789335940329270478}
   - component: {fileID: 2601600499138894516}
-  - component: {fileID: 8829159626416600366}
   - component: {fileID: 1129386395703465537}
+  - component: {fileID: 4590527132596843038}
   m_Layer: 0
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -60,8 +60,8 @@ MonoBehaviour:
   - {fileID: 2037521199117911177}
   - {fileID: 1789335940329270478}
   - {fileID: 2601600499138894516}
-  - {fileID: 8829159626416600366}
   - {fileID: 1129386395703465537}
+  - {fileID: 4590527132596843038}
   - {fileID: 7030957579734586408}
   - {fileID: 1567227689365279528}
 --- !u!114 &594154694073896456
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f3e69c0cce5496a895804b69c5dbb1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMovement: {fileID: 0}
+  _currentMovement: {fileID: 0}
 --- !u!114 &2601600499138894516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,18 +118,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
---- !u!114 &8829159626416600366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7844063035658194730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb43b1833a4540ac81151de132bf811f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1129386395703465537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +128,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e37d45351c10c24693269fc30869be9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4590527132596843038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7844063035658194730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb43b1833a4540ac81151de132bf811f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &4908636286951382556

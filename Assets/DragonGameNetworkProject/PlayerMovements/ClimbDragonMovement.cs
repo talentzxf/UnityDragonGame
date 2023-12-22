@@ -1,4 +1,5 @@
 using System.Collections;
+using DragonGameNetworkProject.DragonMovements;
 using Fusion;
 using UnityEngine;
 
@@ -6,8 +7,6 @@ namespace DragonGameNetworkProject
 {
     public class ClimbDragonMovement : OnDragonBase
     {
-        private string sitPoint = "SitPoint";
-        private string dragonNeckName = "Bone.008";
         private int _climb = Animator.StringToHash("climb");
 
         private Vector3 climbStartForward;
@@ -18,6 +17,9 @@ namespace DragonGameNetworkProject
             {
                 return;
             }
+
+            dragonNO = dragonGO.GetComponentInParent<NetworkObject>();
+            dragonNO.RequestStateAuthority(); // The dragon is mine now. Claim the authority.
 
             Prepare(dragonGO.GetComponent<NetworkObject>());
 
@@ -34,15 +36,18 @@ namespace DragonGameNetworkProject
         IEnumerator FixPlayerPosition(float durationSeconds)
         {
             Vector3 startPosition = ccTransform.position;
-            Vector3 endPosition = Utility.RecursiveFind(dragonTransform, sitPoint).position;
-
             float progress = 0.0f;
             while (progress < durationSeconds)
             {
-                ccTransform.position = Vector3.Slerp(startPosition, endPosition, progress / durationSeconds);
+                ccTransform.position = Vector3.Slerp(startPosition, sitPoint.position, progress / durationSeconds);
                 progress += Time.deltaTime;
                 yield return null;
             }
+            
+            controller.GetMovement<OnDragonMovement>().Prepare(dragonNO);
+            controller.SwitchTo<OnDragonMovement>();
+            
+            dragonNO.GetComponent<DragonMovementController>().SwitchTo<DragonMountedMovement>();            
         }
 
         public override void FixedUpdateNetwork()
@@ -71,9 +76,6 @@ namespace DragonGameNetworkProject
             if (climbUpProgress > 0.99f)
             {
                 StartCoroutine(FixPlayerPosition(0.5f));
-
-                controller.GetMovement<OnDragonMovement>().Prepare(dragonNO);
-                controller.SwitchTo<OnDragonMovement>();
             }
         }
     }

@@ -36,12 +36,6 @@ AnimatorController:
   m_Name: DragonAnimationController
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: TakeOff
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
   - m_Name: TakeOffProgress
     m_Type: 1
     m_DefaultFloat: 0
@@ -50,6 +44,12 @@ AnimatorController:
     m_Controller: {fileID: 0}
   - m_Name: SpeedFWD
     m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: TakeOff
+    m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -203,7 +203,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 8709979197693818052}
-    m_Position: {x: 280, y: 140, z: 0}
+    m_Position: {x: 210, y: 140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6720677252560406823}
     m_Position: {x: 350, y: -80, z: 0}
@@ -219,7 +219,7 @@ AnimatorStateMachine:
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 100, y: -10, z: 0}
-  m_EntryPosition: {x: 40, y: 110, z: 0}
+  m_EntryPosition: {x: 50, y: 70, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 8709979197693818052}

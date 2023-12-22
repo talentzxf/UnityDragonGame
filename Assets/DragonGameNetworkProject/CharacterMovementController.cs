@@ -5,11 +5,11 @@ namespace DragonGameNetworkProject
 {
     public class CharacterMovementController : NetworkBehaviour
     {
-        [Networked] public AbstractCharacterMovement currentMovement { set; get; }
+        [Networked] public AbstractMovement currentMovement { set; get; }
 
-        private AbstractCharacterMovement[] _movements;
+        private AbstractMovement[] _movements;
 
-        private AbstractCharacterMovement[] movements
+        private AbstractMovement[] movements
         {
             get
             {
@@ -32,10 +32,10 @@ namespace DragonGameNetworkProject
 
         private void RefreshComponents()
         {
-            _movements = gameObject.GetComponents<AbstractCharacterMovement>();
+            _movements = gameObject.GetComponents<AbstractMovement>();
         }
 
-        public T GetMovement<T>() where T : AbstractCharacterMovement
+        public T GetMovement<T>() where T : AbstractMovement
         {
             foreach (var movement in movements)
             {
@@ -48,7 +48,7 @@ namespace DragonGameNetworkProject
             return default;
         }
 
-        public void SwitchTo<T>() where T : AbstractCharacterMovement
+        public void SwitchTo<T>() where T : AbstractMovement
         {
             foreach (var movement in movements)
             {
@@ -64,7 +64,7 @@ namespace DragonGameNetworkProject
             }
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             foreach (var movement in movements)
             {

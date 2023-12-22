@@ -13,6 +13,22 @@ namespace DragonGameNetworkProject
 
         [Networked] protected NetworkObject dragonNO { set; get; }
         
+        private string sitPointStr = "SitPoint";
+        private Transform _sitPoint;
+
+        protected Transform sitPoint
+        {
+            get
+            {
+                if (_sitPoint == null)
+                {
+                    _sitPoint = Utility.RecursiveFind(dragonTransform, sitPointStr);
+                }
+
+                return _sitPoint;
+            }
+        }
+        
         private Transform _dragonTransform;
 
         protected Transform dragonTransform
