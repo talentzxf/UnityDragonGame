@@ -12,10 +12,14 @@ namespace DragonGameNetworkProject.DragonMovements
         {
             base.Spawned();
             boneRoot = ccTransform.Find(rootBonePath);
-            networkAnimator.Animator.SetBool(takeOff, true);
         }
 
-        public void FixedUpdate()
+        public override void OnEnterMovement()
+        {
+            networkAnimator.Animator.SetBool(takeOff, true);
+        }
+        
+        public override void FixedUpdateNetwork()
         {
             float takeOffProgress = networkAnimator.Animator.GetFloat("TakeOffProgress");
             if (takeOffProgress > 0.0)
@@ -28,6 +32,8 @@ namespace DragonGameNetworkProject.DragonMovements
                 ccTransform.position = boneRoot.position;
                 
                 Debug.Log("Set dragon transform to:" + ccTransform.position + " ," + networkAnimator.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+
+                controller.SwitchTo<DragonFlyingMovement>();
             }
         }
     }

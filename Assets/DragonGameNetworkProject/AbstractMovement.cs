@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DragonGameNetworkProject
 {
-    public class AbstractMovement: NetworkBehaviour
+    public abstract class AbstractMovement: NetworkBehaviour
     {
         protected NetworkMecanimAnimator networkAnimator;
         protected Transform ccTransform;
@@ -19,5 +19,8 @@ namespace DragonGameNetworkProject
         public virtual void OnAnimatorIK(int layerIndex)
         {
         }
+
+        public abstract void OnEnterMovement();
+        public abstract void OnLeaveMovement();
     }
 }

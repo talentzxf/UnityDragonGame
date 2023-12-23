@@ -5,7 +5,7 @@ namespace DragonGameNetworkProject.DragonMovements
 {
     public class DragonMountedMovement: AbstractRigidBodyMovement
     {
-        public void FixedUpdate()
+        public override void FixedUpdateNetwork()
         {
             if (HasStateAuthority == false)
                 return;

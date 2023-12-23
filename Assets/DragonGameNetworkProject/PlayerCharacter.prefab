@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5138612695425009242}
   - component: {fileID: 594154694073896456}
   - component: {fileID: 2037521199117911177}
-  - component: {fileID: 1789335940329270478}
+  - component: {fileID: 1310688536859379741}
   - component: {fileID: 2601600499138894516}
   - component: {fileID: 1129386395703465537}
   - component: {fileID: 4590527132596843038}
@@ -58,7 +58,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 594154694073896456}
   - {fileID: 2037521199117911177}
-  - {fileID: 1789335940329270478}
+  - {fileID: 1310688536859379741}
   - {fileID: 2601600499138894516}
   - {fileID: 1129386395703465537}
   - {fileID: 4590527132596843038}
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c39b613ea15b77f4ca369b492308ae9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1789335940329270478
+--- !u!114 &1310688536859379741
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,10 +101,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7844063035658194730}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f3e69c0cce5496a895804b69c5dbb1a, type: 3}
+  m_Script: {fileID: 11500000, guid: 5bd703a5f6cc488883461ffb1f6f5637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _currentMovement: {fileID: 0}
+  dragonNO: {fileID: 0}
+  avatarTransform: {fileID: 4869591654940097015}
 --- !u!114 &2601600499138894516
 MonoBehaviour:
   m_ObjectHideFlags: 0

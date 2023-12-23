@@ -24,7 +24,7 @@ namespace DragonGameNetworkProject
 
             climbStartForward = forwardDir;
             cc.enabled = false;
-
+            
             networkAnimator.Animator.SetBool(_climb, true);
 
             Camera.main.GetComponent<FirstPersonCamera>().LerpToDistance(3.0f, 3.0f);
@@ -40,11 +40,13 @@ namespace DragonGameNetworkProject
                 progress += Time.deltaTime;
                 yield return null;
             }
-            
+
             controller.GetMovement<OnDragonMovement>().Prepare(dragonNO);
             controller.SwitchTo<OnDragonMovement>();
             
-            dragonNO.GetComponentInParent<DragonMovementController>().SwitchTo<DragonMountedMovement>();            
+            dragonNO.GetComponent<DragonMovementController>().SwitchTo<DragonMountedMovement>();
+            
+            cc.GetComponent<NetworkTransform>().enabled = false; // When the player is on dragon, it will move with the dragon, no need to sync network transform.
         }
 
         public override void FixedUpdateNetwork()

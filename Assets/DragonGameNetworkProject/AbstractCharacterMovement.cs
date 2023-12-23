@@ -13,5 +13,13 @@ namespace DragonGameNetworkProject
             base.Spawned();
             cc = GetComponentInChildren<CharacterController>();
         }
+
+        public override void OnEnterMovement()
+        {
+        }
+
+        public override void OnLeaveMovement()
+        {
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace DragonGameNetworkProject
                 return _movements;
             }
         }
-        
+
         public override void Spawned()
         {
             foreach (var movement in movements)
@@ -48,20 +48,31 @@ namespace DragonGameNetworkProject
             return default;
         }
 
-        public void SwitchTo<T>() where T : AbstractMovement
+        public bool SwitchTo<T>() where T : AbstractMovement
         {
             foreach (var movement in movements)
             {
                 if (movement.IsType<T>())
                 {
                     movement.enabled = true;
+                    if (currentMovement != movement)
+                    {
+                        if (currentMovement != null)
+                            currentMovement.OnLeaveMovement();
+                        movement.OnEnterMovement();
+                    }
+
                     currentMovement = movement;
+
+                    return true;
                 }
                 else
                 {
                     movement.enabled = false;
                 }
             }
+
+            return false;
         }
 
         private void FixedUpdate()

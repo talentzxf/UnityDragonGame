@@ -15,7 +15,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
         if (player == Runner.LocalPlayer)
         {
             NetworkObject no = Runner.Spawn(playerPrefab, spawnPoint.position, spawnPoint.rotation, player);
-            no.gameObject.GetComponent<CharacterMovementController>().SwitchTo<PlayerGroundMovement>();
+            no.gameObject.GetComponent<PlayerMovementController>().SwitchTo<PlayerGroundMovement>();
 
             if (Runner.IsSharedModeMasterClient)
             { // Spawn the dragons.
