@@ -11,8 +11,6 @@ namespace DragonGameNetworkProject
         private Transform _leftFootIK;
         private Transform _rightFootIK;
 
-        [Networked] protected NetworkObject dragonNO { set; get; }
-        
         private string sitPointStr = "SitPoint";
         private Transform _sitPoint;
 
@@ -28,6 +26,14 @@ namespace DragonGameNetworkProject
                 return _sitPoint;
             }
         }
+
+        protected NetworkObject dragonNO
+        {
+            get
+            {
+                return (controller as PlayerMovementController).dragonNO;
+            }
+        }
         
         private Transform _dragonTransform;
 
@@ -40,12 +46,7 @@ namespace DragonGameNetworkProject
                 return _dragonTransform;
             }
         }
-
-        public void Prepare(NetworkObject dragonNO)
-        {
-            this.dragonNO = dragonNO;
-        }
-
+        
         public override void OnAnimatorIK(int layerIndex)
         {
             float climbUpProgress = networkAnimator.Animator.GetFloat("ClimbUpProgress");
