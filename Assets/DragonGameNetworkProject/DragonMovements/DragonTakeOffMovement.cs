@@ -21,19 +21,25 @@ namespace DragonGameNetworkProject.DragonMovements
         
         public override void FixedUpdateNetwork()
         {
-            float takeOffProgress = networkAnimator.Animator.GetFloat("TakeOffProgress");
-            if (takeOffProgress > 0.0)
-            {
-                networkAnimator.Animator.SetBool(takeOff, false); // Reset the flag.
-            }
+            if (!HasStateAuthority)
+                return;
 
-            if (takeOffProgress > 0.99)
+            if (Runner.IsForward)
             {
-                ccTransform.position = boneRoot.position;
+                float takeOffProgress = networkAnimator.Animator.GetFloat("TakeOffProgress");
+                if (takeOffProgress > 0.0)
+                {
+                    networkAnimator.Animator.SetBool(takeOff, false); // Reset the flag.
+                }
+
+                if (takeOffProgress > 0.99)
+                {
+                    ccTransform.position = boneRoot.position;
                 
-                Debug.Log("Set dragon transform to:" + ccTransform.position + " ," + networkAnimator.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+                    Debug.Log("Set dragon transform to:" + ccTransform.position + " ," + networkAnimator.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
 
-                controller.SwitchTo<DragonFlyingMovement>();
+                    controller.SwitchTo<DragonFlyingMovement>();
+                }                
             }
         }
     }

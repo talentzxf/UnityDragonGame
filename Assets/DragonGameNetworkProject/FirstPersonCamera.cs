@@ -48,7 +48,7 @@ public class FirstPersonCamera : MonoBehaviour
         distance = offset.magnitude;
     }
 
-    private void LateUpdate()
+    void SyncTransform()
     {
         if (target == null)
             return;
@@ -66,5 +66,15 @@ public class FirstPersonCamera : MonoBehaviour
 
         transform.position = newPosition;
         transform.LookAt(targetPosition);
+    }
+
+    private void Update()
+    {  
+        SyncTransform();
+    }
+
+    private void LateUpdate()
+    {
+        SyncTransform();
     }
 }

@@ -2232,7 +2232,7 @@ GameObject:
   - component: {fileID: 7658670689528630099}
   - component: {fileID: 1512335063523269360}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: OnboardingCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3780,6 +3780,7 @@ GameObject:
   - component: {fileID: 840132153825416325}
   - component: {fileID: 6431390373181742861}
   - component: {fileID: 6798838872186438842}
+  - component: {fileID: 6699452348448040102}
   m_Layer: 0
   m_Name: Dragon
   m_TagString: Untagged
@@ -3825,6 +3826,7 @@ MonoBehaviour:
   - {fileID: 840132153825416325}
   - {fileID: 6431390373181742861}
   - {fileID: 6798838872186438842}
+  - {fileID: 6699452348448040102}
   - {fileID: 7879535255536362704}
   - {fileID: 7867968624439057606}
 --- !u!114 &2268967241336285774
@@ -3893,6 +3895,18 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 0
+--- !u!114 &6699452348448040102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6840503093361006397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faebc26c133bf48429b28a6d369be894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6936837066732441991
 GameObject:
   m_ObjectHideFlags: 0

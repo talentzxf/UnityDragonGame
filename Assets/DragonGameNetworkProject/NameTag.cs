@@ -1,3 +1,4 @@
+using System;
 using Fusion;
 using TMPro;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class NameTag : NetworkBehaviour
     private string _userId;
     private float avatarHeight = 1.6f;
 
-    void Update()
+    private void Sync()
     {
         if (nameText != null)
         {
@@ -29,6 +30,21 @@ public class NameTag : NetworkBehaviour
                 nameText.enabled = false;
             }
         }
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        Sync();
+    }
+
+    private void Update()
+    {
+        Sync();
+    }
+
+    private void LateUpdate()
+    {
+        Sync();
     }
 
     public override void Despawned(NetworkRunner runner, bool hasState)

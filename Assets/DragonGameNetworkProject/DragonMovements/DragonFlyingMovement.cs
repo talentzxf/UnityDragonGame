@@ -253,7 +253,7 @@ namespace DragonGameNetworkProject.DragonMovements
         {
             if (!HasStateAuthority)
                 return;
-
+            
             float delta = Runner.DeltaTime;
             float _xMov = input.Horizontal;
             float _zMov = input.Vertical;
@@ -291,7 +291,10 @@ namespace DragonGameNetworkProject.DragonMovements
             //flying controls
             FlyingCtrl(delta, ActSpeed, _xMov, _zMov);
 
-            networkAnimator.Animator.SetFloat(speedFWD, rigidBody.velocity.magnitude);
+            if (Runner.IsForward)
+            {
+                networkAnimator.Animator.SetFloat(speedFWD, rigidBody.velocity.magnitude);
+            }
         }
     }
 }

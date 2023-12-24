@@ -17,12 +17,7 @@ namespace DragonGameNetworkProject
         public override void Spawned()
         {
             base.Spawned();
-            if (HasStateAuthority)
-            {
-                camera = Camera.main;
-                FirstPersonCamera fpsCamera = camera.GetComponent<FirstPersonCamera>();
-                fpsCamera.SetCameraTarget(cc.gameObject);
-            }
+            camera = Camera.main;
         }
 
         public override void FixedUpdateNetwork()
@@ -77,7 +72,10 @@ namespace DragonGameNetworkProject
                 ccTransform.rotation = resultRotation;
             }
 
-            networkAnimator.Animator.SetFloat(_speed, speed);
+            if (Runner.IsForward)
+            {
+                networkAnimator.Animator.SetFloat(_speed, speed);
+            }
         }
     }
 }

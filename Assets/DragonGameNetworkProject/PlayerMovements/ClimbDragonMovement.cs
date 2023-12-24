@@ -45,8 +45,6 @@ namespace DragonGameNetworkProject
             controller.SwitchTo<OnDragonMovement>();
             
             dragonNO.GetComponent<DragonMovementController>().SwitchTo<DragonMountedMovement>();
-            
-            cc.GetComponent<NetworkTransform>().enabled = false; // When the player is on dragon, it will move with the dragon, no need to sync network transform.
         }
 
         public override void FixedUpdateNetwork()

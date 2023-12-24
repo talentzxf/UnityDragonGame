@@ -6,12 +6,13 @@ namespace DragonGameNetworkProject
 {
     public class OnDragonMovement : OnDragonBase
     {
-        private void Update() // When on dragon, the player is not synced, only dragon transform need to be synced.
+        public override void FixedUpdateNetwork()
         {
-            cc.GetComponent<NetworkTransform>().enabled = false;
-                
-            ccTransform.position = sitPoint.position;
-            ccTransform.rotation = sitPoint.rotation;
+            if (HasStateAuthority)
+            {
+                ccTransform.position = sitPoint.position;
+                ccTransform.rotation = sitPoint.rotation;                
+            }
         }
     }
 }
