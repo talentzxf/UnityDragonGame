@@ -11,7 +11,7 @@ namespace DragonGameNetworkProject
         public override void Spawned()
         {
             base.Spawned();
-            cc = GetComponentInChildren<CharacterController>();
+            cc = controller.avatarGO.GetComponent<CharacterController>();
         }
 
         public override void OnEnterMovement()

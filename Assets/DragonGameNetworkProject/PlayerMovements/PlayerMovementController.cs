@@ -6,6 +6,5 @@ namespace DragonGameNetworkProject
     public class PlayerMovementController: CharacterMovementController
     {
         [Networked] public NetworkObject dragonNO { set; get; }
-        public Transform avatarTransform;
     }
 }

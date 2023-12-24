@@ -1,10 +1,13 @@
 using ExitGames.Client.Photon.StructWrapping;
 using Fusion;
+using UnityEngine;
 
 namespace DragonGameNetworkProject
 {
     public class CharacterMovementController : NetworkBehaviour
     {
+        public GameObject avatarGO;
+        
         [Networked] public AbstractMovement currentMovement { set; get; }
 
         private AbstractMovement[] _movements;
