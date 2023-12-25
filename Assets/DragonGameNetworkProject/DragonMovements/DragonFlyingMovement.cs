@@ -30,7 +30,12 @@ namespace DragonGameNetworkProject.DragonMovements
             RB = Input.GetButton("RightTilt");
             LB = Input.GetButton("LeftTilt");
             
-            Land = Input.GetButton("Land");
+            Land = Input.GetButtonDown("Land");
+
+            if (Land)
+            {
+                Debug.Log("Land:" + Land);
+            }
         }
     }
 
@@ -106,8 +111,6 @@ namespace DragonGameNetworkProject.DragonMovements
         public override void Spawned()
         {
             base.Spawned();
-            rigidBody.useGravity = false;
-            rigidBody.freezeRotation = false;
 
             Cam = Camera.main.transform;
             CamY = Cam;
@@ -119,11 +122,12 @@ namespace DragonGameNetworkProject.DragonMovements
             boneRoot = ccTransform.Find(rootBonePath);
         }
 
-        private void Update()
+        public override void OnEnterMovement()
         {
-            input.Update();
+            rigidBody.useGravity = false;
+            rigidBody.freezeRotation = false;
         }
-
+        
         //handle how our speed is increased or decreased when flying
         void HandleVelocity(float d, float TargetSpeed, float Accel, float YAmt)
         {
@@ -180,9 +184,7 @@ namespace DragonGameNetworkProject.DragonMovements
             //lerp velocity
             Vector3 dir = Vector3.Lerp(rigidBody.velocity, targetVelocity, d * FlyLerpSpd);
 
-            Debug.Log("Calculated velocity:" + dir);
             rigidBody.velocity = dir;
-            Debug.Log("Rigid body velocity:" + rigidBody.velocity);
         }
 
         Vector3 VehicleFlyingDownwardDirection(float d, float ZMove)
@@ -281,6 +283,8 @@ namespace DragonGameNetworkProject.DragonMovements
         {
             if (HasStateAuthority)
             {
+                input.Update();
+                
                 if (input.Land)
                 {
                     controller.SwitchTo<DragonLandMovement>();

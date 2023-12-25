@@ -1,34 +1,133 @@
 using System;
+using System.Collections;
+using Fusion;
 using UnityEngine;
 
 namespace DragonGameNetworkProject.DragonMovements
 {
+    class PoseAdjuster // Can't use coroutine in Network code, have to implement by myself.
+    {
+        public Rigidbody rigidBody;
+        public Vector3 targetPosition;
+        public Quaternion targetRotation;
+        
+        private float distanceThreshold = 0.1f;
+        private float angleThreshold = 5f;
+        
+                
+        public float moveSpeed = 10f;
+        public float rotateSpeed = 10f;
+
+        private bool hasFinished = false;
+
+        private CharacterMovementController controller;
+        
+        public void Prepare(Rigidbody rigidBody, Vector3 targetPoint, Quaternion targetRotation, CharacterMovementController controller)
+        {
+            this.rigidBody = rigidBody;
+            this.targetPosition = targetPoint;
+            this.targetRotation = targetRotation;
+            this.controller = controller;
+
+            hasFinished = false;
+            
+            rigidBody.useGravity = false;
+            rigidBody.velocity = Vector3.zero;
+            rigidBody.angularVelocity = Vector3.zero;
+        }
+
+        public bool Step(float deltaTime) // Return, do we need further round of iteration??
+        {
+            if (hasFinished)
+                return false;
+            
+            if (Vector3.Distance(rigidBody.transform.position, targetPosition) > 0.01f ||
+                Quaternion.Angle(rigidBody.transform.rotation, targetRotation) > 0.01f)
+            {
+                float step = moveSpeed * deltaTime;
+                float rotateStep = rotateSpeed * deltaTime;
+
+                rigidBody.MovePosition(Vector3.MoveTowards(rigidBody.transform.position, targetPosition, step));
+                rigidBody.MoveRotation(Quaternion.RotateTowards(rigidBody.transform.rotation, targetRotation, rotateStep));
+
+                return true;
+            }
+            else
+            {
+                rigidBody.MovePosition(targetPosition);
+                rigidBody.MoveRotation(targetRotation);
+
+                hasFinished = true;
+
+                controller.SwitchTo<DragonMountedMovement>();
+
+                return false;
+            }
+        }
+    }
+    
     public class DragonLandMovement : AbstractRigidBodyMovement
     {
+        public float beginLandDistance = 5.0f;
+        
+        private float maxDistance = 100f;
+
         private int lands = Animator.StringToHash("Land");
+
+        // Deprecated flag.
+        public bool onGround = false;
         
         public override void OnEnterMovement()
         {
             animator.SetBool(lands, true);
+            
+            Debug.Log("Set Land true");
         }
 
-        private void Update()
+        public override void OnLeaveMovement()
         {
+            animator.SetBool(lands, false);
             
+            Debug.Log("Set Land false");
         }
+
+        private bool isAdjustingPose = false;
+        private PoseAdjuster poseAdjuster = new PoseAdjuster();
 
         public override void FixedUpdateNetwork()
         {
             if (!HasStateAuthority)
                 return;
-            
-            float landProgress = animator.GetFloat("LandProgress");
-            if (landProgress > 0.0)
-            {
-                animator.SetBool(lands, false);
-            }
 
-            rigidBody.velocity = Vector3.up * -10.0f;
+            if (isAdjustingPose)
+            {
+                isAdjustingPose = poseAdjuster.Step(Runner.DeltaTime);
+            }
+            else
+            {
+                float landProgress = animator.GetFloat("LandProgress");
+                if (landProgress > 0.0)
+                {
+                    animator.SetBool(lands, false);
+                }
+            
+                int layerMask = LayerMask.GetMask("Terrain");
+                RaycastHit hit;
+                if (Physics.Raycast(rigidBody.position, Vector3.down, out hit, maxDistance, layerMask))
+                {
+                    Vector3 targetPosition = hit.point + Vector3.up * beginLandDistance;
+                    Quaternion targetRotation = Quaternion.identity;
+                    
+                    Debug.Log("TargetPosition:" + targetPosition + " targetRotation:" + targetRotation);
+
+                    poseAdjuster.Prepare(rigidBody, targetPosition, targetRotation, controller);
+                    isAdjustingPose = true;
+                }
+                else
+                {
+                    Debug.LogError("Can't detect ground here!!!");
+                }
+            }
         }
     }
 }

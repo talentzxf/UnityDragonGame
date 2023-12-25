@@ -1,3 +1,4 @@
+using DragonGameNetworkProject.DragonMovements;
 using ExitGames.Client.Photon.StructWrapping;
 using Fusion;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace DragonGameNetworkProject
     public class CharacterMovementController : NetworkBehaviour
     {
         public GameObject avatarGO;
-        
+
         [Networked] public AbstractMovement currentMovement { set; get; }
 
         public AbstractMovement prevMovement = null;
@@ -60,8 +61,16 @@ namespace DragonGameNetworkProject
                 if (movement.IsType<T>())
                 {
                     movement.enabled = true;
+                    
+                    if(currentMovement != null && movement != null)
+                        Debug.Log("Switched state from " + currentMovement.GetType().Name + " to " + movement.GetType().Name);
+                    
                     currentMovement = movement;
 
+                    if (movement.IsType<DragonLandMovement>())
+                    {
+                        Debug.Log("Land ???");
+                    }
                     return true;
                 }
                 else
@@ -73,31 +82,35 @@ namespace DragonGameNetworkProject
             return false;
         }
 
-        private void FixedUpdate()
+        public override void FixedUpdateNetwork()
         {
-            if (prevMovement != currentMovement)
+            if (Runner.IsForward)
             {
-                if (prevMovement != null)
+                if (prevMovement != currentMovement)
                 {
-                    prevMovement.OnLeaveMovement();
+                    if (prevMovement != null)
+                    {
+                        prevMovement.OnLeaveMovement();
+                    }
+
+                    if (currentMovement != null)
+                    {
+                        currentMovement.OnEnterMovement();
+                    }
+
+                    prevMovement = currentMovement;
                 }
 
-                if (currentMovement != null)
+                foreach (var movement in movements)
                 {
-                    currentMovement.OnEnterMovement();
-                }
-                prevMovement = currentMovement;
-            }
-            
-            foreach (var movement in movements)
-            {
-                if (movement == currentMovement)
-                {
-                    movement.enabled = true;
-                }
-                else
-                {
-                    movement.enabled = false;
+                    if (movement == currentMovement)
+                    {
+                        movement.enabled = true;
+                    }
+                    else
+                    {
+                        movement.enabled = false;
+                    }
                 }
             }
         }
