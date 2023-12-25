@@ -1,3 +1,4 @@
+using System;
 using Fusion;
 using UnityEngine;
 
@@ -95,7 +96,7 @@ namespace DragonGameNetworkProject.DragonMovements
 
         private Transform Cam;
         private Transform CamY;
-        
+
         private string rootBonePath = "Armature/Bone";
         private Transform boneRoot;
 
@@ -111,7 +112,7 @@ namespace DragonGameNetworkProject.DragonMovements
             FlyingTimer = GlideTime;
             ActGravAmt = 0.0f;
             FlownAdjustmentLerp = -1;
-            
+
             boneRoot = ccTransform.Find(rootBonePath);
         }
 
@@ -175,7 +176,10 @@ namespace DragonGameNetworkProject.DragonMovements
             targetVelocity -= Vector3.up * ActGravAmt;
             //lerp velocity
             Vector3 dir = Vector3.Lerp(rigidBody.velocity, targetVelocity, d * FlyLerpSpd);
+
+            Debug.Log("Calculated velocity:" + dir);
             rigidBody.velocity = dir;
+            Debug.Log("Rigid body velocity:" + rigidBody.velocity);
         }
 
         Vector3 VehicleFlyingDownwardDirection(float d, float ZMove)
@@ -257,57 +261,64 @@ namespace DragonGameNetworkProject.DragonMovements
             }
         }
 
-        private void FixedUpdate()
+        public void FixedUpdate() // Not sure why, but proxy won't execute FixedUpdateNetwork???
+        {
+            var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (!animatorStateInfo.IsName("Flying FWD") &&
+                !animatorStateInfo.IsName("TakeOff"))
+            {
+                Debug.Log("Current animation:" + animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+                Debug.Log("Switch to animation Flying FWD");
+                animator.Play("Flying FWD");
+            }            
+        }
+        public override void FixedUpdateNetwork()
         {
             if (HasStateAuthority)
             {
-                if(!animator.GetCurrentAnimatorStateInfo(0).IsName("Flying FWD")){
-                    boneRoot.position = ccTransform.position;
-                }
-
-                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Flying FWD") &&
-                    !animator.GetCurrentAnimatorStateInfo(0).IsName("TakeOff"))
+                var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                if (!animatorStateInfo.IsName("Flying FWD"))
                 {
-                    animator.Play("Flying FWD");
+                    boneRoot.position = ccTransform.position;
                 }
                 
                 float delta = Runner.DeltaTime;
                 float _xMov = input.Horizontal;
                 float _zMov = input.Vertical;
-                
+
                 //get our direction of input based on camera position
                 Vector3 screenMovementForward = CamY.transform.forward;
                 Vector3 screenMovementRight = CamY.transform.right;
                 Vector3 screenMovementUp = CamY.transform.up;
-                
+
                 Vector3 h = screenMovementRight * _xMov;
                 Vector3 v = screenMovementForward * _zMov;
-                
+
                 Vector3 moveDirection = (v + h).normalized;
-                
+
                 if (ActionAirTimer > 0)
                     ActionAirTimer -= delta;
-                
+
                 if (FlyingAdjustmentLerp < 1.1)
                     FlyingAdjustmentLerp += delta * FlyingAdjustmentSpeed;
-                
+
                 //lerp speed
                 float YAmt = rigidBody.velocity.y;
                 float FlyAccel = FlyingAcceleration * FlyingAdjustmentLerp;
                 float Spd = FlyingSpeed;
-                
+
                 if (!input.Fly) //we are not holding fly, slow down
                 {
                     Spd = FlyingMinSpeed;
                     if (ActSpeed > FlyingMinSpeed)
                         FlyAccel = FlyingDecelleration * FlyingAdjustmentLerp;
                 }
-                
+
                 HandleVelocity(delta, Spd, FlyAccel, YAmt);
-                
+
                 //flying controls
                 FlyingCtrl(delta, ActSpeed, _xMov, _zMov);
-                
+
                 rigidbodyVelocity = rigidBody.velocity;
             }
 
