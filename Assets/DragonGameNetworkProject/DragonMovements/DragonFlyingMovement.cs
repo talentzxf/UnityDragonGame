@@ -1,4 +1,3 @@
-using System;
 using Fusion;
 using UnityEngine;
 
@@ -16,6 +15,8 @@ namespace DragonGameNetworkProject.DragonMovements
 
         public bool LB;
         public bool RB;
+        
+        public bool Land = false;
 
         public void Update()
         {
@@ -28,6 +29,8 @@ namespace DragonGameNetworkProject.DragonMovements
 
             RB = Input.GetButton("RightTilt");
             LB = Input.GetButton("LeftTilt");
+            
+            Land = Input.GetButton("Land");
         }
     }
 
@@ -265,23 +268,31 @@ namespace DragonGameNetworkProject.DragonMovements
         {
             var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
             if (!animatorStateInfo.IsName("Flying FWD") &&
-                !animatorStateInfo.IsName("TakeOff"))
+                !animatorStateInfo.IsName("TakeOff") &&
+                !animatorStateInfo.IsName("Lands"))
             {
                 Debug.Log("Current animation:" + animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
                 Debug.Log("Switch to animation Flying FWD");
                 animator.Play("Flying FWD");
-            }            
+            }
         }
+
         public override void FixedUpdateNetwork()
         {
             if (HasStateAuthority)
             {
+                if (input.Land)
+                {
+                    controller.SwitchTo<DragonLandMovement>();
+                    return;
+                }
+                
                 var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
                 if (!animatorStateInfo.IsName("Flying FWD"))
                 {
                     boneRoot.position = ccTransform.position;
                 }
-                
+
                 float delta = Runner.DeltaTime;
                 float _xMov = input.Horizontal;
                 float _zMov = input.Vertical;
