@@ -10,6 +10,8 @@ namespace DragonGameNetworkProject
         
         [Networked] public AbstractMovement currentMovement { set; get; }
 
+        public AbstractMovement prevMovement = null;
+
         private AbstractMovement[] _movements;
 
         private AbstractMovement[] movements
@@ -58,13 +60,6 @@ namespace DragonGameNetworkProject
                 if (movement.IsType<T>())
                 {
                     movement.enabled = true;
-                    if (currentMovement != movement)
-                    {
-                        if (currentMovement != null)
-                            currentMovement.OnLeaveMovement();
-                        movement.OnEnterMovement();
-                    }
-
                     currentMovement = movement;
 
                     return true;
@@ -80,6 +75,20 @@ namespace DragonGameNetworkProject
 
         private void FixedUpdate()
         {
+            if (prevMovement != currentMovement)
+            {
+                if (prevMovement != null)
+                {
+                    prevMovement.OnLeaveMovement();
+                }
+
+                if (currentMovement != null)
+                {
+                    currentMovement.OnEnterMovement();
+                }
+                prevMovement = currentMovement;
+            }
+            
             foreach (var movement in movements)
             {
                 if (movement == currentMovement)

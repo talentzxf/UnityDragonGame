@@ -1,3 +1,4 @@
+using Fusion;
 using UnityEngine;
 
 namespace DragonGameNetworkProject.DragonMovements
@@ -31,6 +32,8 @@ namespace DragonGameNetworkProject.DragonMovements
 
     public class DragonFlyingMovement : AbstractRigidBodyMovement
     {
+        [Networked] public Vector3 rigidbodyVelocity { set; get; }
+
         private float maxSpeed = 500.0f;
         private float rotationSpeed = 1000f;
 
@@ -92,6 +95,9 @@ namespace DragonGameNetworkProject.DragonMovements
 
         private Transform Cam;
         private Transform CamY;
+        
+        private string rootBonePath = "Armature/Bone";
+        private Transform boneRoot;
 
         public override void Spawned()
         {
@@ -105,6 +111,8 @@ namespace DragonGameNetworkProject.DragonMovements
             FlyingTimer = GlideTime;
             ActGravAmt = 0.0f;
             FlownAdjustmentLerp = -1;
+            
+            boneRoot = ccTransform.Find(rootBonePath);
         }
 
         private void Update()
@@ -249,51 +257,63 @@ namespace DragonGameNetworkProject.DragonMovements
             }
         }
 
-        public override void FixedUpdateNetwork()
+        private void FixedUpdate()
         {
-            if (!HasStateAuthority)
-                return;
-            
-            float delta = Runner.DeltaTime;
-            float _xMov = input.Horizontal;
-            float _zMov = input.Vertical;
-
-            //get our direction of input based on camera position
-            Vector3 screenMovementForward = CamY.transform.forward;
-            Vector3 screenMovementRight = CamY.transform.right;
-            Vector3 screenMovementUp = CamY.transform.up;
-
-            Vector3 h = screenMovementRight * _xMov;
-            Vector3 v = screenMovementForward * _zMov;
-
-            Vector3 moveDirection = (v + h).normalized;
-
-            if (ActionAirTimer > 0)
-                ActionAirTimer -= delta;
-
-            if (FlyingAdjustmentLerp < 1.1)
-                FlyingAdjustmentLerp += delta * FlyingAdjustmentSpeed;
-
-            //lerp speed
-            float YAmt = rigidBody.velocity.y;
-            float FlyAccel = FlyingAcceleration * FlyingAdjustmentLerp;
-            float Spd = FlyingSpeed;
-
-            if (!input.Fly) //we are not holding fly, slow down
+            if (HasStateAuthority)
             {
-                Spd = FlyingMinSpeed;
-                if (ActSpeed > FlyingMinSpeed)
-                    FlyAccel = FlyingDecelleration * FlyingAdjustmentLerp;
+                if(!animator.GetCurrentAnimatorStateInfo(0).IsName("Flying FWD")){
+                    boneRoot.position = ccTransform.position;
+                }
+
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Flying FWD") &&
+                    !animator.GetCurrentAnimatorStateInfo(0).IsName("TakeOff"))
+                {
+                    animator.Play("Flying FWD");
+                }
+                
+                float delta = Runner.DeltaTime;
+                float _xMov = input.Horizontal;
+                float _zMov = input.Vertical;
+                
+                //get our direction of input based on camera position
+                Vector3 screenMovementForward = CamY.transform.forward;
+                Vector3 screenMovementRight = CamY.transform.right;
+                Vector3 screenMovementUp = CamY.transform.up;
+                
+                Vector3 h = screenMovementRight * _xMov;
+                Vector3 v = screenMovementForward * _zMov;
+                
+                Vector3 moveDirection = (v + h).normalized;
+                
+                if (ActionAirTimer > 0)
+                    ActionAirTimer -= delta;
+                
+                if (FlyingAdjustmentLerp < 1.1)
+                    FlyingAdjustmentLerp += delta * FlyingAdjustmentSpeed;
+                
+                //lerp speed
+                float YAmt = rigidBody.velocity.y;
+                float FlyAccel = FlyingAcceleration * FlyingAdjustmentLerp;
+                float Spd = FlyingSpeed;
+                
+                if (!input.Fly) //we are not holding fly, slow down
+                {
+                    Spd = FlyingMinSpeed;
+                    if (ActSpeed > FlyingMinSpeed)
+                        FlyAccel = FlyingDecelleration * FlyingAdjustmentLerp;
+                }
+                
+                HandleVelocity(delta, Spd, FlyAccel, YAmt);
+                
+                //flying controls
+                FlyingCtrl(delta, ActSpeed, _xMov, _zMov);
+                
+                rigidbodyVelocity = rigidBody.velocity;
             }
-
-            HandleVelocity(delta, Spd, FlyAccel, YAmt);
-
-            //flying controls
-            FlyingCtrl(delta, ActSpeed, _xMov, _zMov);
 
             if (Runner.IsForward)
             {
-                networkAnimator.Animator.SetFloat(speedFWD, rigidBody.velocity.magnitude);
+                animator.SetFloat(speedFWD, rigidbodyVelocity.magnitude);
             }
         }
     }

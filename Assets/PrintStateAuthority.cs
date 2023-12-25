@@ -19,18 +19,10 @@ public class PrintStateAuthority : NetworkBehaviour
         {
             Debug.Log("Dragon State Authority is null");
         }
-        else
-        {
-            Debug.Log("Dragon State Authority:" + _networkObject.StateAuthority.PlayerId);
-        }
-
+        
         if (_networkObject.HasInputAuthority == null)
         {
             Debug.Log("Dragon Input Authority is null");
-        }
-        else
-        {
-            Debug.Log("Dragon Input Authority:" + _networkObject.InputAuthority.PlayerId);
         }
     }
 }

@@ -8,12 +8,14 @@ namespace DragonGameNetworkProject
         protected NetworkMecanimAnimator networkAnimator;
         protected Transform ccTransform;
         protected CharacterMovementController controller;
+        protected Animator animator;
         
         public override void Spawned()
         {
             controller = GetComponent<CharacterMovementController>();
             networkAnimator = controller.avatarGO.GetComponent<NetworkMecanimAnimator>();
-            ccTransform = networkAnimator.transform;
+            ccTransform = controller.avatarGO.transform;
+            animator = controller.avatarGO.GetComponent<Animator>();
         }
 
         public virtual void OnAnimatorIK(int layerIndex)

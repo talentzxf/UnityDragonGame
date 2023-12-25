@@ -139,8 +139,7 @@ GameObject:
   - component: {fileID: 1534231822559513991}
   - component: {fileID: 7710442806778388856}
   - component: {fileID: 5659573436804160237}
-  - component: {fileID: 7879535255536362704}
-  - component: {fileID: 7867968624439057606}
+  - component: {fileID: 3341341651520612962}
   m_Layer: 0
   m_Name: RedDragon1.1 Variant
   m_TagString: Untagged
@@ -237,7 +236,7 @@ CapsuleCollider:
   m_Height: 12.707747
   m_Direction: 2
   m_Center: {x: 0, y: 3.0899994, z: -1.0352384}
---- !u!114 &7879535255536362704
+--- !u!114 &3341341651520612962
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -246,31 +245,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 266274313640888295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Animator: {fileID: 1534231822559513991}
-  TotalWords: 5
-  ApplyTiming: 2
-  SyncSettings: 95
-  StateHashes: 0000000095db75a9a668509ef94df4877d6e22688d3bca2ebe88ef19d098193b52d755be
-  TriggerHashes: 00000000
---- !u!114 &7867968624439057606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 266274313640888295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a591d221a634417e9827eb58e17de84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncScale: 0
   SyncParent: 0
-  _autoAOIOverride: 1
-  DisableSharedModeInterpolation: 0
+  _interpolationTarget: {fileID: 0}
+  UsePreciseRotation: 0
+  UseRenderSleepThresholds: 1
+  RenderThresholds:
+    UseEnergy: 1
+    Position: 0.01
+    Rotation: 0.01
+    Scale: 0.01
 --- !u!1 &371735784174536499
 GameObject:
   m_ObjectHideFlags: 0
@@ -2537,6 +2524,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1920730193362411406}
+  - component: {fileID: 4877764570215285181}
   m_Layer: 0
   m_Name: Bone
   m_TagString: Untagged
@@ -2563,6 +2551,22 @@ Transform:
   - {fileID: 196172973985285474}
   m_Father: {fileID: 6409600158550102806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4877764570215285181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4498810347345184719}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!1 &4530366041481805421
 GameObject:
   m_ObjectHideFlags: 0
@@ -3827,8 +3831,8 @@ MonoBehaviour:
   - {fileID: 6431390373181742861}
   - {fileID: 6798838872186438842}
   - {fileID: 6699452348448040102}
-  - {fileID: 7879535255536362704}
-  - {fileID: 7867968624439057606}
+  - {fileID: 3341341651520612962}
+  - {fileID: 4877764570215285181}
 --- !u!114 &2268967241336285774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3843,6 +3847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   avatarGO: {fileID: 266274313640888295}
   _currentMovement: {fileID: 0}
+  prevMovement: {fileID: 0}
 --- !u!114 &6906802957796508718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3891,6 +3896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b35af4471eef34b9cd9df21013a63c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rigidbodyVelocity: {x: 0, y: 0, z: 0}
   HandleReturnSpeed: 0
   GroundLayers:
     serializedVersion: 2

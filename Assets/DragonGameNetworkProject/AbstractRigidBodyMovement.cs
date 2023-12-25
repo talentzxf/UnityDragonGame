@@ -9,7 +9,7 @@ namespace DragonGameNetworkProject
         public override void Spawned()
         {
             base.Spawned();
-            rigidBody = GetComponentInChildren<Rigidbody>();
+            rigidBody = controller.avatarGO.GetComponent<Rigidbody>();
         }
         
         public override void OnEnterMovement()

@@ -24,7 +24,6 @@ namespace DragonGameNetworkProject
         {
             if (HasStateAuthority)
             {
-                cc.GetComponent<NetworkTransform>().enabled = true;
                 networkAnimator.Animator.applyRootMotion = true;
             }
             else
