@@ -2150,7 +2150,7 @@ ModelImporter:
       takeName: Armature|Drakaris
       internalID: 0
       firstFrame: 0
-      lastFrame: 85
+      lastFrame: 86
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -2168,7 +2168,32 @@ ModelImporter:
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
+      curves:
+      - name: AttackProgress
+        curve:
+          serializedVersion: 2
+          curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 1
+            outSlope: 1
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 1
+            outSlope: 1
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          preInfinity: 2
+          postInfinity: 2
+          rotationOrder: 4
       events: []
       transformMask:
       - path: 
@@ -2789,7 +2814,7 @@ ModelImporter:
       takeName: Armature|FlyingAttack
       internalID: 0
       firstFrame: 0
-      lastFrame: 267
+      lastFrame: 268
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -2798,11 +2823,11 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
+      keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
@@ -5424,7 +5449,7 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
-    rootMotionBoneName: Bone
+    rootMotionBoneName: Bone.001
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1

@@ -89,7 +89,10 @@ namespace DragonGameNetworkProject.DragonMovements
                     
                     rigidBody.useGravity = true;
                     rigidBody.freezeRotation = true;
+                    
                     (controller as DragonMovementController).playerController.SwitchTo<ClimbDownDragonMovement>(); // Player climb down.
+
+                    (controller as DragonMovementController).playerNO = null;
                     controller.SwitchTo<DragonIdleMovement>();
                 }
             }

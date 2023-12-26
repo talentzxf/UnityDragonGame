@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using Fusion;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -20,6 +21,8 @@ namespace DragonGameNetworkProject.DragonMovements
         
         public bool Land = false;
 
+        public bool Attack = false;
+
         public void Update()
         {
             Horizontal = Input.GetAxis("Horizontal");
@@ -32,7 +35,9 @@ namespace DragonGameNetworkProject.DragonMovements
             RB = Input.GetButton("RightTilt");
             LB = Input.GetButton("LeftTilt");
             
-            Land = Input.GetButtonDown("Land");
+            Land = Input.GetButton("Land");
+
+            Attack = Input.GetButton("Attack");
         }
 
         public void Reset()
@@ -46,6 +51,7 @@ namespace DragonGameNetworkProject.DragonMovements
             RB = false;
             LB = false;
             Land = false;
+            Attack = false;
         }
     }
 
@@ -143,6 +149,12 @@ namespace DragonGameNetworkProject.DragonMovements
         private void Update()
         {
             input.Update();
+            
+            var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (animatorStateInfo.IsName("TakeOff"))
+            {
+                boneRoot.position = ccTransform.position;
+            }
         }
 
         //handle how our speed is increased or decreased when flying
@@ -288,7 +300,9 @@ namespace DragonGameNetworkProject.DragonMovements
             var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
             if (!animatorStateInfo.IsName("Flying FWD") &&
                 !animatorStateInfo.IsName("TakeOff") &&
-                !animatorStateInfo.IsName("Lands"))
+                !animatorStateInfo.IsName("Lands") && 
+                !animatorStateInfo.IsName("Drakaris") && 
+                !animator.IsInTransition(0))
             {
                 Debug.Log("Current animation:" + animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
                 Debug.Log("Switch to animation Flying FWD");
@@ -300,7 +314,7 @@ namespace DragonGameNetworkProject.DragonMovements
                 animator.SetFloat(speedFWD, rigidbodyVelocity.magnitude);
             }
         }
-
+        
         public override void FixedUpdateNetwork()
         {
             try
@@ -313,8 +327,14 @@ namespace DragonGameNetworkProject.DragonMovements
                         return;
                     }
 
+                    if (input.Attack)
+                    {
+                        controller.SwitchTo<DragonAttackMovement>();
+                        return;
+                    }
+
                     var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                    if (!animatorStateInfo.IsName("Flying FWD"))
+                    if (animatorStateInfo.IsName("TakeOff"))
                     {
                         boneRoot.position = ccTransform.position;
                     }

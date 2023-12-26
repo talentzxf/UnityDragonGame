@@ -12,6 +12,8 @@ namespace DragonGameNetworkProject
 
         private Vector3 climbStartForward;
 
+        private NetworkObject tobeSetPlayerNO;
+
         public void PrepareToClimb(GameObject dragonGO, Vector3 startPosition, Vector3 startForward)
         {
             if (!HasStateAuthority)
@@ -25,8 +27,7 @@ namespace DragonGameNetworkProject
             (controller as PlayerMovementController).dragonNO = dragonGO.GetComponentInParent<NetworkObject>();
             dragonNO.RequestStateAuthority(); // The dragon is mine now. Claim the authority.
 
-            dragonNO.GetComponent<DragonMovementController>().playerNO = GetComponent<NetworkObject>();
-            
+            tobeSetPlayerNO = GetComponent<NetworkObject>();
             Vector3 forwardDir = dragonTransform.right;
 
             climbStartForward = forwardDir;
@@ -55,6 +56,12 @@ namespace DragonGameNetworkProject
 
         public override void FixedUpdateNetwork()
         {
+            if (dragonNO.HasStateAuthority && tobeSetPlayerNO != null)
+            {
+                dragonNO.GetComponent<DragonMovementController>().playerNO = tobeSetPlayerNO;
+                tobeSetPlayerNO = null;
+            }
+
             if (HasStateAuthority)
             {
                 networkAnimator.Animator.applyRootMotion = true;

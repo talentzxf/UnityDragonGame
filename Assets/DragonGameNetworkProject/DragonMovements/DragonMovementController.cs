@@ -1,3 +1,4 @@
+using System;
 using Fusion;
 
 namespace DragonGameNetworkProject.DragonMovements
@@ -6,24 +7,12 @@ namespace DragonGameNetworkProject.DragonMovements
     {
         [Networked] public NetworkObject playerNO { set; get; }
 
-        private PlayerMovementController _playerMovement;
-
-        public PlayerMovementController playerController
-        {
-            get
-            {
-                if(_playerMovement == null)
-                {
-                    _playerMovement = playerNO.GetComponent<PlayerMovementController>();
-                }
-
-                return _playerMovement;
-            }
-        }
-
+        public PlayerMovementController playerController => playerNO.GetComponent<PlayerMovementController>();
+        
         public override void Spawned()
         {
             base.Spawned();
+            
             if (HasStateAuthority)
             {
                 SwitchTo<DragonIdleMovement>();
