@@ -21,6 +21,11 @@ namespace DragonGameNetworkProject.DragonMovements
             animator.SetBool(takeOff, true);
         }
 
+        public override void OnLeaveMovement()
+        {
+            animator.SetBool(takeOff, false);
+        }
+
         public override void FixedUpdateNetwork()
         {
             if (!HasStateAuthority)

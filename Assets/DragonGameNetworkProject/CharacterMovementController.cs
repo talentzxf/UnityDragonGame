@@ -61,16 +61,18 @@ namespace DragonGameNetworkProject
                 if (movement.IsType<T>())
                 {
                     movement.enabled = true;
-                    
-                    if(currentMovement != null && movement != null)
-                        Debug.Log("Switched state from " + currentMovement.GetType().Name + " to " + movement.GetType().Name);
-                    
+
+                    if (currentMovement != null && movement != null)
+                        Debug.Log("Switched state from " + currentMovement.GetType().Name + " to " +
+                                  movement.GetType().Name);
+
                     currentMovement = movement;
 
                     if (movement.IsType<DragonLandMovement>())
                     {
                         Debug.Log("Land ???");
                     }
+
                     return true;
                 }
                 else
@@ -82,35 +84,32 @@ namespace DragonGameNetworkProject
             return false;
         }
 
-        public override void FixedUpdateNetwork()
+        public void FixedUpdate()
         {
-            if (Runner.IsForward)
+            if (prevMovement != currentMovement)
             {
-                if (prevMovement != currentMovement)
+                if (prevMovement != null)
                 {
-                    if (prevMovement != null)
-                    {
-                        prevMovement.OnLeaveMovement();
-                    }
-
-                    if (currentMovement != null)
-                    {
-                        currentMovement.OnEnterMovement();
-                    }
-
-                    prevMovement = currentMovement;
+                    prevMovement.OnLeaveMovement();
                 }
 
-                foreach (var movement in movements)
+                if (currentMovement != null)
                 {
-                    if (movement == currentMovement)
-                    {
-                        movement.enabled = true;
-                    }
-                    else
-                    {
-                        movement.enabled = false;
-                    }
+                    currentMovement.OnEnterMovement();
+                }
+
+                prevMovement = currentMovement;
+            }
+
+            foreach (var movement in movements)
+            {
+                if (movement == currentMovement)
+                {
+                    movement.enabled = true;
+                }
+                else
+                {
+                    movement.enabled = false;
                 }
             }
         }

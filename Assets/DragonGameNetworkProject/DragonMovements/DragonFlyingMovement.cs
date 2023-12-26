@@ -1,4 +1,6 @@
+using System;
 using Fusion;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DragonGameNetworkProject.DragonMovements
@@ -126,8 +128,15 @@ namespace DragonGameNetworkProject.DragonMovements
         {
             rigidBody.useGravity = false;
             rigidBody.freezeRotation = false;
+
+            input.Update();
         }
-        
+
+        private void Update()
+        {
+            input.Update();
+        }
+
         //handle how our speed is increased or decreased when flying
         void HandleVelocity(float d, float TargetSpeed, float Accel, float YAmt)
         {
@@ -277,14 +286,17 @@ namespace DragonGameNetworkProject.DragonMovements
                 Debug.Log("Switch to animation Flying FWD");
                 animator.Play("Flying FWD");
             }
+            
+            if (Runner.IsForward)
+            {
+                animator.SetFloat(speedFWD, rigidbodyVelocity.magnitude);
+            }
         }
 
         public override void FixedUpdateNetwork()
         {
             if (HasStateAuthority)
             {
-                input.Update();
-                
                 if (input.Land)
                 {
                     controller.SwitchTo<DragonLandMovement>();
