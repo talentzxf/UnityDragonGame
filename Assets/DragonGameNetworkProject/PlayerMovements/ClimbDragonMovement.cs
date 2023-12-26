@@ -11,10 +11,8 @@ namespace DragonGameNetworkProject
         private int _climb = Animator.StringToHash("climb");
 
         private Vector3 climbStartForward;
-        
-        protected override bool isEnableIK => false;
 
-        public void PrepareToClimb(GameObject dragonGO, Vector3 startPosition)
+        public void PrepareToClimb(GameObject dragonGO, Vector3 startPosition, Vector3 startForward)
         {
             if (!HasStateAuthority)
             {
@@ -22,6 +20,7 @@ namespace DragonGameNetworkProject
             }
 
             ccTransform.position = startPosition;
+            ccTransform.forward = startForward;
 
             (controller as PlayerMovementController).dragonNO = dragonGO.GetComponentInParent<NetworkObject>();
             dragonNO.RequestStateAuthority(); // The dragon is mine now. Claim the authority.

@@ -20,7 +20,8 @@ public class ClimbDragonAction : MonoBehaviour
 
             if (playerMovementController.HasStateAuthority)
             {
-                playerMovementController.GetMovement<ClimbDragonMovement>().PrepareToClimb(dragonTransform.gameObject, transform.position);
+                playerMovementController.GetMovement<ClimbDragonMovement>().PrepareToClimb(dragonTransform.gameObject, 
+                    transform.position, transform.forward);
                 playerMovementController.SwitchTo<ClimbDragonMovement>();
             }
         }
