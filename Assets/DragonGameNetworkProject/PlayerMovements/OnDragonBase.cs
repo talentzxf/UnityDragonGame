@@ -15,13 +15,7 @@ namespace DragonGameNetworkProject
         private string sitPointStr = "SitPoint";
         private Transform _sitPoint;
 
-        protected virtual bool isEnableIK
-        {
-            get
-            {
-                return true;
-            }
-        }
+        protected virtual bool isEnableIK => true;
 
         protected Transform sitPoint
         {
@@ -36,14 +30,8 @@ namespace DragonGameNetworkProject
             }
         }
 
-        protected NetworkObject dragonNO
-        {
-            get
-            {
-                return (controller as PlayerMovementController).dragonNO;
-            }
-        }
-        
+        protected NetworkObject dragonNO => (controller as PlayerMovementController).dragonNO;
+
         private Transform _dragonTransform;
 
         protected Transform dragonTransform

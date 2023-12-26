@@ -11,6 +11,7 @@ public class FirstPersonCamera : MonoBehaviour
     private float yAngle;
 
     private float distance;
+    private float originalDistance;
     
     public void LerpToDistance(float distanceFactor, float totalTime)
     {
@@ -20,7 +21,7 @@ public class FirstPersonCamera : MonoBehaviour
     private IEnumerator InternalLerpToDistance(float distanceFactor, float durationSeconds)
     {
         float startDistance = distance;
-        float targetDistance = distance * distanceFactor;
+        float targetDistance = originalDistance * distanceFactor;
         float percentage = 0.0f;
 
         while (percentage < durationSeconds)
@@ -46,6 +47,7 @@ public class FirstPersonCamera : MonoBehaviour
 
         Vector3 offset = target.position - transform.position;
         distance = offset.magnitude;
+        originalDistance = distance;
     }
 
     void SyncTransform()

@@ -10,8 +10,18 @@ namespace DragonGameNetworkProject.DragonMovements
 
         public void Update()
         {
-            TakeOff = Input.GetKeyDown(KeyCode.Space);
-            UnMount = Input.GetKeyDown(KeyCode.M);
+            TakeOff = Input.GetKey(KeyCode.Space);
+            UnMount = Input.GetKey(KeyCode.M);
+
+            if (TakeOff)
+            {
+                Debug.Log("TakeOff!!!!");
+            }
+
+            if (UnMount)
+            {
+                Debug.Log("UnMount!!!");
+            }
         }
 
         public void Reset()
@@ -26,7 +36,7 @@ namespace DragonGameNetworkProject.DragonMovements
         private int hasLandedOnGround = Animator.StringToHash("HasLandedOnGround");
         private int speedFWD = Animator.StringToHash("SpeedFWD");
         
-        private InputData inputData;
+        private InputData inputData = new InputData();
         
         public override void OnEnterMovement()
         {
@@ -40,8 +50,6 @@ namespace DragonGameNetworkProject.DragonMovements
 
         public override void OnLeaveMovement()
         {
-            rigidBody.useGravity = false;
-            rigidBody.freezeRotation = false;
             animator.SetBool(hasLandedOnGround, false);
         }
 
@@ -68,12 +76,21 @@ namespace DragonGameNetworkProject.DragonMovements
             {
                 if (inputData.TakeOff)
                 {
+                    Debug.Log("Begin to take off!");
+                    
+                    rigidBody.useGravity = false;
+                    rigidBody.freezeRotation = false;
                     controller.SwitchTo<DragonTakeOffMovement>();
                 }
 
                 if (inputData.UnMount)
                 {
+                    Debug.Log("Begin to unmount!");
                     
+                    rigidBody.useGravity = true;
+                    rigidBody.freezeRotation = true;
+                    (controller as DragonMovementController).playerController.SwitchTo<ClimbDownDragonMovement>(); // Player climb down.
+                    controller.SwitchTo<DragonIdleMovement>();
                 }
             }
             finally

@@ -1,6 +1,7 @@
 using System.Collections;
 using DragonGameNetworkProject.DragonMovements;
 using Fusion;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DragonGameNetworkProject
@@ -11,14 +12,8 @@ namespace DragonGameNetworkProject
 
         private Vector3 climbStartForward;
         
-        protected override bool isEnableIK
-        {
-            get
-            {
-                return false;
-            }
-        }
-        
+        protected override bool isEnableIK => false;
+
         public void PrepareToClimb(GameObject dragonGO, Vector3 startPosition)
         {
             if (!HasStateAuthority)
@@ -26,9 +21,13 @@ namespace DragonGameNetworkProject
                 return;
             }
 
+            ccTransform.position = startPosition;
+
             (controller as PlayerMovementController).dragonNO = dragonGO.GetComponentInParent<NetworkObject>();
             dragonNO.RequestStateAuthority(); // The dragon is mine now. Claim the authority.
 
+            dragonNO.GetComponent<DragonMovementController>().playerNO = GetComponent<NetworkObject>();
+            
             Vector3 forwardDir = dragonTransform.right;
 
             climbStartForward = forwardDir;
@@ -51,7 +50,7 @@ namespace DragonGameNetworkProject
             }
 
             controller.SwitchTo<OnDragonMovement>();
-            
+
             dragonNO.GetComponent<DragonMovementController>().SwitchTo<DragonMountedMovement>();
         }
 

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2601600499138894516}
   - component: {fileID: 1129386395703465537}
   - component: {fileID: 4590527132596843038}
+  - component: {fileID: 9158797047957096947}
   m_Layer: 0
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -60,6 +61,7 @@ MonoBehaviour:
   - {fileID: 2601600499138894516}
   - {fileID: 1129386395703465537}
   - {fileID: 4590527132596843038}
+  - {fileID: 9158797047957096947}
   - {fileID: 7030957579734586408}
   - {fileID: 1567227689365279528}
 --- !u!114 &2037521199117911177
@@ -88,6 +90,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   avatarGO: {fileID: 5251077747225748301}
   _currentMovement: {fileID: 0}
+  prevMovement: {fileID: 0}
   _dragonNO: {fileID: 0}
 --- !u!114 &2601600499138894516
 MonoBehaviour:
@@ -124,6 +127,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb43b1833a4540ac81151de132bf811f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9158797047957096947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7844063035658194730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee9a4816831a4d11afbb949376319597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &4908636286951382556
@@ -7991,7 +8006,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 1545982737550467981}
-  TotalWords: 5
+  TotalWords: 6
   ApplyTiming: 2
   SyncSettings: 95
   StateHashes: 000000008a18fce4b9abd9d315b524dc47ef5bf5050e23d936bd06eedf8a1ade5ba9cc311e4f6d52f58ce5af
