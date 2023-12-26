@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using Fusion;
 using UnityEngine;
 
 namespace DragonGameNetworkProject.DragonMovements
@@ -10,19 +7,20 @@ namespace DragonGameNetworkProject.DragonMovements
         public Rigidbody rigidBody;
         public Vector3 targetPosition;
         public Quaternion targetRotation;
-        
-        private float distanceThreshold = 0.1f;
-        private float angleThreshold = 5f;
-        
-                
+
+        private float distanceThreshold = 0.01f;
+        private float angleThreshold = 0.01f;
+
+
         public float moveSpeed = 10f;
-        public float rotateSpeed = 10f;
+        public float rotateSpeed = 30f;
 
         private bool hasFinished = false;
 
         private CharacterMovementController controller;
-        
-        public void Prepare(Rigidbody rigidBody, Vector3 targetPoint, Quaternion targetRotation, CharacterMovementController controller)
+
+        public void Prepare(Rigidbody rigidBody, Vector3 targetPoint, Quaternion targetRotation,
+            CharacterMovementController controller)
         {
             this.rigidBody = rigidBody;
             this.targetPosition = targetPoint;
@@ -30,7 +28,7 @@ namespace DragonGameNetworkProject.DragonMovements
             this.controller = controller;
 
             hasFinished = false;
-            
+
             rigidBody.useGravity = false;
             rigidBody.velocity = Vector3.zero;
             rigidBody.angularVelocity = Vector3.zero;
@@ -40,15 +38,16 @@ namespace DragonGameNetworkProject.DragonMovements
         {
             if (hasFinished)
                 return false;
-            
-            if (Vector3.Distance(rigidBody.transform.position, targetPosition) > 0.01f ||
-                Quaternion.Angle(rigidBody.transform.rotation, targetRotation) > 0.01f)
+
+            if (Vector3.Distance(rigidBody.transform.position, targetPosition) > distanceThreshold||
+                Quaternion.Angle(rigidBody.transform.rotation, targetRotation) > angleThreshold)
             {
                 float step = moveSpeed * deltaTime;
                 float rotateStep = rotateSpeed * deltaTime;
 
                 rigidBody.MovePosition(Vector3.MoveTowards(rigidBody.transform.position, targetPosition, step));
-                rigidBody.MoveRotation(Quaternion.RotateTowards(rigidBody.transform.rotation, targetRotation, rotateStep));
+                rigidBody.MoveRotation(Quaternion.RotateTowards(rigidBody.transform.rotation, targetRotation,
+                    rotateStep));
 
                 return true;
             }
@@ -65,29 +64,29 @@ namespace DragonGameNetworkProject.DragonMovements
             }
         }
     }
-    
+
     public class DragonLandMovement : AbstractRigidBodyMovement
     {
         public float beginLandDistance = 5.0f;
-        
+
         private float maxDistance = 100f;
 
         private int lands = Animator.StringToHash("Land");
 
         // Deprecated flag.
         public bool onGround = false;
-        
+
         public override void OnEnterMovement()
         {
             animator.SetBool(lands, true);
-            
+
             Debug.Log("Set Land true");
         }
 
         public override void OnLeaveMovement()
         {
             animator.SetBool(lands, false);
-            
+
             Debug.Log("Set Land false");
         }
 
@@ -110,14 +109,16 @@ namespace DragonGameNetworkProject.DragonMovements
                 {
                     animator.SetBool(lands, false);
                 }
-            
+
                 int layerMask = LayerMask.GetMask("Terrain");
                 RaycastHit hit;
                 if (Physics.Raycast(rigidBody.position, Vector3.down, out hit, maxDistance, layerMask))
                 {
                     Vector3 targetPosition = hit.point + Vector3.up * beginLandDistance;
-                    Quaternion targetRotation = Quaternion.identity;
-                    
+                    Quaternion targetRotation = Quaternion.LookRotation(
+                        Vector3.ProjectOnPlane(rigidBody.transform.forward, Vector3.up)
+                        , Vector3.up);
+
                     Debug.Log("TargetPosition:" + targetPosition + " targetRotation:" + targetRotation);
 
                     poseAdjuster.Prepare(rigidBody, targetPosition, targetRotation, controller);
