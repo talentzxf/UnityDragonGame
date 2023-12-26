@@ -297,6 +297,8 @@ namespace DragonGameNetworkProject.DragonMovements
         {
             if (HasStateAuthority)
             {
+                input.Update();
+                
                 if (input.Land)
                 {
                     controller.SwitchTo<DragonLandMovement>();
