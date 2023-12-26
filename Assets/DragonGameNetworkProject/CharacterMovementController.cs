@@ -67,12 +67,6 @@ namespace DragonGameNetworkProject
                                   movement.GetType().Name);
 
                     currentMovement = movement;
-
-                    if (movement.IsType<DragonLandMovement>())
-                    {
-                        Debug.Log("Land ???");
-                    }
-
                     return true;
                 }
                 else

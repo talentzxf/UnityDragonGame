@@ -33,11 +33,19 @@ namespace DragonGameNetworkProject.DragonMovements
             LB = Input.GetButton("LeftTilt");
             
             Land = Input.GetButtonDown("Land");
+        }
 
-            if (Land)
-            {
-                Debug.Log("Land:" + Land);
-            }
+        public void Reset()
+        {
+            Horizontal = 0.0f;
+            Vertical = 0.0f;
+            Jump = false;
+            JumpHold = false;
+            Fly = false;
+
+            RB = false;
+            LB = false;
+            Land = false;
         }
     }
 
@@ -129,7 +137,7 @@ namespace DragonGameNetworkProject.DragonMovements
             rigidBody.useGravity = false;
             rigidBody.freezeRotation = false;
 
-            input.Update();
+            input.Reset();
         }
 
         private void Update()
@@ -295,65 +303,70 @@ namespace DragonGameNetworkProject.DragonMovements
 
         public override void FixedUpdateNetwork()
         {
-            if (HasStateAuthority)
+            try
             {
-                input.Update();
-                
-                if (input.Land)
+                if (HasStateAuthority)
                 {
-                    controller.SwitchTo<DragonLandMovement>();
-                    return;
+                    if (input.Land)
+                    {
+                        controller.SwitchTo<DragonLandMovement>();
+                        return;
+                    }
+
+                    var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                    if (!animatorStateInfo.IsName("Flying FWD"))
+                    {
+                        boneRoot.position = ccTransform.position;
+                    }
+
+                    float delta = Runner.DeltaTime;
+                    float _xMov = input.Horizontal;
+                    float _zMov = input.Vertical;
+
+                    //get our direction of input based on camera position
+                    Vector3 screenMovementForward = CamY.transform.forward;
+                    Vector3 screenMovementRight = CamY.transform.right;
+                    Vector3 screenMovementUp = CamY.transform.up;
+
+                    Vector3 h = screenMovementRight * _xMov;
+                    Vector3 v = screenMovementForward * _zMov;
+
+                    Vector3 moveDirection = (v + h).normalized;
+
+                    if (ActionAirTimer > 0)
+                        ActionAirTimer -= delta;
+
+                    if (FlyingAdjustmentLerp < 1.1)
+                        FlyingAdjustmentLerp += delta * FlyingAdjustmentSpeed;
+
+                    //lerp speed
+                    float YAmt = rigidBody.velocity.y;
+                    float FlyAccel = FlyingAcceleration * FlyingAdjustmentLerp;
+                    float Spd = FlyingSpeed;
+
+                    if (!input.Fly) //we are not holding fly, slow down
+                    {
+                        Spd = FlyingMinSpeed;
+                        if (ActSpeed > FlyingMinSpeed)
+                            FlyAccel = FlyingDecelleration * FlyingAdjustmentLerp;
+                    }
+
+                    HandleVelocity(delta, Spd, FlyAccel, YAmt);
+
+                    //flying controls
+                    FlyingCtrl(delta, ActSpeed, _xMov, _zMov);
+
+                    rigidbodyVelocity = rigidBody.velocity;
                 }
-                
-                var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                if (!animatorStateInfo.IsName("Flying FWD"))
+
+                if (Runner.IsForward)
                 {
-                    boneRoot.position = ccTransform.position;
+                    animator.SetFloat(speedFWD, rigidbodyVelocity.magnitude);
                 }
-
-                float delta = Runner.DeltaTime;
-                float _xMov = input.Horizontal;
-                float _zMov = input.Vertical;
-
-                //get our direction of input based on camera position
-                Vector3 screenMovementForward = CamY.transform.forward;
-                Vector3 screenMovementRight = CamY.transform.right;
-                Vector3 screenMovementUp = CamY.transform.up;
-
-                Vector3 h = screenMovementRight * _xMov;
-                Vector3 v = screenMovementForward * _zMov;
-
-                Vector3 moveDirection = (v + h).normalized;
-
-                if (ActionAirTimer > 0)
-                    ActionAirTimer -= delta;
-
-                if (FlyingAdjustmentLerp < 1.1)
-                    FlyingAdjustmentLerp += delta * FlyingAdjustmentSpeed;
-
-                //lerp speed
-                float YAmt = rigidBody.velocity.y;
-                float FlyAccel = FlyingAcceleration * FlyingAdjustmentLerp;
-                float Spd = FlyingSpeed;
-
-                if (!input.Fly) //we are not holding fly, slow down
-                {
-                    Spd = FlyingMinSpeed;
-                    if (ActSpeed > FlyingMinSpeed)
-                        FlyAccel = FlyingDecelleration * FlyingAdjustmentLerp;
-                }
-
-                HandleVelocity(delta, Spd, FlyAccel, YAmt);
-
-                //flying controls
-                FlyingCtrl(delta, ActSpeed, _xMov, _zMov);
-
-                rigidbodyVelocity = rigidBody.velocity;
             }
-
-            if (Runner.IsForward)
+            finally
             {
-                animator.SetFloat(speedFWD, rigidbodyVelocity.magnitude);
+                input.Reset();
             }
         }
     }

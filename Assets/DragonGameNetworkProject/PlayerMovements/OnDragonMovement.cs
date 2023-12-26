@@ -6,12 +6,17 @@ namespace DragonGameNetworkProject
 {
     public class OnDragonMovement : OnDragonBase
     {
+        public override void Spawned()
+        {
+            base.Spawned();
+        }
+
         public override void FixedUpdateNetwork()
         {
             if (HasStateAuthority)
             {
                 ccTransform.position = sitPoint.position;
-                ccTransform.rotation = sitPoint.rotation;                
+                ccTransform.rotation = sitPoint.rotation;
             }
         }
     }

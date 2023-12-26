@@ -1,3 +1,4 @@
+using DragonGameNetworkProject.DragonMovements;
 using Fusion;
 using UnityEngine;
 
@@ -13,6 +14,14 @@ namespace DragonGameNetworkProject
 
         private string sitPointStr = "SitPoint";
         private Transform _sitPoint;
+
+        protected virtual bool isEnableIK
+        {
+            get
+            {
+                return true;
+            }
+        }
 
         protected Transform sitPoint
         {
@@ -49,6 +58,9 @@ namespace DragonGameNetworkProject
         
         public override void OnAnimatorIK(int layerIndex)
         {
+            if (!isEnableIK)
+                return;
+            
             float climbUpProgress = networkAnimator.Animator.GetFloat("ClimbUpProgress");
             if (climbUpProgress > 0.5)
             {

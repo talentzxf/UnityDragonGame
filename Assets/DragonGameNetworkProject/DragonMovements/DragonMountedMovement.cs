@@ -3,10 +3,30 @@ using UnityEngine;
 
 namespace DragonGameNetworkProject.DragonMovements
 {
+    class InputData
+    {
+        public bool TakeOff;
+        public bool UnMount;
+
+        public void Update()
+        {
+            TakeOff = Input.GetKeyDown(KeyCode.Space);
+            UnMount = Input.GetKeyDown(KeyCode.M);
+        }
+
+        public void Reset()
+        {
+            TakeOff = false;
+            UnMount = false;
+        }
+    }
+    
     public class DragonMountedMovement: AbstractRigidBodyMovement
     {
         private int hasLandedOnGround = Animator.StringToHash("HasLandedOnGround");
         private int speedFWD = Animator.StringToHash("SpeedFWD");
+        
+        private InputData inputData;
         
         public override void OnEnterMovement()
         {
@@ -33,16 +53,34 @@ namespace DragonGameNetworkProject.DragonMovements
                 animator.Play("IdleSimple");
             }
         }
-        
+
+        private void Update()
+        {
+            inputData.Update();
+        }
+
         public override void FixedUpdateNetwork()
         {
             if (HasStateAuthority == false)
                 return;
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            try
             {
-                controller.SwitchTo<DragonTakeOffMovement>();
+                if (inputData.TakeOff)
+                {
+                    controller.SwitchTo<DragonTakeOffMovement>();
+                }
+
+                if (inputData.UnMount)
+                {
+                    
+                }
             }
+            finally
+            {
+                inputData.Reset();
+            }
+
         }
     }
 }
