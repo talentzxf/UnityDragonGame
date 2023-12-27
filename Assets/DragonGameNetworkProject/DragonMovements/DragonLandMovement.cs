@@ -80,6 +80,9 @@ namespace DragonGameNetworkProject.DragonMovements
         {
             animator.SetBool(lands, true);
 
+            rigidBody.velocity = Vector3.zero;
+            rigidBody.angularVelocity = Vector3.zero;
+
             Debug.Log("Set Land true");
         }
 
