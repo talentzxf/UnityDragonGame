@@ -33,11 +33,21 @@ public class FirstPersonCamera : MonoBehaviour
         }
     }
 
-    public void SetCameraTarget(GameObject playerGO)
+    private void OnEnable()
+    {
+        LockCursor();
+    }
+
+    public void LockCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.visible = false;        
+    }
 
+    public void SetCameraTarget(GameObject playerGO, bool hideCursor = true)
+    {
+        LockCursor();
+        
         target = playerGO.transform;
         Animator playerAnimator = playerGO.GetComponentInChildren<Animator>();
         if (playerAnimator && playerAnimator.isHuman)

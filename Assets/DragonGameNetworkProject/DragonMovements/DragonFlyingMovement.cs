@@ -1,8 +1,14 @@
 using System;
 using System.Data;
+using System.Numerics;
+using System.Runtime;
 using Fusion;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using Quaternion = UnityEngine.Quaternion;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 namespace DragonGameNetworkProject.DragonMovements
 {
@@ -23,6 +29,9 @@ namespace DragonGameNetworkProject.DragonMovements
 
         public bool Attack = false;
 
+        public bool IsRightMouseHold = false;
+        public Vector2 MousePosition = Vector3.zero;
+
         public void Update()
         {
             Horizontal = Input.GetAxis("Horizontal");
@@ -38,9 +47,24 @@ namespace DragonGameNetworkProject.DragonMovements
             Land = Input.GetButton("Land");
 
             Attack = Input.GetButton("Attack");
+
+            if (Input.GetMouseButtonDown(1)) // 1 -- Right Mouse Button
+            {
+                Debug.Log("RightMouseHold true");
+                IsRightMouseHold = true;
+            }
+
+
+            if (Input.GetMouseButtonUp(1))
+            {
+                Debug.Log("RightMouseHold false");
+                IsRightMouseHold = false;
+            }
+            
+            MousePosition = Input.mousePosition;
         }
 
-        public void Reset()
+        public void Reset(bool resetMouse = false)
         {
             Horizontal = 0.0f;
             Vertical = 0.0f;
@@ -52,11 +76,20 @@ namespace DragonGameNetworkProject.DragonMovements
             LB = false;
             Land = false;
             Attack = false;
+
+            if (resetMouse)
+            {
+                IsRightMouseHold = false;
+                MousePosition = Vector3.zero;                
+            }
         }
     }
 
     public class DragonFlyingMovement : AbstractRigidBodyMovement
     {
+        public bool isHardCoreControl = false;
+        public float cursorDistance = 5.0f;
+        
         [Networked] public Vector3 rigidbodyVelocity { set; get; }
 
         private float maxSpeed = 500.0f;
@@ -120,9 +153,13 @@ namespace DragonGameNetworkProject.DragonMovements
 
         private Transform Cam;
         private Transform CamY;
+        private Camera CamComp;
 
         private string rootBonePath = "Armature/Bone";
         private Transform boneRoot;
+
+        private Image frontSightImg;
+        private RectTransform frontSightRT;
 
         public override void Spawned()
         {
@@ -130,12 +167,17 @@ namespace DragonGameNetworkProject.DragonMovements
 
             Cam = Camera.main.transform;
             CamY = Cam;
+            CamComp = Cam.GetComponent<Camera>();
 
             FlyingTimer = GlideTime;
             ActGravAmt = 0.0f;
             FlownAdjustmentLerp = -1;
 
             boneRoot = ccTransform.Find(rootBonePath);
+
+            var canvas = GameObject.Find("Canvas");
+            frontSightImg = canvas.transform.Find("FrontSight").GetComponent<Image>();
+            frontSightRT = frontSightImg.GetComponent<RectTransform>();
         }
 
         public override void OnEnterMovement()
@@ -143,7 +185,7 @@ namespace DragonGameNetworkProject.DragonMovements
             rigidBody.useGravity = false;
             rigidBody.freezeRotation = false;
 
-            input.Reset();
+            input.Reset(true);
         }
 
         private void Update()
@@ -314,7 +356,46 @@ namespace DragonGameNetworkProject.DragonMovements
                 animator.SetFloat(speedFWD, rigidbodyVelocity.magnitude);
             }
         }
-        
+
+        private void EasyControl()
+        {
+            float delta = Runner.DeltaTime;
+            
+            if (input.IsRightMouseHold)
+            {
+                Debug.Log("FrontSightSetActive true");
+                frontSightImg.gameObject.SetActive(true);
+
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(frontSightRT,
+                    input.MousePosition, null, out Vector2 localPoint);
+                frontSightImg.rectTransform.localPosition = localPoint;
+
+                // 1. Let dragon forward align with camera forward.
+                Vector3 mouseWorldPosition = CamComp.ScreenToWorldPoint(input.MousePosition);
+                Vector3 forwardPlanePosition = transform.position + transform.forward * cursorDistance;
+                Vector3 forwardPlaneNormal = -transform.forward;
+
+                Vector3 projectedPoint =
+                    Vector3.ProjectOnPlane(mouseWorldPosition - forwardPlanePosition, forwardPlaneNormal) +
+                    forwardPlanePosition;
+                
+                Vector3 targetDir = projectedPoint - transform.position;
+                
+                Quaternion targetRot = Quaternion.LookRotation(targetDir, Vector3.up);
+
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotationSpeed);
+            }
+            else
+            {
+                Debug.Log("FrontSightSetActive false");
+                frontSightImg.gameObject.SetActive(false);
+            }
+        }
+
+        private void HardCoreControl()
+        {
+        }
+
         public override void FixedUpdateNetwork()
         {
             try
@@ -338,7 +419,7 @@ namespace DragonGameNetworkProject.DragonMovements
                     {
                         boneRoot.position = ccTransform.position;
                     }
-
+                    
                     float delta = Runner.DeltaTime;
                     float _xMov = input.Horizontal;
                     float _zMov = input.Vertical;
@@ -373,8 +454,15 @@ namespace DragonGameNetworkProject.DragonMovements
 
                     HandleVelocity(delta, Spd, FlyAccel, YAmt);
 
-                    //flying controls
-                    FlyingCtrl(delta, ActSpeed, _xMov, _zMov);
+                    if (isHardCoreControl)
+                    {
+                        //flying controls
+                        FlyingCtrl(delta, ActSpeed, _xMov, _zMov);
+                    }
+                    else
+                    {
+                        EasyControl();
+                    }
 
                     rigidbodyVelocity = rigidBody.velocity;
                 }
