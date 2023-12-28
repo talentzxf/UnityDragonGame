@@ -152,7 +152,7 @@ namespace DragonGameNetworkProject.DragonMovements
         private Transform CamY;
         private Camera CamComp;
 
-        private string rootBonePath = "Armature/Bone";
+        private string rootBonePath = "Armature/Bone/Bone.004";
         private Transform boneRoot;
 
         private Image frontSightImg;
@@ -193,12 +193,6 @@ namespace DragonGameNetworkProject.DragonMovements
         private void Update()
         {
             input.Update();
-            
-            var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            if (animatorStateInfo.IsName("TakeOff"))
-            {
-                boneRoot.position = ccTransform.position;
-            }
         }
 
         //handle how our speed is increased or decreased when flying
@@ -353,10 +347,10 @@ namespace DragonGameNetworkProject.DragonMovements
                 animator.Play("Flying FWD");
             }
 
-            if (Runner.IsForward)
-            {
-                animator.SetFloat(speedFWD, rigidbodyVelocity.magnitude);
-            }
+            // if (Runner.IsForward)
+            // {
+            //     animator.SetFloat(speedFWD, rigidbodyVelocity.magnitude);
+            // }
         }
         
         private void EasyControl()
@@ -380,28 +374,30 @@ namespace DragonGameNetworkProject.DragonMovements
 
                     frontSightRT.anchoredPosition = mousePos;
                     
+                    Vector3 dragonPosition = boneRoot.position;
+                    
                     Ray mousePointRay = CamComp.ScreenPointToRay(inputMousePosition);
 
-                    float cameraToProjectPlaneDistance = (ccTransform.position - Cam.transform.position).magnitude + this.projectDistance;
+                    float cameraToProjectPlaneDistance = (dragonPosition - Cam.transform.position).magnitude + this.projectDistance;
 
                     Vector3 projectedPoint = mousePointRay.origin + mousePointRay.direction * cameraToProjectPlaneDistance;
                     Vector3 dragonTargetPoint = projectedPoint;
 
-                    Quaternion targetRotation = Quaternion.LookRotation(dragonTargetPoint - ccTransform.position);
+                    Quaternion targetRotation = Quaternion.LookRotation(dragonTargetPoint - dragonPosition);
                     ccTransform.rotation = Quaternion.Slerp(ccTransform.rotation, targetRotation,
                         camSwitchRotationSpeed * delta);
-
-
-                    float curVelocityMag = rigidBody.velocity.magnitude;
+                    
+                    Vector3 curVelocity = rigidBody.velocity;
+                    float curVelocityMag = curVelocity.magnitude;
 
                     rigidBody.velocity =
-                        (rigidBody.velocity.normalized + (dragonTargetPoint - ccTransform.position).normalized)
+                        (curVelocity.normalized + (dragonTargetPoint - dragonPosition).normalized)
                         .normalized * curVelocityMag;
 
-                    Cam.transform.position = ccTransform.position +
-                                             (Cam.transform.position - ccTransform.position).normalized * fpsCamera.distance;
-            
-                    Cam.transform.LookAt(ccTransform.position + 2 * Vector3.up);
+                    Cam.transform.position = dragonPosition +
+                                             (Cam.transform.position - dragonPosition).normalized * fpsCamera.distance;
+                    
+                    Cam.transform.LookAt(boneRoot);
                 }
                 else
                 {
@@ -434,12 +430,6 @@ namespace DragonGameNetworkProject.DragonMovements
                 {
                     controller.SwitchTo<DragonAttackMovement>();
                     return;
-                }
-        
-                var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                if (animatorStateInfo.IsName("TakeOff"))
-                {
-                    boneRoot.position = ccTransform.position;
                 }
         
                 float delta = Runner.DeltaTime;

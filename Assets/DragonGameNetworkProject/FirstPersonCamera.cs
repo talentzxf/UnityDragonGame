@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FirstPersonCamera : MonoBehaviour
 {
-    public Transform target;
     public float MouseSensitivity = 10f;
 
     private float xAngle;
@@ -12,9 +11,15 @@ public class FirstPersonCamera : MonoBehaviour
 
     public float distance;
     private float originalDistance;
+ 
+    public Transform target;
+    public Transform newTarget;
+    private float currentProgress = 0.0f;
 
-    public void LerpToDistance(float distanceFactor, float totalTime)
+    public void LerpToDistance(float distanceFactor, Transform newTarget, float totalTime)
     {
+        this.newTarget = newTarget;
+        
         StartCoroutine(InternalLerpToDistance(distanceFactor, totalTime));
     }
 
@@ -22,15 +27,21 @@ public class FirstPersonCamera : MonoBehaviour
     {
         float startDistance = distance;
         float targetDistance = originalDistance * distanceFactor;
-        float percentage = 0.0f;
+        float usedTime = 0.0f;
 
-        while (percentage < durationSeconds)
+        while (usedTime < durationSeconds)
         {
-            distance = Mathf.Lerp(startDistance, targetDistance, percentage / durationSeconds);
+            distance = Mathf.Lerp(startDistance, targetDistance, usedTime / durationSeconds);
 
-            percentage += Time.deltaTime;
+            usedTime += Time.deltaTime;
+
+            currentProgress = usedTime / durationSeconds;
             yield return null;
         }
+
+        currentProgress = 0.0f;
+        target = newTarget;
+        newTarget = null;
     }
 
     private void OnEnable()
@@ -65,8 +76,13 @@ public class FirstPersonCamera : MonoBehaviour
     {
         if (target == null)
             return;
-
+        
         Vector3 targetPosition = target.position;
+
+        if (newTarget != null)
+        {
+            targetPosition = Vector3.Lerp(target.position, newTarget.position, currentProgress);
+        }
 
         float horizontalInput = Input.GetAxis("Mouse X") * MouseSensitivity * Time.deltaTime;
         float verticalInput = Input.GetAxis("Mouse Y") * MouseSensitivity * Time.deltaTime;

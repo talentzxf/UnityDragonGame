@@ -13,7 +13,8 @@ namespace DragonGameNetworkProject
         private Vector3 climbStartForward;
 
         private NetworkObject tobeSetPlayerNO;
-
+        private string rootBoneName = "Bone.004";
+        
         public void PrepareToClimb(GameObject dragonGO, Vector3 startPosition, Vector3 startForward)
         {
             if (!HasStateAuthority)
@@ -35,7 +36,8 @@ namespace DragonGameNetworkProject
             
             networkAnimator.Animator.SetBool(_climb, true);
 
-            Camera.main.GetComponent<FirstPersonCamera>().LerpToDistance(3.0f, 3.0f);
+            Transform boneRoot = Utility.RecursiveFind(dragonTransform, rootBoneName);
+            Camera.main.GetComponent<FirstPersonCamera>().LerpToDistance(3.0f, boneRoot, 3.0f);
         }
 
         IEnumerator FixPlayerPosition(float durationSeconds)

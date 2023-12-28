@@ -82,7 +82,7 @@ namespace DragonGameNetworkProject.DragonMovements
 
             rigidBody.velocity = Vector3.zero;
             rigidBody.angularVelocity = Vector3.zero;
-
+            
             Debug.Log("Set Land true");
         }
 

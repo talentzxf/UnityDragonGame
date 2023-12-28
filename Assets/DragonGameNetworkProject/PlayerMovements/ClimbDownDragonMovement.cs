@@ -7,13 +7,13 @@ namespace DragonGameNetworkProject
         private int _climbDown = Animator.StringToHash("climbDown");
         private int _isIdleHash = Animator.StringToHash("isIdle");
         protected override bool isEnableIK => false;
-
+        
         public override void OnEnterMovement()
         {
             networkAnimator.Animator.SetBool(_isIdleHash, true);
             networkAnimator.Animator.SetBool(_climbDown, true);
             cc.enabled = true;
-            Camera.main.GetComponent<FirstPersonCamera>().LerpToDistance(1.0f, 3.0f);
+            Camera.main.GetComponent<FirstPersonCamera>().LerpToDistance(1.0f, ccTransform, 3.0f);
         }
 
         public override void OnLeaveMovement()
