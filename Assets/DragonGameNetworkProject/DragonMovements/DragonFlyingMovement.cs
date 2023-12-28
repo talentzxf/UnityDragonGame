@@ -157,7 +157,7 @@ namespace DragonGameNetworkProject.DragonMovements
         private RectTransform frontSightRT;
         private FirstPersonCamera fpsCamera;
         private Canvas canvas;
-        
+
         public override void Spawned()
         {
             base.Spawned();
@@ -181,18 +181,25 @@ namespace DragonGameNetworkProject.DragonMovements
 
         public override void OnEnterMovement()
         {
-            Camera.main.GetComponent<FirstPersonCamera>().clampEnabled = false;
-            
-            rigidBody.useGravity = false;
-            rigidBody.freezeRotation = false;
+            if (HasStateAuthority)
+            {
+                Camera.main.GetComponent<FirstPersonCamera>().clampEnabled = false;
 
-            rigidBody.velocity = ccTransform.forward * initVelocity;
-            input.Reset(true);
+                rigidBody.useGravity = false;
+                rigidBody.freezeRotation = false;
+                
+                rigidBody.AddForce(ccTransform.forward * initVelocity, ForceMode.Impulse);
+
+                input.Reset(true);
+            }
         }
 
         private void Update()
         {
-            input.Update();
+            if (HasStateAuthority)
+            {
+                input.Update();
+            }
         }
 
         //handle how our speed is increased or decreased when flying
@@ -347,20 +354,26 @@ namespace DragonGameNetworkProject.DragonMovements
                 animator.Play("Flying FWD");
             }
 
-            // if (Runner.IsForward)
-            // {
-            //     animator.SetFloat(speedFWD, rigidbodyVelocity.magnitude);
-            // }
+            if (Runner.IsForward)
+            {
+                animator.SetFloat(speedFWD, rigidbodyVelocity.magnitude);
+            }
         }
-        
+
         private void EasyControl()
         {
             if (Runner.IsForward)
             {
                 float delta = Runner.DeltaTime;
-                
+
+                if (input.Jump)
+                {
+                    float curMag = rigidBody.velocity.magnitude;
+                    rigidBody.velocity = curMag * 1.5f * rigidBody.velocity.normalized;
+                }
+
                 // if (input.IsRightMouseHold)
-                if(input.IsRightMouseHold)
+                if (input.IsRightMouseHold)
                 {
                     fpsCamera.enabled = false;
                     Cursor.lockState = CursorLockMode.Confined;
@@ -372,20 +385,22 @@ namespace DragonGameNetworkProject.DragonMovements
                         inputMousePosition, canvas.worldCamera, out mousePos);
 
                     frontSightRT.anchoredPosition = mousePos;
-                    
+
                     Vector3 dragonPosition = boneRoot.position;
-                    
+
                     Ray mousePointRay = CamComp.ScreenPointToRay(inputMousePosition);
 
-                    float cameraToProjectPlaneDistance = (dragonPosition - Cam.transform.position).magnitude + this.projectDistance;
+                    float cameraToProjectPlaneDistance =
+                        (dragonPosition - Cam.transform.position).magnitude + this.projectDistance;
 
-                    Vector3 projectedPoint = mousePointRay.origin + mousePointRay.direction * cameraToProjectPlaneDistance;
+                    Vector3 projectedPoint =
+                        mousePointRay.origin + mousePointRay.direction * cameraToProjectPlaneDistance;
                     Vector3 dragonTargetPoint = projectedPoint;
 
                     Quaternion targetRotation = Quaternion.LookRotation(dragonTargetPoint - dragonPosition);
                     ccTransform.rotation = Quaternion.Slerp(ccTransform.rotation, targetRotation,
                         camSwitchRotationSpeed * delta);
-                    
+
                     Vector3 curVelocity = rigidBody.velocity;
                     float curVelocityMag = curVelocity.magnitude;
 
@@ -395,7 +410,7 @@ namespace DragonGameNetworkProject.DragonMovements
 
                     Cam.transform.position = dragonPosition +
                                              (Cam.transform.position - dragonPosition).normalized * fpsCamera.distance;
-                    
+
                     Cam.transform.LookAt(boneRoot);
                 }
                 else
@@ -403,8 +418,6 @@ namespace DragonGameNetworkProject.DragonMovements
                     frontSightImg.gameObject.SetActive(false);
                     fpsCamera.enabled = true;
                 }
-
-                // rigidBody.velocity = rigidBody.velocity + Vector3.up * -1.0f * delta;
             }
         }
 
@@ -414,78 +427,78 @@ namespace DragonGameNetworkProject.DragonMovements
 
         public override void FixedUpdateNetwork()
         {
-        try
-        {
-            if (HasStateAuthority)
+            try
             {
-                if (input.Land)
+                if (HasStateAuthority)
                 {
-                    controller.SwitchTo<DragonLandMovement>();
-                    return;
+                    if (input.Land)
+                    {
+                        controller.SwitchTo<DragonLandMovement>();
+                        return;
+                    }
+
+                    if (input.Attack)
+                    {
+                        controller.SwitchTo<DragonAttackMovement>();
+                        return;
+                    }
+
+                    float delta = Runner.DeltaTime;
+                    float _xMov = input.Horizontal;
+                    float _zMov = input.Vertical;
+
+                    //get our direction of input based on camera position
+                    Vector3 screenMovementForward = CamY.transform.forward;
+                    Vector3 screenMovementRight = CamY.transform.right;
+                    Vector3 screenMovementUp = CamY.transform.up;
+
+                    Vector3 h = screenMovementRight * _xMov;
+                    Vector3 v = screenMovementForward * _zMov;
+
+                    Vector3 moveDirection = (v + h).normalized;
+
+                    if (ActionAirTimer > 0)
+                        ActionAirTimer -= delta;
+
+                    if (FlyingAdjustmentLerp < 1.1)
+                        FlyingAdjustmentLerp += delta * FlyingAdjustmentSpeed;
+
+                    //lerp speed
+                    float YAmt = rigidBody.velocity.y;
+                    float FlyAccel = FlyingAcceleration * FlyingAdjustmentLerp;
+                    float Spd = FlyingSpeed;
+
+                    if (!input.Fly) //we are not holding fly, slow down
+                    {
+                        Spd = FlyingMinSpeed;
+                        if (ActSpeed > FlyingMinSpeed)
+                            FlyAccel = FlyingDecelleration * FlyingAdjustmentLerp;
+                    }
+
+                    HandleVelocity(delta, Spd, FlyAccel, YAmt);
+
+                    if (isHardCoreControl)
+                    {
+                        //flying controls
+                        FlyingCtrl(delta, ActSpeed, _xMov, _zMov);
+                    }
+                    else
+                    {
+                        EasyControl();
+                    }
+                    
+                    rigidbodyVelocity = rigidBody.velocity; // Set here, sync to all clients.
                 }
-        
-                if (input.Attack)
+
+                if (Runner.IsForward)
                 {
-                    controller.SwitchTo<DragonAttackMovement>();
-                    return;
+                    animator.SetFloat(speedFWD, rigidbodyVelocity.magnitude);
                 }
-        
-                float delta = Runner.DeltaTime;
-                float _xMov = input.Horizontal;
-                float _zMov = input.Vertical;
-        
-                //get our direction of input based on camera position
-                Vector3 screenMovementForward = CamY.transform.forward;
-                Vector3 screenMovementRight = CamY.transform.right;
-                Vector3 screenMovementUp = CamY.transform.up;
-        
-                Vector3 h = screenMovementRight * _xMov;
-                Vector3 v = screenMovementForward * _zMov;
-        
-                Vector3 moveDirection = (v + h).normalized;
-        
-                if (ActionAirTimer > 0)
-                    ActionAirTimer -= delta;
-        
-                if (FlyingAdjustmentLerp < 1.1)
-                    FlyingAdjustmentLerp += delta * FlyingAdjustmentSpeed;
-        
-                //lerp speed
-                float YAmt = rigidBody.velocity.y;
-                float FlyAccel = FlyingAcceleration * FlyingAdjustmentLerp;
-                float Spd = FlyingSpeed;
-        
-                if (!input.Fly) //we are not holding fly, slow down
-                {
-                    Spd = FlyingMinSpeed;
-                    if (ActSpeed > FlyingMinSpeed)
-                        FlyAccel = FlyingDecelleration * FlyingAdjustmentLerp;
-                }
-        
-                HandleVelocity(delta, Spd, FlyAccel, YAmt);
-        
-                if (isHardCoreControl)
-                {
-                    //flying controls
-                    FlyingCtrl(delta, ActSpeed, _xMov, _zMov);
-                }
-                else
-                {
-                    EasyControl();
-                }
-        
-                rigidbodyVelocity = rigidBody.velocity;
             }
-        
-            if (Runner.IsForward)
+            finally
             {
-                animator.SetFloat(speedFWD, rigidbodyVelocity.magnitude);
+                input.Reset();
             }
-        }
-        finally
-        {
-            input.Reset();
-        }
         }
     }
 }
