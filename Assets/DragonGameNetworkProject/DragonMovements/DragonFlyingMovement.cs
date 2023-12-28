@@ -44,14 +44,12 @@ namespace DragonGameNetworkProject.DragonMovements
 
             if (Input.GetMouseButtonDown(1)) // 1 -- Right Mouse Button
             {
-                Debug.Log("RightMouseHold true");
                 IsRightMouseHold = true;
             }
 
 
             if (Input.GetMouseButtonUp(1))
             {
-                Debug.Log("RightMouseHold false");
                 IsRightMouseHold = false;
             }
 
@@ -183,6 +181,8 @@ namespace DragonGameNetworkProject.DragonMovements
 
         public override void OnEnterMovement()
         {
+            Camera.main.GetComponent<FirstPersonCamera>().clampEnabled = false;
+            
             rigidBody.useGravity = false;
             rigidBody.freezeRotation = false;
 
@@ -362,7 +362,6 @@ namespace DragonGameNetworkProject.DragonMovements
                 // if (input.IsRightMouseHold)
                 if(input.IsRightMouseHold)
                 {
-                    Debug.Log("FrontSightSetActive true");
                     fpsCamera.enabled = false;
                     Cursor.lockState = CursorLockMode.Confined;
                     frontSightImg.gameObject.SetActive(true);
@@ -401,7 +400,6 @@ namespace DragonGameNetworkProject.DragonMovements
                 }
                 else
                 {
-                    Debug.Log("FrontSightSetActive false");
                     frontSightImg.gameObject.SetActive(false);
                     fpsCamera.enabled = true;
                 }

@@ -1,10 +1,14 @@
 using System;
 using System.Collections;
+using System.Numerics;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 public class FirstPersonCamera : MonoBehaviour
 {
     public float MouseSensitivity = 10f;
+    public bool clampEnabled = true;
 
     private float xAngle;
     private float yAngle;
@@ -48,6 +52,23 @@ public class FirstPersonCamera : MonoBehaviour
     {
         if (target != null)
             LockCursor();
+
+        if (target != null)
+        {
+            Vector3 initDir = Vector3.forward;
+            Vector3 resultDir = transform.position - target.position;
+        
+            Quaternion resultRotation = Quaternion.FromToRotation(initDir, resultDir.normalized);
+        
+            xAngle = resultRotation.eulerAngles.x;
+            yAngle = resultRotation.eulerAngles.y;
+            
+            Quaternion rotation = Quaternion.Euler(xAngle, yAngle, 0);
+            Vector3 newPosition = target.position + (rotation * Vector3.forward).normalized * distance;
+            
+            Debug.Log("Calculated xAngle:" + xAngle + " yAngle:" + yAngle);
+            Debug.Log("Camera error:" + (newPosition - transform.position));
+        }
     }
 
     public void LockCursor()
@@ -89,7 +110,10 @@ public class FirstPersonCamera : MonoBehaviour
 
         xAngle += verticalInput;
         yAngle += horizontalInput;
-        xAngle = Math.Clamp(xAngle, -89, 89);
+        
+        if(clampEnabled)
+            xAngle = Math.Clamp(xAngle, -89, 89);
+        
         Quaternion rotation = Quaternion.Euler(xAngle, yAngle, 0);
         Vector3 newPosition = targetPosition + (rotation * Vector3.forward).normalized * distance;
 
