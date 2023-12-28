@@ -45,16 +45,18 @@ namespace DragonGameNetworkProject.DragonMovements
                 float step = moveSpeed * deltaTime;
                 float rotateStep = rotateSpeed * deltaTime;
 
-                rigidBody.MovePosition(Vector3.MoveTowards(rigidBody.transform.position, targetPosition, step));
-                rigidBody.MoveRotation(Quaternion.RotateTowards(rigidBody.transform.rotation, targetRotation,
-                    rotateStep));
+                Vector3 proposedPosition = Vector3.MoveTowards(rigidBody.transform.position, targetPosition, step);
 
+                rigidBody.transform.position = proposedPosition;
+                rigidBody.transform.rotation = Quaternion.RotateTowards(rigidBody.transform.rotation, targetRotation,
+                    rotateStep);
+                
                 return true;
             }
             else
             {
-                rigidBody.MovePosition(targetPosition);
-                rigidBody.MoveRotation(targetRotation);
+                rigidBody.transform.position = targetPosition;
+                rigidBody.transform.rotation = targetRotation;
 
                 hasFinished = true;
 

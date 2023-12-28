@@ -192,6 +192,9 @@ namespace DragonGameNetworkProject.DragonMovements
 
                 input.Reset(true);
             }
+            
+            Utility.RecursiveFind(ccTransform, "OnboardingCube").gameObject.SetActive(false);
+            Utility.RecursiveFind(ccTransform, "ClimbDownStair").gameObject.SetActive(false);
         }
 
         private void Update()

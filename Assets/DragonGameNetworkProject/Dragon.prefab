@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 9145386144984175347}
   - component: {fileID: 1534231822559513991}
   - component: {fileID: 7710442806778388856}
-  - component: {fileID: 3341341651520612962}
+  - component: {fileID: 6113434499066157746}
   m_Layer: 0
   m_Name: RedDragon1.1 Variant
   m_TagString: Untagged
@@ -213,7 +213,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &3341341651520612962
+--- !u!114 &6113434499066157746
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,19 +222,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 266274313640888295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a591d221a634417e9827eb58e17de84, type: 3}
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncScale: 0
   SyncParent: 0
-  _interpolationTarget: {fileID: 0}
-  UsePreciseRotation: 0
-  UseRenderSleepThresholds: 1
-  RenderThresholds:
-    UseEnergy: 1
-    Position: 0.01
-    Rotation: 0.01
-    Scale: 0.01
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!1 &371735784174536499
 GameObject:
   m_ObjectHideFlags: 0
@@ -4179,7 +4173,7 @@ MonoBehaviour:
   - {fileID: 6699452348448040102}
   - {fileID: 3727287046409813048}
   - {fileID: 2714350509990450338}
-  - {fileID: 3341341651520612962}
+  - {fileID: 6113434499066157746}
   - {fileID: 4877764570215285181}
 --- !u!114 &2268967241336285774
 MonoBehaviour:
@@ -4442,7 +4436,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4013784541605216550
 Transform:
   m_ObjectHideFlags: 0

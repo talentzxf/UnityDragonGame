@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DragonGameNetworkProject.DragonMovements
@@ -46,6 +47,9 @@ namespace DragonGameNetworkProject.DragonMovements
             rigidBody.useGravity = true;
             
             animator.SetFloat(speedFWD, 0.0f);
+            
+            Utility.RecursiveFind(ccTransform, "OnboardingCube").gameObject.SetActive(false);
+            Utility.RecursiveFind(ccTransform, "ClimbDownStair").gameObject.SetActive(true);
         }
 
         public override void OnLeaveMovement()
