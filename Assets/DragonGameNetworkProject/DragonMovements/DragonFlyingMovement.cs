@@ -1,14 +1,8 @@
 using System;
-using System.Data;
-using System.Numerics;
-using System.Runtime;
 using Fusion;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
-using Quaternion = UnityEngine.Quaternion;
-using Vector2 = UnityEngine.Vector2;
-using Vector3 = UnityEngine.Vector3;
 
 namespace DragonGameNetworkProject.DragonMovements
 {
@@ -24,7 +18,7 @@ namespace DragonGameNetworkProject.DragonMovements
 
         public bool LB;
         public bool RB;
-        
+
         public bool Land = false;
 
         public bool Attack = false;
@@ -43,7 +37,7 @@ namespace DragonGameNetworkProject.DragonMovements
 
             RB = Input.GetButton("RightTilt");
             LB = Input.GetButton("LeftTilt");
-            
+
             Land = Input.GetButton("Land");
 
             Attack = Input.GetButton("Attack");
@@ -60,7 +54,7 @@ namespace DragonGameNetworkProject.DragonMovements
                 Debug.Log("RightMouseHold false");
                 IsRightMouseHold = false;
             }
-            
+
             MousePosition = Input.mousePosition;
         }
 
@@ -77,23 +71,26 @@ namespace DragonGameNetworkProject.DragonMovements
             Land = false;
             Attack = false;
 
-            if (resetMouse)
-            {
-                IsRightMouseHold = false;
-                MousePosition = Vector3.zero;                
-            }
+            // if (resetMouse)
+            // {
+            //     IsRightMouseHold = false;
+            //     MousePosition = Vector3.zero;
+            // }
         }
     }
 
     public class DragonFlyingMovement : AbstractRigidBodyMovement
     {
         public bool isHardCoreControl = false;
-        public float cursorDistance = 5.0f;
-        
+        private float projectDistance = 10f;
+
+        public float initVelocity = 10.0f;
+
         [Networked] public Vector3 rigidbodyVelocity { set; get; }
 
         private float maxSpeed = 500.0f;
         private float rotationSpeed = 1000f;
+        private float camSwitchRotationSpeed = 10.0f;
 
         private int speedFWD = Animator.StringToHash("SpeedFWD");
 
@@ -160,7 +157,9 @@ namespace DragonGameNetworkProject.DragonMovements
 
         private Image frontSightImg;
         private RectTransform frontSightRT;
-
+        private FirstPersonCamera fpsCamera;
+        private Canvas canvas;
+        
         public override void Spawned()
         {
             base.Spawned();
@@ -168,6 +167,7 @@ namespace DragonGameNetworkProject.DragonMovements
             Cam = Camera.main.transform;
             CamY = Cam;
             CamComp = Cam.GetComponent<Camera>();
+            fpsCamera = Cam.GetComponent<FirstPersonCamera>();
 
             FlyingTimer = GlideTime;
             ActGravAmt = 0.0f;
@@ -175,7 +175,8 @@ namespace DragonGameNetworkProject.DragonMovements
 
             boneRoot = ccTransform.Find(rootBonePath);
 
-            var canvas = GameObject.Find("Canvas");
+            var canvasGO = GameObject.Find("Canvas");
+            canvas = canvasGO.GetComponent<Canvas>();
             frontSightImg = canvas.transform.Find("FrontSight").GetComponent<Image>();
             frontSightRT = frontSightImg.GetComponent<RectTransform>();
         }
@@ -185,6 +186,7 @@ namespace DragonGameNetworkProject.DragonMovements
             rigidBody.useGravity = false;
             rigidBody.freezeRotation = false;
 
+            rigidBody.velocity = ccTransform.forward * initVelocity;
             input.Reset(true);
         }
 
@@ -342,53 +344,73 @@ namespace DragonGameNetworkProject.DragonMovements
             var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
             if (!animatorStateInfo.IsName("Flying FWD") &&
                 !animatorStateInfo.IsName("TakeOff") &&
-                !animatorStateInfo.IsName("Lands") && 
-                !animatorStateInfo.IsName("Drakaris") && 
+                !animatorStateInfo.IsName("Lands") &&
+                !animatorStateInfo.IsName("Drakaris") &&
                 !animator.IsInTransition(0))
             {
                 Debug.Log("Current animation:" + animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
                 Debug.Log("Switch to animation Flying FWD");
                 animator.Play("Flying FWD");
             }
-            
+
             if (Runner.IsForward)
             {
                 animator.SetFloat(speedFWD, rigidbodyVelocity.magnitude);
             }
         }
-
+        
         private void EasyControl()
         {
-            float delta = Runner.DeltaTime;
+            if (Runner.IsForward)
+            {
+                float delta = Runner.DeltaTime;
+                
+                // if (input.IsRightMouseHold)
+                if(input.IsRightMouseHold)
+                {
+                    Debug.Log("FrontSightSetActive true");
+                    fpsCamera.enabled = false;
+                    Cursor.lockState = CursorLockMode.Confined;
+                    frontSightImg.gameObject.SetActive(true);
+
+                    Vector2 inputMousePosition = input.MousePosition;
+                    Vector2 mousePos;
+                    RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform,
+                        inputMousePosition, canvas.worldCamera, out mousePos);
+
+                    frontSightRT.anchoredPosition = mousePos;
+                    
+                    Ray mousePointRay = CamComp.ScreenPointToRay(inputMousePosition);
+
+                    float cameraToProjectPlaneDistance = (ccTransform.position - Cam.transform.position).magnitude + this.projectDistance;
+
+                    Vector3 projectedPoint = mousePointRay.origin + mousePointRay.direction * cameraToProjectPlaneDistance;
+                    Vector3 dragonTargetPoint = projectedPoint;
+
+                    Quaternion targetRotation = Quaternion.LookRotation(dragonTargetPoint - ccTransform.position);
+                    ccTransform.rotation = Quaternion.Slerp(ccTransform.rotation, targetRotation,
+                        camSwitchRotationSpeed * delta);
+
+
+                    float curVelocityMag = rigidBody.velocity.magnitude;
+
+                    rigidBody.velocity =
+                        (rigidBody.velocity.normalized + (dragonTargetPoint - ccTransform.position).normalized)
+                        .normalized * curVelocityMag;
+
+                    Cam.transform.position = ccTransform.position +
+                                             (Cam.transform.position - ccTransform.position).normalized * fpsCamera.distance;
             
-            if (input.IsRightMouseHold)
-            {
-                Debug.Log("FrontSightSetActive true");
-                frontSightImg.gameObject.SetActive(true);
+                    Cam.transform.LookAt(ccTransform.position + 2 * Vector3.up);
+                }
+                else
+                {
+                    Debug.Log("FrontSightSetActive false");
+                    frontSightImg.gameObject.SetActive(false);
+                    fpsCamera.enabled = true;
+                }
 
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(frontSightRT,
-                    input.MousePosition, null, out Vector2 localPoint);
-                frontSightImg.rectTransform.localPosition = localPoint;
-
-                // 1. Let dragon forward align with camera forward.
-                Vector3 mouseWorldPosition = CamComp.ScreenToWorldPoint(input.MousePosition);
-                Vector3 forwardPlanePosition = transform.position + transform.forward * cursorDistance;
-                Vector3 forwardPlaneNormal = -transform.forward;
-
-                Vector3 projectedPoint =
-                    Vector3.ProjectOnPlane(mouseWorldPosition - forwardPlanePosition, forwardPlaneNormal) +
-                    forwardPlanePosition;
-                
-                Vector3 targetDir = projectedPoint - transform.position;
-                
-                Quaternion targetRot = Quaternion.LookRotation(targetDir, Vector3.up);
-
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotationSpeed);
-            }
-            else
-            {
-                Debug.Log("FrontSightSetActive false");
-                frontSightImg.gameObject.SetActive(false);
+                // rigidBody.velocity = rigidBody.velocity + Vector3.up * -1.0f * delta;
             }
         }
 
@@ -398,84 +420,84 @@ namespace DragonGameNetworkProject.DragonMovements
 
         public override void FixedUpdateNetwork()
         {
-            try
+        try
+        {
+            if (HasStateAuthority)
             {
-                if (HasStateAuthority)
+                if (input.Land)
                 {
-                    if (input.Land)
-                    {
-                        controller.SwitchTo<DragonLandMovement>();
-                        return;
-                    }
-
-                    if (input.Attack)
-                    {
-                        controller.SwitchTo<DragonAttackMovement>();
-                        return;
-                    }
-
-                    var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                    if (animatorStateInfo.IsName("TakeOff"))
-                    {
-                        boneRoot.position = ccTransform.position;
-                    }
-                    
-                    float delta = Runner.DeltaTime;
-                    float _xMov = input.Horizontal;
-                    float _zMov = input.Vertical;
-
-                    //get our direction of input based on camera position
-                    Vector3 screenMovementForward = CamY.transform.forward;
-                    Vector3 screenMovementRight = CamY.transform.right;
-                    Vector3 screenMovementUp = CamY.transform.up;
-
-                    Vector3 h = screenMovementRight * _xMov;
-                    Vector3 v = screenMovementForward * _zMov;
-
-                    Vector3 moveDirection = (v + h).normalized;
-
-                    if (ActionAirTimer > 0)
-                        ActionAirTimer -= delta;
-
-                    if (FlyingAdjustmentLerp < 1.1)
-                        FlyingAdjustmentLerp += delta * FlyingAdjustmentSpeed;
-
-                    //lerp speed
-                    float YAmt = rigidBody.velocity.y;
-                    float FlyAccel = FlyingAcceleration * FlyingAdjustmentLerp;
-                    float Spd = FlyingSpeed;
-
-                    if (!input.Fly) //we are not holding fly, slow down
-                    {
-                        Spd = FlyingMinSpeed;
-                        if (ActSpeed > FlyingMinSpeed)
-                            FlyAccel = FlyingDecelleration * FlyingAdjustmentLerp;
-                    }
-
-                    HandleVelocity(delta, Spd, FlyAccel, YAmt);
-
-                    if (isHardCoreControl)
-                    {
-                        //flying controls
-                        FlyingCtrl(delta, ActSpeed, _xMov, _zMov);
-                    }
-                    else
-                    {
-                        EasyControl();
-                    }
-
-                    rigidbodyVelocity = rigidBody.velocity;
+                    controller.SwitchTo<DragonLandMovement>();
+                    return;
                 }
-
-                if (Runner.IsForward)
+        
+                if (input.Attack)
                 {
-                    animator.SetFloat(speedFWD, rigidbodyVelocity.magnitude);
+                    controller.SwitchTo<DragonAttackMovement>();
+                    return;
                 }
+        
+                var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                if (animatorStateInfo.IsName("TakeOff"))
+                {
+                    boneRoot.position = ccTransform.position;
+                }
+        
+                float delta = Runner.DeltaTime;
+                float _xMov = input.Horizontal;
+                float _zMov = input.Vertical;
+        
+                //get our direction of input based on camera position
+                Vector3 screenMovementForward = CamY.transform.forward;
+                Vector3 screenMovementRight = CamY.transform.right;
+                Vector3 screenMovementUp = CamY.transform.up;
+        
+                Vector3 h = screenMovementRight * _xMov;
+                Vector3 v = screenMovementForward * _zMov;
+        
+                Vector3 moveDirection = (v + h).normalized;
+        
+                if (ActionAirTimer > 0)
+                    ActionAirTimer -= delta;
+        
+                if (FlyingAdjustmentLerp < 1.1)
+                    FlyingAdjustmentLerp += delta * FlyingAdjustmentSpeed;
+        
+                //lerp speed
+                float YAmt = rigidBody.velocity.y;
+                float FlyAccel = FlyingAcceleration * FlyingAdjustmentLerp;
+                float Spd = FlyingSpeed;
+        
+                if (!input.Fly) //we are not holding fly, slow down
+                {
+                    Spd = FlyingMinSpeed;
+                    if (ActSpeed > FlyingMinSpeed)
+                        FlyAccel = FlyingDecelleration * FlyingAdjustmentLerp;
+                }
+        
+                HandleVelocity(delta, Spd, FlyAccel, YAmt);
+        
+                if (isHardCoreControl)
+                {
+                    //flying controls
+                    FlyingCtrl(delta, ActSpeed, _xMov, _zMov);
+                }
+                else
+                {
+                    EasyControl();
+                }
+        
+                rigidbodyVelocity = rigidBody.velocity;
             }
-            finally
+        
+            if (Runner.IsForward)
             {
-                input.Reset();
+                animator.SetFloat(speedFWD, rigidbodyVelocity.magnitude);
             }
+        }
+        finally
+        {
+            input.Reset();
+        }
         }
     }
 }

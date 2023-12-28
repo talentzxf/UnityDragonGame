@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class FirstPersonCamera : MonoBehaviour
 {
-    private Transform target;
+    public Transform target;
     public float MouseSensitivity = 10f;
 
     private float xAngle;
     private float yAngle;
 
-    private float distance;
+    public float distance;
     private float originalDistance;
-    
+
     public void LerpToDistance(float distanceFactor, float totalTime)
     {
         StartCoroutine(InternalLerpToDistance(distanceFactor, totalTime));
@@ -27,7 +27,7 @@ public class FirstPersonCamera : MonoBehaviour
         while (percentage < durationSeconds)
         {
             distance = Mathf.Lerp(startDistance, targetDistance, percentage / durationSeconds);
-            
+
             percentage += Time.deltaTime;
             yield return null;
         }
@@ -35,19 +35,20 @@ public class FirstPersonCamera : MonoBehaviour
 
     private void OnEnable()
     {
-        LockCursor();
+        if (target != null)
+            LockCursor();
     }
 
     public void LockCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;        
+        Cursor.visible = false;
     }
 
     public void SetCameraTarget(GameObject playerGO, bool hideCursor = true)
     {
         LockCursor();
-        
+
         target = playerGO.transform;
         Animator playerAnimator = playerGO.GetComponentInChildren<Animator>();
         if (playerAnimator && playerAnimator.isHuman)
@@ -81,7 +82,7 @@ public class FirstPersonCamera : MonoBehaviour
     }
 
     private void Update()
-    {  
+    {
         SyncTransform();
     }
 

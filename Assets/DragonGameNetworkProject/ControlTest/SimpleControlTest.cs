@@ -9,9 +9,15 @@ public class SimpleControlTest : MonoBehaviour
     private FirstPersonCamera fpsCamera;
     private Canvas canvas;
 
-    private float distance = 5f;
+    private float cameraDistance = 0.0f;
+
+    private float rotationSpeed = 10.0f;
+
+    private float distance = 10f;
 
     private GameObject dragonTargetGO;
+
+    private Rigidbody rb;
 
     void Start()
     {
@@ -26,6 +32,12 @@ public class SimpleControlTest : MonoBehaviour
         frontSightRT = frontSightImg.GetComponent<RectTransform>();
         
         dragonTargetGO = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+        rb = GetComponent<Rigidbody>();
+        
+        rb.velocity = transform.forward * 2.0f;
+
+        cameraDistance = (Cam.transform.position - transform.position).magnitude;
     }
 
     private bool isRightMouseDown = false;
@@ -43,31 +55,48 @@ public class SimpleControlTest : MonoBehaviour
             isRightMouseDown = false;
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            float curMag = rb.velocity.magnitude;
+            
+            rb.velocity = curMag * 1.5f * rb.velocity.normalized;
+        }
+
         if (isRightMouseDown)
         {
             fpsCamera.enabled = false;
             Cursor.lockState = CursorLockMode.Confined;
             frontSightImg.gameObject.SetActive(true);
 
+            Vector2 inputMousePosition = Input.mousePosition;
             Vector2 mousePos;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform,
-                Input.mousePosition, canvas.worldCamera, out mousePos);
+                inputMousePosition, canvas.worldCamera, out mousePos);
 
             frontSightRT.anchoredPosition = mousePos;
+           
+            Ray mousePointRay = Cam.ScreenPointToRay(inputMousePosition);
+
+            float cameraToProjectPlaneDistance = (transform.position - Cam.transform.position).magnitude + this.distance;
+
+            Vector3 projectedPoint = mousePointRay.origin + mousePointRay.direction * cameraToProjectPlaneDistance;
+            dragonTargetGO.transform.position = projectedPoint;
+
+            Quaternion targetRotation = Quaternion.LookRotation(dragonTargetGO.transform.position - transform.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation,
+                rotationSpeed * Time.deltaTime);
 
 
-            Vector3 planeNormal = (transform.position - Cam.transform.position).normalized;
-            Vector3 planePosition = transform.position + 5.0f * planeNormal;
+            float curVelocityMag = rb.velocity.magnitude;
 
-            Plane plane = new Plane(planeNormal, planePosition);
-            Ray mouseRay = Cam.ScreenPointToRay(mousePos);
+            rb.velocity =
+                (rb.velocity.normalized + (dragonTargetGO.transform.position - transform.position).normalized)
+                .normalized * curVelocityMag;
+
+            Cam.transform.position = transform.position +
+                                     (Cam.transform.position - transform.position).normalized * cameraDistance;
             
-            if(plane.Raycast(mouseRay, out float distance))
-            {
-                Vector3 intersectionPoint = mouseRay.GetPoint(distance);
-
-                dragonTargetGO.transform.position = intersectionPoint;
-            }
+            Cam.transform.LookAt(transform.position);
         }
         else
         {
