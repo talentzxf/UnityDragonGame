@@ -1,3 +1,4 @@
+using System;
 using DragonGameNetworkProject;
 using Fusion;
 using UnityEngine;
@@ -30,7 +31,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
                 NetworkObject dragonNo = Runner.Spawn(dragonPrefab, dragonSpawnPoint.position,
                     dragonSpawnPoint.rotation, player);
             }
-
+            
             Physics.SyncTransforms(); // Need to sync transforms, or character controller will always reset character position to 0,0,0;
         }
     }
