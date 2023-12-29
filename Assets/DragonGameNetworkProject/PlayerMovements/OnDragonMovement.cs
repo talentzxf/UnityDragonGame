@@ -11,6 +11,12 @@ namespace DragonGameNetworkProject
             base.Spawned();
         }
 
+        private void Update()
+        {
+            ccTransform.position = sitPoint.position;
+            ccTransform.rotation = sitPoint.rotation;
+        }
+
         public override void FixedUpdateNetwork()
         {
             if (HasStateAuthority)

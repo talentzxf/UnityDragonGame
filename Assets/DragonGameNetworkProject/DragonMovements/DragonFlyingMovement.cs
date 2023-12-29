@@ -1,4 +1,5 @@
 using System;
+using ExitGames.Client.Photon.StructWrapping;
 using Fusion;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -372,7 +373,12 @@ namespace DragonGameNetworkProject.DragonMovements
                 if (input.Jump)
                 {
                     float curMag = rigidBody.velocity.magnitude;
-                    rigidBody.velocity = curMag * 1.5f * rigidBody.velocity.normalized;
+                    if (curMag < Mathf.Epsilon)
+                    {
+                        rigidBody.velocity = ccTransform.forward;
+                    }
+                    
+                    rigidBody.velocity *= 1.5f;
                 }
 
                 // if (input.IsRightMouseHold)
@@ -446,42 +452,41 @@ namespace DragonGameNetworkProject.DragonMovements
                         return;
                     }
 
-                    float delta = Runner.DeltaTime;
-                    float _xMov = input.Horizontal;
-                    float _zMov = input.Vertical;
-
-                    //get our direction of input based on camera position
-                    Vector3 screenMovementForward = CamY.transform.forward;
-                    Vector3 screenMovementRight = CamY.transform.right;
-                    Vector3 screenMovementUp = CamY.transform.up;
-
-                    Vector3 h = screenMovementRight * _xMov;
-                    Vector3 v = screenMovementForward * _zMov;
-
-                    Vector3 moveDirection = (v + h).normalized;
-
-                    if (ActionAirTimer > 0)
-                        ActionAirTimer -= delta;
-
-                    if (FlyingAdjustmentLerp < 1.1)
-                        FlyingAdjustmentLerp += delta * FlyingAdjustmentSpeed;
-
-                    //lerp speed
-                    float YAmt = rigidBody.velocity.y;
-                    float FlyAccel = FlyingAcceleration * FlyingAdjustmentLerp;
-                    float Spd = FlyingSpeed;
-
-                    if (!input.Fly) //we are not holding fly, slow down
-                    {
-                        Spd = FlyingMinSpeed;
-                        if (ActSpeed > FlyingMinSpeed)
-                            FlyAccel = FlyingDecelleration * FlyingAdjustmentLerp;
-                    }
-
-                    HandleVelocity(delta, Spd, FlyAccel, YAmt);
-
                     if (isHardCoreControl)
                     {
+                        float delta = Runner.DeltaTime;
+                        float _xMov = input.Horizontal;
+                        float _zMov = input.Vertical;
+
+                        //get our direction of input based on camera position
+                        Vector3 screenMovementForward = CamY.transform.forward;
+                        Vector3 screenMovementRight = CamY.transform.right;
+                        Vector3 screenMovementUp = CamY.transform.up;
+
+                        Vector3 h = screenMovementRight * _xMov;
+                        Vector3 v = screenMovementForward * _zMov;
+
+                        Vector3 moveDirection = (v + h).normalized;
+
+                        if (ActionAirTimer > 0)
+                            ActionAirTimer -= delta;
+
+                        if (FlyingAdjustmentLerp < 1.1)
+                            FlyingAdjustmentLerp += delta * FlyingAdjustmentSpeed;
+
+                        //lerp speed
+                        float YAmt = rigidBody.velocity.y;
+                        float FlyAccel = FlyingAcceleration * FlyingAdjustmentLerp;
+                        float Spd = FlyingSpeed;
+
+                        if (!input.Fly) //we are not holding fly, slow down
+                        {
+                            Spd = FlyingMinSpeed;
+                            if (ActSpeed > FlyingMinSpeed)
+                                FlyAccel = FlyingDecelleration * FlyingAdjustmentLerp;
+                        }
+                        
+                        HandleVelocity(delta, Spd, FlyAccel, YAmt);
                         //flying controls
                         FlyingCtrl(delta, ActSpeed, _xMov, _zMov);
                     }
