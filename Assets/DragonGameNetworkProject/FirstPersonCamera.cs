@@ -20,9 +20,14 @@ public class FirstPersonCamera : MonoBehaviour
     public Transform newTarget;
     private float currentProgress = 0.0f;
 
-    public void LerpToDistance(float distanceFactor, Transform newTarget, float totalTime)
+    public void LerpToDistance(float distanceFactor, Transform inNewTarget, float totalTime)
     {
-        this.newTarget = newTarget;
+        this.newTarget = inNewTarget;
+        Animator playerAnimator = inNewTarget.GetComponentInChildren<Animator>();
+        if (playerAnimator && playerAnimator.isHuman)
+        {
+            this.newTarget = playerAnimator.GetBoneTransform(HumanBodyBones.Neck);
+        }
         
         StartCoroutine(InternalLerpToDistance(distanceFactor, totalTime));
     }
