@@ -2,9 +2,11 @@
     <ui:VisualElement style="flex-grow: 1; flex-direction: column;">
         <ui:VisualElement name="Header" style="flex-grow: 1; flex-direction: row; justify-content: space-between; flex-shrink: 1;">
             <ui:Label tabindex="-1" text="RoomName" parse-escape-sequences="true" display-tooltip-when-elided="true" name="RoomName" style="font-size: 30px; color: rgb(255, 194, 0);" />
-            <ui:Label tabindex="-1" text="UserID" parse-escape-sequences="true" display-tooltip-when-elided="true" name="UserID" style="font-size: 30px; color: rgb(255, 194, 0);" />
+            <ui:Label tabindex="-1" text="UserID" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LocalUserID" style="font-size: 30px; color: rgb(255, 194, 0);" />
         </ui:VisualElement>
         <ui:VisualElement name="Middle" style="flex-grow: 20;" />
-        <ui:VisualElement name="Footer" style="flex-grow: 1;" />
+        <ui:VisualElement name="Footer" style="flex-grow: 1;">
+            <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Messages" text="zxcv" style="font-size: 20px; color: rgb(239, 0, 255);" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

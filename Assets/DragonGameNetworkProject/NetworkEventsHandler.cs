@@ -9,6 +9,7 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
 {
     public static event EventHandler<string> LocalPlayerJoined;
     public static event EventHandler<string> PlayerJoined;
+    public static event EventHandler<string> PlayerLeft; 
 
     public static event EventHandler<NetworkRunner> ServerConnected;
 
@@ -30,6 +31,8 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
+        string playerId = runner.GetPlayerUserId(player);
+        PlayerLeft?.Invoke(this, playerId);
     }
 
     public void OnInput(NetworkRunner runner, NetworkInput input)

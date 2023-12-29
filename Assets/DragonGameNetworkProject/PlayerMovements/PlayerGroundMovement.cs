@@ -23,8 +23,11 @@ namespace DragonGameNetworkProject
         public override void OnEnterMovement()
         {
             base.OnEnterMovement();
-            
-            camera.GetComponent<FirstPersonCamera>().clampEnabled = true;
+
+            if (HasStateAuthority)
+            {
+                camera.GetComponent<FirstPersonCamera>().clampEnabled = true;
+            }
         }
 
         public override void FixedUpdateNetwork()

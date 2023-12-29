@@ -10,15 +10,21 @@ namespace DragonGameNetworkProject
         
         public override void OnEnterMovement()
         {
-            networkAnimator.Animator.SetBool(_isIdleHash, true);
-            networkAnimator.Animator.SetBool(_climbDown, true);
-            cc.enabled = true;
-            Camera.main.GetComponent<FirstPersonCamera>().LerpToDistance(1.0f, ccTransform, 3.0f);
+            if (HasStateAuthority)
+            {
+                networkAnimator.Animator.SetBool(_isIdleHash, true);
+                networkAnimator.Animator.SetBool(_climbDown, true);
+                cc.enabled = true;
+                Camera.main.GetComponent<FirstPersonCamera>().LerpToDistance(1.0f, ccTransform, 3.0f);
+            }
         }
 
         public override void OnLeaveMovement()
         {
-            networkAnimator.Animator.SetBool(_climbDown, false);
+            if (HasStateAuthority)
+            {
+                networkAnimator.Animator.SetBool(_climbDown, false);
+            }
         }
 
         public override void FixedUpdateNetwork()
