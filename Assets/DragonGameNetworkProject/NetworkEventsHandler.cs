@@ -7,6 +7,11 @@ using UnityEngine;
 
 public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
 {
+    public static event EventHandler<string> LocalPlayerJoined;
+    public static event EventHandler<string> PlayerJoined;
+
+    public static event EventHandler<NetworkRunner> ServerConnected;
+
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
     {
     }
@@ -17,24 +22,22 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        if(player == runner.LocalPlayer)
-            GlobalEvents.Instance.TriggerEventByName("LocalPlayerJoined", player);
-        GlobalEvents.Instance.TriggerEventByName("PlayerJoined", player);
+        string playerId = runner.GetPlayerUserId(player);
+        if (player == runner.LocalPlayer)
+            LocalPlayerJoined?.Invoke(this, playerId);
+        PlayerJoined?.Invoke(this, playerId);
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        
     }
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
     {
-        
     }
 
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
@@ -43,6 +46,7 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnConnectedToServer(NetworkRunner runner)
     {
+        ServerConnected?.Invoke(this, runner);
     }
 
     public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)

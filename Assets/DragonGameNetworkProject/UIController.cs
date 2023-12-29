@@ -5,19 +5,29 @@ using Fusion;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UIController : NetworkBehaviour
+public class UIController : MonoBehaviour
 {
     private UIDocument uiDocument;
     private void Awake()
     {
-        GlobalEvents.Instance.LocalPlayerJoined += (sender, e) =>
+        NetworkEventsHandler.LocalPlayerJoined += (sender, userId) =>
         {
-            string localPlayerId = Runner.GetPlayerUserId(e);
+            uiDocument.gameObject.SetActive(true);
+
+            string localPlayerId = userId;
 
             uiDocument.rootVisualElement.Q<Label>("LocalUserID").text = "UserID:" + localPlayerId;
         };
 
-        uiDocument = GetComponentInChildren<UIDocument>();
+        NetworkEventsHandler.ServerConnected += (sender, runner) =>
+        {
+            uiDocument.gameObject.SetActive(true);
+
+            string roomName = runner.SessionInfo.Name + "@" + runner.SessionInfo.Region;
+            uiDocument.rootVisualElement.Q<Label>("RoomName").text = "Room:" + roomName;
+        };
+        
+        uiDocument = GetComponentInChildren<UIDocument>(true);
     }
 
     // Start is called before the first frame update
