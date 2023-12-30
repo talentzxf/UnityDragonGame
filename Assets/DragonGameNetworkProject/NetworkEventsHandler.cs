@@ -10,6 +10,10 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
     public static event EventHandler<string> LocalPlayerJoined;
     public static event EventHandler<string> PlayerJoined;
     public static event EventHandler<string> PlayerLeft; 
+    public static event EventHandler<string> ServerDisconnected;
+    public static event EventHandler<string> ConnectFailed;
+    public static event EventHandler SceneLoadDone;
+    public static event EventHandler SceneLoadStart;
 
     public static event EventHandler<NetworkRunner> ServerConnected;
 
@@ -54,6 +58,7 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
     {
+        ServerDisconnected?.Invoke(this, Enum.GetName(typeof(NetDisconnectReason), reason));
     }
 
     public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
@@ -62,6 +67,7 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
     {
+        ConnectFailed?.Invoke(this, Enum.GetName(typeof(NetConnectFailedReason), reason));
     }
 
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
@@ -90,9 +96,11 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSceneLoadDone(NetworkRunner runner)
     {
+        SceneLoadDone?.Invoke(this, EventArgs.Empty);
     }
 
     public void OnSceneLoadStart(NetworkRunner runner)
     {
+        SceneLoadStart?.Invoke(this, EventArgs.Empty);
     }
 }

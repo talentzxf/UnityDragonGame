@@ -24,5 +24,15 @@ namespace DragonGameNetworkProject
 
         public abstract void OnEnterMovement();
         public abstract void OnLeaveMovement();
+
+        public virtual bool CanLeaveMovement()
+        {
+            return true;
+        }
+
+        public virtual bool CanEnterMovement()
+        {
+            return true;
+        }
     }
 }

@@ -86,6 +86,9 @@ namespace DragonGameNetworkProject.DragonMovements
             rigidBody.angularVelocity = Vector3.zero;
             
             Debug.Log("Set Land true");
+            
+            if(HasStateAuthority)
+                UIController.Instance.HideSpeedBar();
         }
 
         public override void OnLeaveMovement()

@@ -87,7 +87,6 @@ namespace DragonGameNetworkProject.DragonMovements
 
         [Networked] public Vector3 rigidbodyVelocity { set; get; }
 
-        private float maxSpeed = 500.0f;
         private float rotationSpeed = 1000f;
         private float camSwitchRotationSpeed = 10.0f;
 
@@ -358,6 +357,9 @@ namespace DragonGameNetworkProject.DragonMovements
                 animator.Play("Flying FWD");
             }
 
+            if(HasStateAuthority)
+                UIController.Instance.ShowSpeed(rigidbodyVelocity, MaxSpeed);
+
             if (Runner.IsForward)
             {
                 animator.SetFloat(speedFWD, rigidbodyVelocity.magnitude);
@@ -377,8 +379,12 @@ namespace DragonGameNetworkProject.DragonMovements
                     {
                         rigidBody.velocity = ccTransform.forward;
                     }
-                    
+
                     rigidBody.velocity *= 1.5f;
+                    if (curMag > MaxSpeed) // Clamp
+                    {
+                        rigidBody.velocity = MaxSpeed * rigidBody.velocity.normalized;
+                    }
                 }
 
                 // if (input.IsRightMouseHold)
