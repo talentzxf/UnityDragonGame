@@ -191,6 +191,8 @@ namespace DragonGameNetworkProject.DragonMovements
                 rigidBody.AddForce(ccTransform.forward * initVelocity, ForceMode.Impulse);
 
                 input.Reset(true);
+                
+                UIController.Instance.ShowDragonControlUI();
             }
             
             Utility.RecursiveFind(ccTransform, "OnboardingCube").gameObject.SetActive(false);

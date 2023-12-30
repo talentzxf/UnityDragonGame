@@ -33,6 +33,7 @@ public class UIController : MonoBehaviour
     private UIDocument uiDocument;
 
     private Label messageLabel;
+    private VisualElement dragonControlUI;
     private ProgressBar speedBar;
 
     private Queue<Message> curMessages = new Queue<Message>();
@@ -47,8 +48,6 @@ public class UIController : MonoBehaviour
         {
             return;
         }
-
-        speedBar.visible = true;
         
         float curSpeedMag = curSpeed.magnitude;
 
@@ -56,12 +55,18 @@ public class UIController : MonoBehaviour
         speedBar.lowValue = 0;
         speedBar.highValue = maxSpeed;
 
-        speedBar.title = "Speed:" + curSpeedMag;
+        speedBar.title = "Speed:" + curSpeedMag.ToString("F2");
     }
 
-    public void HideSpeedBar()
+    public void ShowDragonControlUI()
     {
-        speedBar.visible = false;
+        dragonControlUI.visible = true;
+    }
+
+
+    public void HideDragonControlUI()
+    {
+        dragonControlUI.visible = false;
     }
     
     private void ActivateUiDocument()
@@ -71,7 +76,9 @@ public class UIController : MonoBehaviour
         messageLabel.text = "";
 
         speedBar = uiDocument.rootVisualElement.Q<ProgressBar>("SpeedBar");
-        speedBar.visible = false;
+        dragonControlUI = uiDocument.rootVisualElement.Q<VisualElement>("DragonControlUI");
+
+        dragonControlUI.visible = false;
     }
     
     private void Awake()
@@ -117,6 +124,11 @@ public class UIController : MonoBehaviour
     void ShowSysMsg(string msg)
     {
         ShowMessage(MSGTYPE.SYSTEM, msg);
+    }
+
+    public void ShowGameMsg(string msg)
+    {
+        ShowMessage(MSGTYPE.GAME, msg);
     }
 
     void ShowMessage(MSGTYPE msgType, string msg)

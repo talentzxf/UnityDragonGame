@@ -88,7 +88,7 @@ namespace DragonGameNetworkProject.DragonMovements
             Debug.Log("Set Land true");
             
             if(HasStateAuthority)
-                UIController.Instance.HideSpeedBar();
+                UIController.Instance.HideDragonControlUI();
         }
 
         public override void OnLeaveMovement()
@@ -100,6 +100,26 @@ namespace DragonGameNetworkProject.DragonMovements
 
         private bool isAdjustingPose = false;
         private PoseAdjuster poseAdjuster = new PoseAdjuster();
+
+        private RaycastHit hit;
+        public override bool CanEnterMovement()
+        {
+            if (HasStateAuthority)
+            {
+                int layerMask = LayerMask.GetMask("Terrain");
+            
+                bool result = Physics.Raycast(rigidBody.position, Vector3.down, out hit, maxDistance, layerMask);
+
+                if (!result)
+                {
+                    UIController.Instance.ShowGameMsg("Can't land here");
+                }
+
+                return result;
+            }
+
+            return false;
+        }
 
         public override void FixedUpdateNetwork()
         {
@@ -118,9 +138,7 @@ namespace DragonGameNetworkProject.DragonMovements
                     animator.SetBool(lands, false);
                 }
 
-                int layerMask = LayerMask.GetMask("Terrain");
-                RaycastHit hit;
-                if (Physics.Raycast(rigidBody.position, Vector3.down, out hit, maxDistance, layerMask))
+
                 {
                     Vector3 targetPosition = hit.point + Vector3.up * beginLandDistance;
                     Quaternion targetRotation = Quaternion.LookRotation(
@@ -131,10 +149,6 @@ namespace DragonGameNetworkProject.DragonMovements
 
                     poseAdjuster.Prepare(rigidBody, targetPosition, targetRotation, controller);
                     isAdjustingPose = true;
-                }
-                else
-                {
-                    Debug.LogError("Can't detect ground here!!!");
                 }
             }
         }
