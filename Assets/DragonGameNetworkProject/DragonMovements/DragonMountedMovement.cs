@@ -1,4 +1,5 @@
 using System;
+using Fusion;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -38,7 +39,16 @@ namespace DragonGameNetworkProject.DragonMovements
         private int speedFWD = Animator.StringToHash("SpeedFWD");
         
         private InputData inputData = new InputData();
-        
+
+        private NetworkObject no;
+
+        public override void Spawned()
+        {
+            base.Spawned();
+
+            no = GetComponent<NetworkObject>();
+        }
+
         public override void OnEnterMovement()
         {
             animator.SetBool(hasLandedOnGround, true);
@@ -50,6 +60,9 @@ namespace DragonGameNetworkProject.DragonMovements
             
             Utility.RecursiveFind(ccTransform, "OnboardingCube").gameObject.SetActive(false);
             Utility.RecursiveFind(ccTransform, "ClimbDownStair").gameObject.SetActive(true);
+            
+            // What if the user just landed?????
+            UIController.Instance.ShowGameMsg("Player:" + Runner.GetPlayerUserId(no.StateAuthority) + " took the dragon!");
         }
 
         public override void OnLeaveMovement()

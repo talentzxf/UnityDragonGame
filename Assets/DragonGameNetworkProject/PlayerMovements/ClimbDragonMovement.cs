@@ -52,8 +52,6 @@ namespace DragonGameNetworkProject
             }
 
             controller.SwitchTo<OnDragonMovement>();
-
-            
             
             dragonNO.GetComponent<DragonMovementController>().SwitchTo<DragonMountedMovement>();
         }

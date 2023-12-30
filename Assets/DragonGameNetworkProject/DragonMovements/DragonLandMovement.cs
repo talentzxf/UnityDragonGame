@@ -118,7 +118,7 @@ namespace DragonGameNetworkProject.DragonMovements
                 return result;
             }
 
-            return false;
+            return true; // In Proxy, it will always follow StateAuthority.
         }
 
         public override void FixedUpdateNetwork()

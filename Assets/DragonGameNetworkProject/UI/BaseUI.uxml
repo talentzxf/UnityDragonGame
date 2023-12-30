@@ -12,7 +12,7 @@
         <ui:VisualElement name="Middle" style="flex-grow: 20; visibility: visible;">
             <ui:VisualElement name="DragonControlUI" style="flex-grow: 1; flex-direction: row; align-items: center; justify-content: space-between; visibility: visible; display: flex;">
                 <ui:ProgressBar value="22" title="Speed" name="SpeedBar" style="height: 22px; width: 196px;" />
-                <ui:Label tabindex="-1" text="Use Mouse Right Button To Control" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DragonControlPrompt" style="font-size: 30px; color: rgb(255, 151, 0); visibility: visible;" />
+                <ui:Label tabindex="-1" text="Use Mouse Right Button To Control" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DragonControlPrompt" style="font-size: 30px; color: rgb(255, 151, 0);" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="Footer" style="flex-grow: 1;">

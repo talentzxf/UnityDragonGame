@@ -62,6 +62,11 @@ namespace DragonGameNetworkProject
                 {
                     movement.enabled = true;
 
+                    if ( (currentMovement != null && !currentMovement.CanLeaveMovement()) || (movement != null && !movement.CanEnterMovement()))
+                    {
+                        continue;
+                    }
+
                     if (currentMovement != null && movement != null)
                         Debug.Log("Switched state from " + currentMovement.GetType().Name + " to " +
                                   movement.GetType().Name);

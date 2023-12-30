@@ -1289,7 +1289,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2469728378082977624, guid: d3d9b87a68a2dca4d985d53102efc648, type: 3}
       propertyPath: gizmoSerializeData.always
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469728378082977624, guid: d3d9b87a68a2dca4d985d53102efc648, type: 3}
+      propertyPath: gizmoSerializeData.clothDebugSettings.enable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469728378082977624, guid: d3d9b87a68a2dca4d985d53102efc648, type: 3}
+      propertyPath: serializeData.angleLimitConstraint.useAngleLimit
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2469728378082977624, guid: d3d9b87a68a2dca4d985d53102efc648, type: 3}
       propertyPath: serializeData2.selectionData.maxConnectionDistance
@@ -2944,8 +2952,40 @@ PrefabInstance:
       value: -0.08340073
       objectReference: {fileID: 0}
     - target: {fileID: 2469728378082977624, guid: d3d9b87a68a2dca4d985d53102efc648, type: 3}
+      propertyPath: serializeData.angleRestorationConstraint.stiffness.useCurve
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469728378082977624, guid: d3d9b87a68a2dca4d985d53102efc648, type: 3}
       propertyPath: serializeData.angleRestorationConstraint.velocityAttenuation
       value: 0.355
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469728378082977624, guid: d3d9b87a68a2dca4d985d53102efc648, type: 3}
+      propertyPath: serializeData2.selectionData.attributes.Array.data[44].Value
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469728378082977624, guid: d3d9b87a68a2dca4d985d53102efc648, type: 3}
+      propertyPath: serializeData2.selectionData.attributes.Array.data[45].Value
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469728378082977624, guid: d3d9b87a68a2dca4d985d53102efc648, type: 3}
+      propertyPath: serializeData2.selectionData.attributes.Array.data[91].Value
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469728378082977624, guid: d3d9b87a68a2dca4d985d53102efc648, type: 3}
+      propertyPath: serializeData2.selectionData.attributes.Array.data[127].Value
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469728378082977624, guid: d3d9b87a68a2dca4d985d53102efc648, type: 3}
+      propertyPath: serializeData2.selectionData.attributes.Array.data[128].Value
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469728378082977624, guid: d3d9b87a68a2dca4d985d53102efc648, type: 3}
+      propertyPath: serializeData2.selectionData.attributes.Array.data[136].Value
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2469728378082977624, guid: d3d9b87a68a2dca4d985d53102efc648, type: 3}
+      propertyPath: serializeData2.selectionData.attributes.Array.data[137].Value
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3077168473646992829, guid: d3d9b87a68a2dca4d985d53102efc648, type: 3}
       propertyPath: nextEdgeMaterial_Pass4

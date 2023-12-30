@@ -60,13 +60,13 @@ public class UIController : MonoBehaviour
 
     public void ShowDragonControlUI()
     {
-        dragonControlUI.visible = true;
+        dragonControlUI.style.visibility = Visibility.Visible;
     }
 
 
     public void HideDragonControlUI()
     {
-        dragonControlUI.visible = false;
+        dragonControlUI.style.visibility = Visibility.Hidden;
     }
     
     private void ActivateUiDocument()
@@ -78,7 +78,7 @@ public class UIController : MonoBehaviour
         speedBar = uiDocument.rootVisualElement.Q<ProgressBar>("SpeedBar");
         dragonControlUI = uiDocument.rootVisualElement.Q<VisualElement>("DragonControlUI");
 
-        dragonControlUI.visible = false;
+        HideDragonControlUI();
     }
     
     private void Awake()
@@ -112,7 +112,7 @@ public class UIController : MonoBehaviour
         };
 
         NetworkEventsHandler.PlayerJoined += (sender, userId) => ShowSysMsg("Player:" + userId + " joined the room");
-        NetworkEventsHandler.PlayerLeft += (sender, userId) => ShowSysMsg("Player:" + userId + " joined the room");
+        NetworkEventsHandler.PlayerLeft += (sender, userId) => ShowSysMsg("Player:" + userId + " left the room");
         NetworkEventsHandler.ServerDisconnected += (sender, msg) => ShowSysMsg("Server Disconnected, reason:" + msg);
         NetworkEventsHandler.ConnectFailed += (sender, msg) => ShowSysMsg("Connect failed, reason:" + msg);
         NetworkEventsHandler.SceneLoadDone += (sender, e) => ShowSysMsg("Scene Load Done.");
