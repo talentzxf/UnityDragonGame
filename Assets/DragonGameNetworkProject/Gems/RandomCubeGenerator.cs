@@ -27,7 +27,8 @@ public class RandomGemGenerator : NetworkBehaviour
                 GameObject gemPrefab = gems[randomIdx];
                 Vector3 randomPosition = Random.insideUnitSphere * maxRange;
                 Vector3 position = transform.position + randomPosition;
-                Runner.Spawn(gemPrefab, position);                
+                var gem = Runner.Spawn(gemPrefab, position);
+                gem.transform.parent = transform;
             }
         }
     }
