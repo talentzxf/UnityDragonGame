@@ -1,5 +1,6 @@
 using System;
 using Fusion;
+using UnityEngine;
 
 namespace DragonGameNetworkProject.DragonMovements
 {
@@ -16,6 +17,13 @@ namespace DragonGameNetworkProject.DragonMovements
             if (HasStateAuthority)
             {
                 SwitchTo<DragonIdleMovement>();
+                
+                // Find all colliders and set tag as Player.
+                var colliders = GetComponentsInChildren<Collider>();
+                foreach (var collider in colliders)
+                {
+                    collider.gameObject.tag = "Player";
+                }
             }
         }
     }

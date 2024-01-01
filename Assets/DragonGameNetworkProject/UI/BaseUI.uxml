@@ -3,9 +3,9 @@
     <ui:VisualElement style="flex-grow: 1; flex-direction: column;">
         <ui:VisualElement name="Header" style="flex-grow: 1; flex-direction: row; justify-content: space-between; flex-shrink: 1;">
             <ui:Label tabindex="-1" text="RoomName" parse-escape-sequences="true" display-tooltip-when-elided="true" name="RoomName" class="toplabel" />
-            <ui:VisualElement style="height: 135px; align-items: center; display: flex; visibility: hidden;">
-                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Bonus" class="toplabel" />
-                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Timer" class="toplabel" />
+            <ui:VisualElement style="height: 135px; align-items: center;">
+                <ui:Label tabindex="-1" text="Points: 0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Bonus" class="toplabel" />
+                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Timer" class="toplabel" style="visibility: hidden;" />
             </ui:VisualElement>
             <ui:Label tabindex="-1" text="UserID" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LocalUserID" class="toplabel" />
         </ui:VisualElement>
