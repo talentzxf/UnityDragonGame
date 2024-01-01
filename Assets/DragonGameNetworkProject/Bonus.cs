@@ -52,7 +52,7 @@ public class Bonus : NetworkBehaviour
             switch (change)
             {
                 case nameof(PlayerCoins):
-                    UIController.Instance.UpdatePlayerCoins(PlayerCoins, Runner.LocalPlayer);
+                    UIController.Instance.UpdatePlayerCoins(PlayerCoins, Runner);
                     break;
             }
         }

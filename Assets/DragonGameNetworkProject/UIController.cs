@@ -37,6 +37,7 @@ public class UIController : MonoBehaviour
     private ProgressBar speedBar;
 
     private Label bonusLabel;
+    private Label playerListLabel;
 
     private Queue<Message> curMessages = new Queue<Message>();
 
@@ -81,6 +82,8 @@ public class UIController : MonoBehaviour
         dragonControlUI = uiDocument.rootVisualElement.Q<VisualElement>("DragonControlUI");
 
         bonusLabel = uiDocument.rootVisualElement.Q<Label>("Bonus");
+
+        playerListLabel = uiDocument.rootVisualElement.Q<Label>("PlayerList");
         HideDragonControlUI();
     }
     
@@ -153,14 +156,19 @@ public class UIController : MonoBehaviour
             messageLabel.text = resultMessage;
     }
 
-    public void UpdatePlayerCoins(NetworkDictionary<PlayerRef, int> playerCoins, PlayerRef localPlayer)
+    public void UpdatePlayerCoins(NetworkDictionary<PlayerRef, int> playerCoins, NetworkRunner runner)
     {
+        string resultStr = "";
         foreach (var playerCoin in playerCoins)
         {
-            if (playerCoin.Key == localPlayer)
+            if (playerCoin.Key == runner.LocalPlayer)
             {
                 bonusLabel.text = "Points:" + playerCoin.Value;
             }
+
+            resultStr = runner.GetPlayerUserId(playerCoin.Key) + ":" + playerCoin.Value + " points\n";
         }
+
+        playerListLabel.text = resultStr;
     }
 }

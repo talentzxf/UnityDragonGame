@@ -30,14 +30,13 @@ public class GemMovement : NetworkBehaviour
                 .SetLoops(-1, LoopType.Restart)
                 .SetEase(Ease.Linear);
 
-            _changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
-
-            meshRenderer = GetComponent<MeshRenderer>();
-            collider = GetComponent<Collider>();
-            
             // Host randomly pick up a material;
             materIdx = Random.Range(0, materialList.Count);
         }
+        
+        _changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
+        meshRenderer = GetComponent<MeshRenderer>();
+        collider = GetComponent<Collider>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -61,13 +60,13 @@ public class GemMovement : NetworkBehaviour
 
     public void Update()
     {
+        if (_changeDetector == null) // Game has not started.
+            return;
+        
         if (materIdx != -1 && meshRenderer != null)
         {
             meshRenderer.material = materialList[materIdx];
         }
-        
-        if (_changeDetector == null) // Game has not started.
-            return;
         
         foreach (var change in _changeDetector.DetectChanges(this))
         {
