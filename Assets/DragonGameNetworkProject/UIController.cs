@@ -41,6 +41,8 @@ public class UIController : MonoBehaviour
 
     private Queue<Message> curMessages = new Queue<Message>();
 
+    private NetworkRunner runner;
+    
     private static UIController _instance;
 
     public static UIController Instance => _instance;
@@ -114,11 +116,13 @@ public class UIController : MonoBehaviour
             string roomName = runner.SessionInfo.Name + "@" + runner.SessionInfo.Region;
             uiDocument.rootVisualElement.Q<Label>("RoomName").text = "Room:" + roomName;
 
+            this.runner = runner;
+
             ShowSysMsg("Connected to server.");
         });
 
-        NetworkEventsHandler.PlayerJoined.AddListener(userId => ShowSysMsg("Player:" + userId + " joined the room"));
-        NetworkEventsHandler.PlayerLeft.AddListener(userId => ShowSysMsg("Player:" + userId + " left the room"));
+        NetworkEventsHandler.PlayerJoined.AddListener(userId => ShowSysMsg("Player:" + runner.GetPlayerUserId(userId) + " joined the room"));
+        NetworkEventsHandler.PlayerLeft.AddListener(userId => ShowSysMsg("Player:" + runner.GetPlayerUserId(userId) + " left the room"));
         NetworkEventsHandler.ServerDisconnected.AddListener(msg => ShowSysMsg("Server Disconnected, reason:" + msg));
         NetworkEventsHandler.ConnectFailed.AddListener(msg => ShowSysMsg("Connect failed, reason:" + msg));
         NetworkEventsHandler.SceneLoadDone.AddListener( () => ShowSysMsg("Scene Load Done."));

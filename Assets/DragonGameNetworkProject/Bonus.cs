@@ -1,5 +1,5 @@
-using System;
 using Fusion;
+using UnityEngine;
 
 public class Bonus : NetworkBehaviour
 {
@@ -9,6 +9,7 @@ public class Bonus : NetworkBehaviour
     public static Bonus Instance => _instance;
 
     private ChangeDetector _changeDetector;
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -25,6 +26,23 @@ public class Bonus : NetworkBehaviour
         base.Spawned();
 
         _changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
+
+        NetworkEventsHandler.PlayerJoined.AddListener(playerRef =>
+        {
+            if (PlayerCoins.ContainsKey(playerRef))
+            {
+                Debug.LogError("The user is already in the list, but re-joined?");
+            }
+            else
+            {
+                Add(playerRef, 0);
+            }
+        });
+
+        NetworkEventsHandler.PlayerLeft.AddListener(playerRef =>
+        {
+            PlayerCoins.Remove(playerRef);
+        });
     }
 
     public void Add(PlayerRef player, int value)
@@ -46,7 +64,7 @@ public class Bonus : NetworkBehaviour
         {
             return;
         }
-        
+
         foreach (var change in _changeDetector.DetectChanges(this))
         {
             switch (change)

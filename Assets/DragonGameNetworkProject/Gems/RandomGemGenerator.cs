@@ -38,9 +38,11 @@ public class RandomGemGenerator : NetworkBehaviour
                 {
                     Debug.LogError("Can't spawn the Gem!");
                 }
-                
-                if(gem != null)
+
+                if (gem != null)
+                {
                     gem.transform.parent = transform;
+                }
             }
         }
     }
