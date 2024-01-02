@@ -1,20 +1,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using Fusion;
-using Unity.VisualScripting;
 using UnityEngine;
-
-struct RecordTransform : INetworkStruct
-{
-    public Vector3 position;
-    public Quaternion rotation;
-
-    public void Set(Transform transform)
-    {
-        position = transform.position;
-        rotation = transform.rotation;
-    }
-}
 
 public class GemMovement : NetworkBehaviour
 {
@@ -30,17 +17,16 @@ public class GemMovement : NetworkBehaviour
 
     private ChangeDetector _changeDetector;
     [Networked] private Vector3 targetPosition { get; set; }
-    [Networked] private RecordTransform startTransform { get; set; }
+    [Networked] private Vector3 startPosition { get; set; }
     
     public override void Spawned()
     {
-        if (HasStateAuthority)
+        if (Runner.IsSharedModeMasterClient)
         {
             base.Spawned();
 
-            startTransform.Set(transform);
+            startPosition = transform.position;
             targetPosition = transform.position + xDistance * transform.right;
-            StartMove();
 
             // Host randomly pick up a material;
             materIdx = Random.Range(0, materialList.Count);
@@ -50,19 +36,17 @@ public class GemMovement : NetworkBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
         collider = GetComponent<Collider>();
         
-        NetworkEventsHandler.HostMigrated.AddListener(() =>
+        NetworkEventsHandler.SelectedAsMasterClient.AddListener(() =>
         {
-            transform.position = startTransform.position;
             StartMove();
         });
     }
 
     private void StartMove()
     {
-        if (HasStateAuthority)
+        if (Runner.IsSharedModeMasterClient)
         {
-            // transform.rotation = startTransform.rotation;
-            // transform.position = startTransform.position;
+            transform.position = startPosition;
             
             transform.DOMove(targetPosition, 2).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
 

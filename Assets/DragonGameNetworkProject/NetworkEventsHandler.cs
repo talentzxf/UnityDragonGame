@@ -7,16 +7,37 @@ using UnityEngine.Events;
 
 public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
 {
-    public static UnityEvent<string> LocalPlayerJoined = new();
-    public static UnityEvent<PlayerRef> PlayerJoined = new();
-    public static UnityEvent<PlayerRef> PlayerLeft = new(); 
-    public static UnityEvent<string> ServerDisconnected = new();
-    public static UnityEvent<string> ConnectFailed = new();
-    public static UnityEvent SceneLoadDone = new();
-    public static UnityEvent SceneLoadStart = new();
-    public static UnityEvent HostMigrated = new();
+    public static readonly UnityEvent<string> LocalPlayerJoined = new();
+    public static readonly UnityEvent<PlayerRef> PlayerJoined = new();
+    public static readonly UnityEvent<PlayerRef> PlayerLeft = new(); 
+    public static readonly UnityEvent<string> ServerDisconnected = new();
+    public static readonly UnityEvent<string> ConnectFailed = new();
+    public static readonly UnityEvent SceneLoadDone = new();
+    public static readonly UnityEvent SceneLoadStart = new();
+    public static readonly UnityEvent HostMigrated = new(); // Seems this will never trigger in shared host mode.
+    public static readonly UnityEvent SelectedAsMasterClient = new();
+    
+    public static readonly UnityEvent<NetworkRunner> ServerConnected = new();
+    
+    private NetworkRunner runner;
 
-    public static UnityEvent<NetworkRunner> ServerConnected = new();
+    private bool isMasterClient = false;
+
+    private void Update()
+    {
+        if (runner == null)
+            return;
+        if (runner.State != NetworkRunner.States.Running)
+            return;
+
+        if (!isMasterClient && runner.IsSharedModeMasterClient)
+        {
+            Debug.Log("I'm Master Client now!");
+            isMasterClient = true;
+            
+            SelectedAsMasterClient?.Invoke();
+        }
+    }
 
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
     {
@@ -54,6 +75,8 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
     public void OnConnectedToServer(NetworkRunner runner)
     {
         ServerConnected?.Invoke(runner);
+
+        this.runner = runner;
     }
 
     public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
