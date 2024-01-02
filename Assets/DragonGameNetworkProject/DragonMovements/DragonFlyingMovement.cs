@@ -204,6 +204,7 @@ namespace DragonGameNetworkProject.DragonMovements
         public override void OnLeaveMovement()
         {
             base.OnLeaveMovement();
+            dragonAttack.StopAnimation();
             frontSightImg.gameObject.SetActive(false);
             fpsCamera.enabled = true;
         }
@@ -214,6 +215,13 @@ namespace DragonGameNetworkProject.DragonMovements
             {
                 input.Update();
             }
+            
+            if (isPlayingDragonAttackAnimation)
+            {
+                dragonAttack.StartAnimation();
+            }
+
+            dragonAttack.Update();
         }
 
 #region ComplexControl
@@ -488,6 +496,7 @@ namespace DragonGameNetworkProject.DragonMovements
             }
         }
 
+        [Networked] private bool isPlayingDragonAttackAnimation { set; get; }
         private DragonAttack dragonAttack;
         
         public override void FixedUpdateNetwork()
@@ -508,11 +517,8 @@ namespace DragonGameNetworkProject.DragonMovements
                         return;
                     }
 
-                    if (dragonAttack.isPlayingAnimation)
-                    {
-                        dragonAttack.Update();
-                    }
-
+                    isPlayingDragonAttackAnimation = dragonAttack.isPlaying;
+                    
                     if (isHardCoreControl)
                     {
                         HardCoreControl();

@@ -53,7 +53,7 @@ namespace DragonGameNetworkProject.DragonMovements
                 
                 return true;
             }
-            else
+            
             {
                 rigidBody.transform.position = targetPosition;
                 rigidBody.transform.rotation = targetRotation;

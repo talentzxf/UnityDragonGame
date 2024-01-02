@@ -1,4 +1,5 @@
 using System;
+using Fusion;
 using UnityEngine;
 
 namespace DragonGameNetworkProject.DragonMovements
@@ -21,16 +22,23 @@ namespace DragonGameNetworkProject.DragonMovements
             drakaris.transform.localScale = drakarisScale;
         }
 
-        public bool isPlayingAnimation = false;
+        public bool isPlaying = false;
         
         public void StartAnimation()
         {
-            isPlayingAnimation = true;
+            isPlaying = true;
             animator.SetBool(attack, true);
             drakaris.gameObject.SetActive(true);
         }
+
+        public void StopAnimation()
+        {
+            animator.SetBool(attack, false);
+            drakaris.gameObject.SetActive(false);
+            isPlaying = false;
+        }
         
-        public void Update()
+        public void Update() // return: is still playing.
         {
             float attackProgress = animator.GetFloat("AttackProgress");
             
@@ -42,9 +50,7 @@ namespace DragonGameNetworkProject.DragonMovements
 
             if (attackProgress > 0.9)
             {
-                animator.SetBool(attack, false);
-                drakaris.gameObject.SetActive(false);
-                isPlayingAnimation = false;
+                StopAnimation();
             }
         }
     }
