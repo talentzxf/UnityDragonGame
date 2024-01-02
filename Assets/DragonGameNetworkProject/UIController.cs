@@ -97,15 +97,15 @@ public class UIController : MonoBehaviour
 
         _instance = this;
 
-        NetworkEventsHandler.LocalPlayerJoined += (sender, userId) =>
+        NetworkEventsHandler.LocalPlayerJoined.AddListener(userId =>
         {
             ActivateUiDocument();
             string localPlayerId = userId;
 
             uiDocument.rootVisualElement.Q<Label>("LocalUserID").text = "UserID:" + localPlayerId;
-        };
+        });
 
-        NetworkEventsHandler.ServerConnected += (sender, runner) =>
+        NetworkEventsHandler.ServerConnected.AddListener(runner =>
         {
             ActivateUiDocument();
 
@@ -115,14 +115,14 @@ public class UIController : MonoBehaviour
             uiDocument.rootVisualElement.Q<Label>("RoomName").text = "Room:" + roomName;
 
             ShowSysMsg("Connected to server.");
-        };
+        });
 
-        NetworkEventsHandler.PlayerJoined += (sender, userId) => ShowSysMsg("Player:" + userId + " joined the room");
-        NetworkEventsHandler.PlayerLeft += (sender, userId) => ShowSysMsg("Player:" + userId + " left the room");
-        NetworkEventsHandler.ServerDisconnected += (sender, msg) => ShowSysMsg("Server Disconnected, reason:" + msg);
-        NetworkEventsHandler.ConnectFailed += (sender, msg) => ShowSysMsg("Connect failed, reason:" + msg);
-        NetworkEventsHandler.SceneLoadDone += (sender, e) => ShowSysMsg("Scene Load Done.");
-        NetworkEventsHandler.SceneLoadStart += (sender, e) => ShowSysMsg("Start loading scene.");
+        NetworkEventsHandler.PlayerJoined.AddListener(userId => ShowSysMsg("Player:" + userId + " joined the room"));
+        NetworkEventsHandler.PlayerLeft.AddListener(userId => ShowSysMsg("Player:" + userId + " left the room"));
+        NetworkEventsHandler.ServerDisconnected.AddListener(msg => ShowSysMsg("Server Disconnected, reason:" + msg));
+        NetworkEventsHandler.ConnectFailed.AddListener(msg => ShowSysMsg("Connect failed, reason:" + msg));
+        NetworkEventsHandler.SceneLoadDone.AddListener( () => ShowSysMsg("Scene Load Done."));
+        NetworkEventsHandler.SceneLoadStart.AddListener( () => ShowSysMsg("Start loading scene."));
 
         uiDocument = GetComponentInChildren<UIDocument>(true);
     }
@@ -166,7 +166,7 @@ public class UIController : MonoBehaviour
                 bonusLabel.text = "Points:" + playerCoin.Value;
             }
 
-            resultStr = runner.GetPlayerUserId(playerCoin.Key) + ":" + playerCoin.Value + " points\n";
+            resultStr += runner.GetPlayerUserId(playerCoin.Key) + ":" + playerCoin.Value + " points\n";
         }
 
         playerListLabel.text = resultStr;

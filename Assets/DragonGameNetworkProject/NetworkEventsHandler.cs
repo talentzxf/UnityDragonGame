@@ -1,21 +1,21 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
 {
-    public static event EventHandler<string> LocalPlayerJoined;
-    public static event EventHandler<string> PlayerJoined;
-    public static event EventHandler<string> PlayerLeft; 
-    public static event EventHandler<string> ServerDisconnected;
-    public static event EventHandler<string> ConnectFailed;
-    public static event EventHandler SceneLoadDone;
-    public static event EventHandler SceneLoadStart;
+    public static UnityEvent<string> LocalPlayerJoined = new();
+    public static UnityEvent<string> PlayerJoined = new();
+    public static UnityEvent<string> PlayerLeft = new(); 
+    public static UnityEvent<string> ServerDisconnected = new();
+    public static UnityEvent<string> ConnectFailed = new();
+    public static UnityEvent SceneLoadDone = new();
+    public static UnityEvent SceneLoadStart = new();
 
-    public static event EventHandler<NetworkRunner> ServerConnected;
+    public static UnityEvent<NetworkRunner> ServerConnected = new();
 
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
     {
@@ -29,14 +29,14 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
     {
         string playerId = runner.GetPlayerUserId(player);
         if (player == runner.LocalPlayer)
-            LocalPlayerJoined?.Invoke(this, playerId);
-        PlayerJoined?.Invoke(this, playerId);
+            LocalPlayerJoined?.Invoke( playerId);
+        PlayerJoined?.Invoke(playerId);
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
         string playerId = runner.GetPlayerUserId(player);
-        PlayerLeft?.Invoke(this, playerId);
+        PlayerLeft?.Invoke(playerId);
     }
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
@@ -53,12 +53,12 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnConnectedToServer(NetworkRunner runner)
     {
-        ServerConnected?.Invoke(this, runner);
+        ServerConnected?.Invoke(runner);
     }
 
     public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
     {
-        ServerDisconnected?.Invoke(this, Enum.GetName(typeof(NetDisconnectReason), reason));
+        ServerDisconnected?.Invoke(Enum.GetName(typeof(NetDisconnectReason), reason));
     }
 
     public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
@@ -67,7 +67,7 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
     {
-        ConnectFailed?.Invoke(this, Enum.GetName(typeof(NetConnectFailedReason), reason));
+        ConnectFailed?.Invoke(Enum.GetName(typeof(NetConnectFailedReason), reason));
     }
 
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
@@ -96,11 +96,11 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSceneLoadDone(NetworkRunner runner)
     {
-        SceneLoadDone?.Invoke(this, EventArgs.Empty);
+        SceneLoadDone?.Invoke();
     }
 
     public void OnSceneLoadStart(NetworkRunner runner)
     {
-        SceneLoadStart?.Invoke(this, EventArgs.Empty);
+        SceneLoadStart?.Invoke();
     }
 }

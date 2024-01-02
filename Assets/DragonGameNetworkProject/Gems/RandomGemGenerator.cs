@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class RandomGemGenerator : NetworkBehaviour
 {
@@ -27,8 +29,18 @@ public class RandomGemGenerator : NetworkBehaviour
                 GameObject gemPrefab = gems[randomIdx];
                 Vector3 randomPosition = Random.insideUnitSphere * maxRange;
                 Vector3 position = transform.position + randomPosition;
-                var gem = Runner.Spawn(gemPrefab, position);
-                gem.transform.parent = transform;
+                NetworkObject gem = null;
+                try
+                {
+                   gem = Runner.Spawn(gemPrefab, position);
+                }
+                catch (Exception)
+                {
+                    Debug.LogError("Can't spawn the Gem!");
+                }
+                
+                if(gem != null)
+                    gem.transform.parent = transform;
             }
         }
     }
