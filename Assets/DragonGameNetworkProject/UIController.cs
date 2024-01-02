@@ -42,7 +42,7 @@ public class UIController : MonoBehaviour
     private Queue<Message> curMessages = new Queue<Message>();
 
     private NetworkRunner runner;
-    
+
     private static UIController _instance;
 
     public static UIController Instance => _instance;
@@ -53,7 +53,7 @@ public class UIController : MonoBehaviour
         {
             return;
         }
-        
+
         float curSpeedMag = curSpeed.magnitude;
 
         speedBar.value = curSpeedMag;
@@ -73,7 +73,7 @@ public class UIController : MonoBehaviour
     {
         dragonControlUI.style.visibility = Visibility.Hidden;
     }
-    
+
     private void ActivateUiDocument()
     {
         uiDocument.gameObject.SetActive(true);
@@ -88,7 +88,7 @@ public class UIController : MonoBehaviour
         playerListLabel = uiDocument.rootVisualElement.Q<Label>("PlayerList");
         HideDragonControlUI();
     }
-    
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -121,12 +121,15 @@ public class UIController : MonoBehaviour
             ShowSysMsg("Connected to server.");
         });
 
-        NetworkEventsHandler.PlayerJoined.AddListener(userId => ShowSysMsg("Player:" + runner.GetPlayerUserId(userId) + " joined the room"));
-        NetworkEventsHandler.PlayerLeft.AddListener(userId => ShowSysMsg("Player:" + runner.GetPlayerUserId(userId) + " left the room"));
+        NetworkEventsHandler.PlayerJoined.AddListener(userId =>
+            ShowSysMsg("Player:" + runner.GetPlayerUserId(userId) + " joined the room"));
+        NetworkEventsHandler.PlayerLeft.AddListener(userId =>
+            ShowSysMsg("Player:" + runner.GetPlayerUserId(userId) + " left the room"));
         NetworkEventsHandler.ServerDisconnected.AddListener(msg => ShowSysMsg("Server Disconnected, reason:" + msg));
         NetworkEventsHandler.ConnectFailed.AddListener(msg => ShowSysMsg("Connect failed, reason:" + msg));
-        NetworkEventsHandler.SceneLoadDone.AddListener( () => ShowSysMsg("Scene Load Done."));
-        NetworkEventsHandler.SceneLoadStart.AddListener( () => ShowSysMsg("Start loading scene."));
+        NetworkEventsHandler.SceneLoadDone.AddListener(() => ShowSysMsg("Scene Load Done."));
+        NetworkEventsHandler.SceneLoadStart.AddListener(() => ShowSysMsg("Start loading scene."));
+        NetworkEventsHandler.HostMigrated.AddListener(() => ShowSysMsg("Host Migrated!"));
 
         uiDocument = GetComponentInChildren<UIDocument>(true);
     }

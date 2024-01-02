@@ -14,6 +14,7 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
     public static UnityEvent<string> ConnectFailed = new();
     public static UnityEvent SceneLoadDone = new();
     public static UnityEvent SceneLoadStart = new();
+    public static UnityEvent HostMigrated = new();
 
     public static UnityEvent<NetworkRunner> ServerConnected = new();
 
@@ -35,7 +36,6 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        string playerId = runner.GetPlayerUserId(player);
         PlayerLeft?.Invoke(player);
     }
 
@@ -84,6 +84,7 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
     {
+        HostMigrated?.Invoke();
     }
 
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data)

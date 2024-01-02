@@ -4,7 +4,7 @@ using UnityEngine;
 public class Bonus : NetworkBehaviour
 {
     [Networked, Capacity(20)] private NetworkDictionary<PlayerRef, int> PlayerCoins => default;
-    
+
     private static Bonus _instance;
     public static Bonus Instance => _instance;
 
@@ -20,6 +20,8 @@ public class Bonus : NetworkBehaviour
 
         _instance = this;
     }
+
+    private bool spawned = false;
 
     public override void Spawned()
     {
@@ -39,10 +41,8 @@ public class Bonus : NetworkBehaviour
             }
         });
 
-        NetworkEventsHandler.PlayerLeft.AddListener(playerRef =>
-        {
-            PlayerCoins.Remove(playerRef);
-        });
+        NetworkEventsHandler.PlayerLeft.AddListener(playerRef => { PlayerCoins.Remove(playerRef); });
+        spawned = true;
     }
 
     public void Add(PlayerRef player, int value)
@@ -60,19 +60,7 @@ public class Bonus : NetworkBehaviour
 
     private void Update()
     {
-        if (_changeDetector == null) // Game has not started, this object has not been spawned!
-        {
-            return;
-        }
-
-        foreach (var change in _changeDetector.DetectChanges(this))
-        {
-            switch (change)
-            {
-                case nameof(PlayerCoins):
-                    UIController.Instance.UpdatePlayerCoins(PlayerCoins, Runner);
-                    break;
-            }
-        }
+        if(spawned)
+            UIController.Instance.UpdatePlayerCoins(PlayerCoins, Runner);
     }
 }
