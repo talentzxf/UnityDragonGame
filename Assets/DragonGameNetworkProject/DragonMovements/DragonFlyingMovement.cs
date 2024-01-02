@@ -177,6 +177,8 @@ namespace DragonGameNetworkProject.DragonMovements
             canvas = canvasGO.GetComponent<Canvas>();
             frontSightImg = canvas.transform.Find("FrontSight").GetComponent<Image>();
             frontSightRT = frontSightImg.GetComponent<RectTransform>();
+            
+            dragonAttack = new DragonAttack(animator, transform);
         }
 
         public override void OnEnterMovement()
@@ -199,6 +201,13 @@ namespace DragonGameNetworkProject.DragonMovements
             Utility.RecursiveFind(ccTransform, "ClimbDownStair").gameObject.SetActive(false);
         }
 
+        public override void OnLeaveMovement()
+        {
+            base.OnLeaveMovement();
+            frontSightImg.gameObject.SetActive(false);
+            fpsCamera.enabled = true;
+        }
+
         private void Update()
         {
             if (HasStateAuthority)
@@ -207,6 +216,7 @@ namespace DragonGameNetworkProject.DragonMovements
             }
         }
 
+#region ComplexControl
         //handle how our speed is increased or decreased when flying
         void HandleVelocity(float d, float TargetSpeed, float Accel, float YAmt)
         {
@@ -344,6 +354,46 @@ namespace DragonGameNetworkProject.DragonMovements
                 ccTransform.rotation = Quaternion.Slerp(ccTransform.rotation, SlerpRot, spd * d);
             }
         }
+        
+        private void HardCoreControl()
+        {
+            float delta = Runner.DeltaTime;
+            float _xMov = input.Horizontal;
+            float _zMov = input.Vertical;
+
+            //get our direction of input based on camera position
+            Vector3 screenMovementForward = CamY.transform.forward;
+            Vector3 screenMovementRight = CamY.transform.right;
+            Vector3 screenMovementUp = CamY.transform.up;
+
+            Vector3 h = screenMovementRight * _xMov;
+            Vector3 v = screenMovementForward * _zMov;
+
+            Vector3 moveDirection = (v + h).normalized;
+
+            if (ActionAirTimer > 0)
+                ActionAirTimer -= delta;
+
+            if (FlyingAdjustmentLerp < 1.1)
+                FlyingAdjustmentLerp += delta * FlyingAdjustmentSpeed;
+
+            //lerp speed
+            float YAmt = rigidBody.velocity.y;
+            float FlyAccel = FlyingAcceleration * FlyingAdjustmentLerp;
+            float Spd = FlyingSpeed;
+
+            if (!input.Fly) //we are not holding fly, slow down
+            {
+                Spd = FlyingMinSpeed;
+                if (ActSpeed > FlyingMinSpeed)
+                    FlyAccel = FlyingDecelleration * FlyingAdjustmentLerp;
+            }
+                        
+            HandleVelocity(delta, Spd, FlyAccel, YAmt);
+            //flying controls
+            FlyingCtrl(delta, ActSpeed, _xMov, _zMov);
+        }
+#endregion
 
         public void FixedUpdate() // Not sure why, but proxy won't execute FixedUpdateNetwork???
         {
@@ -438,10 +488,8 @@ namespace DragonGameNetworkProject.DragonMovements
             }
         }
 
-        private void HardCoreControl()
-        {
-        }
-
+        private DragonAttack dragonAttack;
+        
         public override void FixedUpdateNetwork()
         {
             try
@@ -456,47 +504,18 @@ namespace DragonGameNetworkProject.DragonMovements
 
                     if (input.Attack)
                     {
-                        controller.SwitchTo<DragonAttackMovement>();
+                        dragonAttack.StartAnimation();
                         return;
+                    }
+
+                    if (dragonAttack.isPlayingAnimation)
+                    {
+                        dragonAttack.Update();
                     }
 
                     if (isHardCoreControl)
                     {
-                        float delta = Runner.DeltaTime;
-                        float _xMov = input.Horizontal;
-                        float _zMov = input.Vertical;
-
-                        //get our direction of input based on camera position
-                        Vector3 screenMovementForward = CamY.transform.forward;
-                        Vector3 screenMovementRight = CamY.transform.right;
-                        Vector3 screenMovementUp = CamY.transform.up;
-
-                        Vector3 h = screenMovementRight * _xMov;
-                        Vector3 v = screenMovementForward * _zMov;
-
-                        Vector3 moveDirection = (v + h).normalized;
-
-                        if (ActionAirTimer > 0)
-                            ActionAirTimer -= delta;
-
-                        if (FlyingAdjustmentLerp < 1.1)
-                            FlyingAdjustmentLerp += delta * FlyingAdjustmentSpeed;
-
-                        //lerp speed
-                        float YAmt = rigidBody.velocity.y;
-                        float FlyAccel = FlyingAcceleration * FlyingAdjustmentLerp;
-                        float Spd = FlyingSpeed;
-
-                        if (!input.Fly) //we are not holding fly, slow down
-                        {
-                            Spd = FlyingMinSpeed;
-                            if (ActSpeed > FlyingMinSpeed)
-                                FlyAccel = FlyingDecelleration * FlyingAdjustmentLerp;
-                        }
-                        
-                        HandleVelocity(delta, Spd, FlyAccel, YAmt);
-                        //flying controls
-                        FlyingCtrl(delta, ActSpeed, _xMov, _zMov);
+                        HardCoreControl();
                     }
                     else
                     {

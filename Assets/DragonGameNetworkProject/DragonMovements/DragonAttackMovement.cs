@@ -3,33 +3,34 @@ using UnityEngine;
 
 namespace DragonGameNetworkProject.DragonMovements
 {
-    public class DragonAttackMovement: AbstractRigidBodyMovement
+    public class DragonAttack
     {
         private string drakaris_name = "Drakaris_Single";
         private int attack = Animator.StringToHash("Attack");
         private Transform drakaris;
 
-        public override void Spawned()
+        private Animator animator;
+        private Transform transform;
+
+        public DragonAttack(Animator animator, Transform transform)
         {
-            base.Spawned();
+            this.animator = animator;
+            this.transform = transform;
             drakaris = Utility.RecursiveFind(transform, drakaris_name);
             Vector3 drakarisScale = new Vector3(0.0f, 1.0f, 0.0f);
             drakaris.transform.localScale = drakarisScale;
         }
+
+        public bool isPlayingAnimation = false;
         
-        public override void OnEnterMovement()
+        public void StartAnimation()
         {
+            isPlayingAnimation = true;
             animator.SetBool(attack, true);
             drakaris.gameObject.SetActive(true);
         }
-
-        public override void OnLeaveMovement()
-        {
-            animator.SetBool(attack, false);
-            drakaris.gameObject.SetActive(false);
-        }
-
-        private void FixedUpdate()
+        
+        public void Update()
         {
             float attackProgress = animator.GetFloat("AttackProgress");
             
@@ -41,7 +42,9 @@ namespace DragonGameNetworkProject.DragonMovements
 
             if (attackProgress > 0.9)
             {
-                controller.SwitchTo<DragonFlyingMovement>();
+                animator.SetBool(attack, false);
+                drakaris.gameObject.SetActive(false);
+                isPlayingAnimation = false;
             }
         }
     }
