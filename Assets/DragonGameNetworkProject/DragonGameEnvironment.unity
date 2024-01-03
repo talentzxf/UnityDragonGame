@@ -645,7 +645,6 @@ GameObject:
   - component: {fileID: 127737623}
   - component: {fileID: 127737622}
   - component: {fileID: 127737621}
-  - component: {fileID: 127737620}
   m_Layer: 0
   m_Name: Spiral(Clone)
   m_TagString: Untagged
@@ -668,20 +667,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &127737620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 127737618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 0baa3f86c9d100044b451177aadc4d3c
 --- !u!114 &127737621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -829,7 +814,6 @@ GameObject:
   - component: {fileID: 147482990}
   - component: {fileID: 147482989}
   - component: {fileID: 147482988}
-  - component: {fileID: 147482987}
   m_Layer: 0
   m_Name: Diamondo5side(Clone)
   m_TagString: Untagged
@@ -852,20 +836,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1437446913}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &147482987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 147482985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 2d6efcbf54927a746945f7a9570a2133
 --- !u!114 &147482988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1560,6 +1530,7 @@ RectTransform:
   m_Children:
   - {fileID: 2079826929}
   - {fileID: 1240055204}
+  - {fileID: 1584658419}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1655,7 +1626,6 @@ GameObject:
   - component: {fileID: 275663651}
   - component: {fileID: 275663650}
   - component: {fileID: 275663649}
-  - component: {fileID: 275663648}
   m_Layer: 0
   m_Name: Diamondo5side(Clone)
   m_TagString: Untagged
@@ -1678,20 +1648,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &275663648
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 275663646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 2d6efcbf54927a746945f7a9570a2133
 --- !u!114 &275663649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2009,7 +1965,6 @@ GameObject:
   - component: {fileID: 351427220}
   - component: {fileID: 351427219}
   - component: {fileID: 351427218}
-  - component: {fileID: 351427217}
   m_Layer: 0
   m_Name: Cuboid(Clone)
   m_TagString: Untagged
@@ -2032,20 +1987,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1437446913}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &351427217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 351427215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: d3fe4ca653400814f83c8da06e530932
 --- !u!114 &351427218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2654,7 +2595,6 @@ GameObject:
   - component: {fileID: 423448119}
   - component: {fileID: 423448118}
   - component: {fileID: 423448117}
-  - component: {fileID: 423448116}
   m_Layer: 0
   m_Name: 5 Side Diamond(Clone)
   m_TagString: Untagged
@@ -2677,20 +2617,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1437446913}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &423448116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423448114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 5a4f0af5eb4b32146b5c87d823d76261
 --- !u!114 &423448117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2838,7 +2764,6 @@ GameObject:
   - component: {fileID: 438078452}
   - component: {fileID: 438078451}
   - component: {fileID: 438078450}
-  - component: {fileID: 438078449}
   m_Layer: 0
   m_Name: CubieBeveled(Clone)
   m_TagString: Untagged
@@ -2861,20 +2786,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1437446913}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &438078449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 438078447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: e23ca049a5fc33842af9a535df1db15e
 --- !u!114 &438078450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3022,7 +2933,6 @@ GameObject:
   - component: {fileID: 457445737}
   - component: {fileID: 457445736}
   - component: {fileID: 457445735}
-  - component: {fileID: 457445734}
   m_Layer: 0
   m_Name: Cuboid(Clone)
   m_TagString: Untagged
@@ -3045,20 +2955,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &457445734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 457445732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: d3fe4ca653400814f83c8da06e530932
 --- !u!114 &457445735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3311,7 +3207,6 @@ GameObject:
   - component: {fileID: 507069199}
   - component: {fileID: 507069198}
   - component: {fileID: 507069197}
-  - component: {fileID: 507069196}
   m_Layer: 0
   m_Name: 4 Side Diamond(Clone)
   m_TagString: Untagged
@@ -3334,20 +3229,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &507069196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 507069194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: ec25f1f9a8636e7439c50706f7470a92
 --- !u!114 &507069197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3495,7 +3376,6 @@ GameObject:
   - component: {fileID: 543888493}
   - component: {fileID: 543888492}
   - component: {fileID: 543888491}
-  - component: {fileID: 543888490}
   m_Layer: 0
   m_Name: Hexgon(Clone)
   m_TagString: Untagged
@@ -3518,20 +3398,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &543888490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543888488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 2ba03b9ecce3af943892234e3f8f219c
 --- !u!114 &543888491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3679,7 +3545,6 @@ GameObject:
   - component: {fileID: 556669163}
   - component: {fileID: 556669162}
   - component: {fileID: 556669161}
-  - component: {fileID: 556669160}
   m_Layer: 0
   m_Name: Cuboid(Clone)
   m_TagString: Untagged
@@ -3702,20 +3567,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &556669160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 556669158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: d3fe4ca653400814f83c8da06e530932
 --- !u!114 &556669161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3863,7 +3714,6 @@ GameObject:
   - component: {fileID: 558682564}
   - component: {fileID: 558682563}
   - component: {fileID: 558682562}
-  - component: {fileID: 558682561}
   m_Layer: 0
   m_Name: SphereGemSmall(Clone)
   m_TagString: Untagged
@@ -3886,20 +3736,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &558682561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 558682559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 010212a850f56074fa6afb4858fbeae7
 --- !u!114 &558682562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4114,7 +3950,6 @@ GameObject:
   - component: {fileID: 575251507}
   - component: {fileID: 575251506}
   - component: {fileID: 575251505}
-  - component: {fileID: 575251504}
   m_Layer: 0
   m_Name: Cuboid(Clone)
   m_TagString: Untagged
@@ -4137,20 +3972,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1437446913}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &575251504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 575251502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: d3fe4ca653400814f83c8da06e530932
 --- !u!114 &575251505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4765,7 +4586,6 @@ GameObject:
   - component: {fileID: 729306024}
   - component: {fileID: 729306023}
   - component: {fileID: 729306022}
-  - component: {fileID: 729306021}
   m_Layer: 0
   m_Name: Penta(Clone)
   m_TagString: Untagged
@@ -4788,20 +4608,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &729306021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 729306019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 3c9189a4eae32af49a3470f9adb2d30f
 --- !u!65 &729306022
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5302,7 +5108,6 @@ GameObject:
   - component: {fileID: 756032425}
   - component: {fileID: 756032424}
   - component: {fileID: 756032423}
-  - component: {fileID: 756032422}
   m_Layer: 0
   m_Name: SphereGemLarge(Clone)
   m_TagString: Untagged
@@ -5325,20 +5130,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &756032422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 756032420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 066fb0d6cad2c274284d711ebe70cc15
 --- !u!114 &756032423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5486,7 +5277,6 @@ GameObject:
   - component: {fileID: 770294321}
   - component: {fileID: 770294320}
   - component: {fileID: 770294319}
-  - component: {fileID: 770294318}
   m_Layer: 0
   m_Name: Penta(Clone)
   m_TagString: Untagged
@@ -5509,20 +5299,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &770294318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 770294316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 3c9189a4eae32af49a3470f9adb2d30f
 --- !u!65 &770294319
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5670,7 +5446,6 @@ GameObject:
   - component: {fileID: 860364435}
   - component: {fileID: 860364434}
   - component: {fileID: 860364433}
-  - component: {fileID: 860364432}
   m_Layer: 0
   m_Name: SphereGemSmall(Clone)
   m_TagString: Untagged
@@ -5693,20 +5468,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &860364432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 860364430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 010212a850f56074fa6afb4858fbeae7
 --- !u!114 &860364433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6016,7 +5777,6 @@ GameObject:
   - component: {fileID: 894134031}
   - component: {fileID: 894134030}
   - component: {fileID: 894134029}
-  - component: {fileID: 894134028}
   m_Layer: 0
   m_Name: Penta(Clone)
   m_TagString: Untagged
@@ -6039,20 +5799,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &894134028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 894134026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 3c9189a4eae32af49a3470f9adb2d30f
 --- !u!65 &894134029
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6361,7 +6107,6 @@ GameObject:
   - component: {fileID: 944403413}
   - component: {fileID: 944403412}
   - component: {fileID: 944403411}
-  - component: {fileID: 944403410}
   m_Layer: 0
   m_Name: Diamondo(Clone)
   m_TagString: Untagged
@@ -6384,20 +6129,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &944403410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 944403408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 650a8b828d06c924bbfd86bb6e12e4fc
 --- !u!65 &944403411
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6715,7 +6446,6 @@ GameObject:
   - component: {fileID: 973573070}
   - component: {fileID: 973573069}
   - component: {fileID: 973573068}
-  - component: {fileID: 973573067}
   m_Layer: 0
   m_Name: Heart(Clone)
   m_TagString: Untagged
@@ -6738,20 +6468,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &973573067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973573065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: d1b19d80fc9954e4599dc3af75267676
 --- !u!114 &973573068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7381,7 +7097,6 @@ GameObject:
   - component: {fileID: 1115459964}
   - component: {fileID: 1115459963}
   - component: {fileID: 1115459962}
-  - component: {fileID: 1115459961}
   m_Layer: 0
   m_Name: Diamondo(Clone)
   m_TagString: Untagged
@@ -7404,20 +7119,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1115459961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1115459959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 650a8b828d06c924bbfd86bb6e12e4fc
 --- !u!65 &1115459962
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7565,7 +7266,6 @@ GameObject:
   - component: {fileID: 1125664824}
   - component: {fileID: 1125664823}
   - component: {fileID: 1125664822}
-  - component: {fileID: 1125664821}
   m_Layer: 0
   m_Name: Spiral(Clone)
   m_TagString: Untagged
@@ -7588,20 +7288,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1125664821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1125664819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 0baa3f86c9d100044b451177aadc4d3c
 --- !u!114 &1125664822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7841,7 +7527,6 @@ GameObject:
   - component: {fileID: 1140097969}
   - component: {fileID: 1140097968}
   - component: {fileID: 1140097967}
-  - component: {fileID: 1140097966}
   m_Layer: 0
   m_Name: SoftStar(Clone)
   m_TagString: Untagged
@@ -7864,20 +7549,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1140097966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1140097964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 81ff6048d5fb6204fab3ab71f03470f3
 --- !u!114 &1140097967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8438,7 +8109,6 @@ GameObject:
   - component: {fileID: 1168839133}
   - component: {fileID: 1168839132}
   - component: {fileID: 1168839131}
-  - component: {fileID: 1168839130}
   m_Layer: 0
   m_Name: Cuboid(Clone)
   m_TagString: Untagged
@@ -8461,20 +8131,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1168839130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1168839128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: d3fe4ca653400814f83c8da06e530932
 --- !u!114 &1168839131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9113,7 +8769,6 @@ GameObject:
   - component: {fileID: 1239917505}
   - component: {fileID: 1239917504}
   - component: {fileID: 1239917503}
-  - component: {fileID: 1239917502}
   m_Layer: 0
   m_Name: CubieBeveled(Clone)
   m_TagString: Untagged
@@ -9136,20 +8791,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1239917502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1239917500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: e23ca049a5fc33842af9a535df1db15e
 --- !u!114 &1239917503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9950,7 +9591,6 @@ GameObject:
   - component: {fileID: 1324136126}
   - component: {fileID: 1324136125}
   - component: {fileID: 1324136124}
-  - component: {fileID: 1324136123}
   m_Layer: 0
   m_Name: Diamondo5side(Clone)
   m_TagString: Untagged
@@ -9973,20 +9613,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1324136123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1324136121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 2d6efcbf54927a746945f7a9570a2133
 --- !u!114 &1324136124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10134,7 +9760,6 @@ GameObject:
   - component: {fileID: 1324579996}
   - component: {fileID: 1324579995}
   - component: {fileID: 1324579994}
-  - component: {fileID: 1324579993}
   m_Layer: 0
   m_Name: Diamondo(Clone)
   m_TagString: Untagged
@@ -10157,20 +9782,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1324579993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1324579991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 650a8b828d06c924bbfd86bb6e12e4fc
 --- !u!65 &1324579994
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10318,7 +9929,6 @@ GameObject:
   - component: {fileID: 1325505321}
   - component: {fileID: 1325505320}
   - component: {fileID: 1325505319}
-  - component: {fileID: 1325505318}
   m_Layer: 0
   m_Name: Hexgon(Clone)
   m_TagString: Untagged
@@ -10341,20 +9951,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1325505318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1325505316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 2ba03b9ecce3af943892234e3f8f219c
 --- !u!114 &1325505319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10569,7 +10165,6 @@ GameObject:
   - component: {fileID: 1360080411}
   - component: {fileID: 1360080410}
   - component: {fileID: 1360080409}
-  - component: {fileID: 1360080408}
   m_Layer: 0
   m_Name: Cuboid(Clone)
   m_TagString: Untagged
@@ -10592,20 +10187,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1360080408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1360080406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: d3fe4ca653400814f83c8da06e530932
 --- !u!114 &1360080409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11593,7 +11174,6 @@ GameObject:
   - component: {fileID: 1495175166}
   - component: {fileID: 1495175165}
   - component: {fileID: 1495175164}
-  - component: {fileID: 1495175163}
   m_Layer: 0
   m_Name: HardStar(Clone)
   m_TagString: Untagged
@@ -11616,20 +11196,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1495175163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1495175161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 7f2cc444a7fab5c46bcf620b98e152a4
 --- !u!65 &1495175164
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11777,7 +11343,6 @@ GameObject:
   - component: {fileID: 1540432425}
   - component: {fileID: 1540432424}
   - component: {fileID: 1540432423}
-  - component: {fileID: 1540432422}
   m_Layer: 0
   m_Name: Penta(Clone)
   m_TagString: Untagged
@@ -11800,20 +11365,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1540432422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1540432420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 3c9189a4eae32af49a3470f9adb2d30f
 --- !u!65 &1540432423
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12039,7 +11590,6 @@ GameObject:
   - component: {fileID: 1547891327}
   - component: {fileID: 1547891326}
   - component: {fileID: 1547891325}
-  - component: {fileID: 1547891324}
   m_Layer: 0
   m_Name: Hexgon(Clone)
   m_TagString: Untagged
@@ -12062,20 +11612,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1547891324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1547891322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 2ba03b9ecce3af943892234e3f8f219c
 --- !u!114 &1547891325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12490,6 +12026,100 @@ MonoBehaviour:
   Components:
   - {fileID: 1570689919}
   _guid: 383c8b16-bb17-4c69-
+--- !u!1 &1584658418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1584658419}
+  - component: {fileID: 1584658421}
+  - component: {fileID: 1584658423}
+  - component: {fileID: 1584658422}
+  m_Layer: 5
+  m_Name: FPS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1584658419
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584658418}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 257977014}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -105, y: 191}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1584658421
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584658418}
+  m_CullTransparentMesh: 1
+--- !u!114 &1584658422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584658418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06e8923c17983d643980d7d7773b7382, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpdateInterval: 0.3
+  Mode: 0
+--- !u!114 &1584658423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584658418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 5686e06ef14cf104b8e282ee7c41b9a6, type: 3}
+    m_FontSize: 30
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 40
+    m_Alignment: 2
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 212
 --- !u!1 &1589245842
 GameObject:
   m_ObjectHideFlags: 0
@@ -12790,7 +12420,6 @@ GameObject:
   - component: {fileID: 1598324379}
   - component: {fileID: 1598324378}
   - component: {fileID: 1598324377}
-  - component: {fileID: 1598324376}
   m_Layer: 0
   m_Name: SphereGemLarge(Clone)
   m_TagString: Untagged
@@ -12813,20 +12442,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1598324376
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1598324374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 066fb0d6cad2c274284d711ebe70cc15
 --- !u!114 &1598324377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13066,7 +12681,6 @@ GameObject:
   - component: {fileID: 1657647560}
   - component: {fileID: 1657647559}
   - component: {fileID: 1657647558}
-  - component: {fileID: 1657647557}
   m_Layer: 0
   m_Name: 5 Side Diamond(Clone)
   m_TagString: Untagged
@@ -13089,20 +12703,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1657647557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1657647555}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 5a4f0af5eb4b32146b5c87d823d76261
 --- !u!114 &1657647558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13478,7 +13078,6 @@ GameObject:
   - component: {fileID: 1728118030}
   - component: {fileID: 1728118029}
   - component: {fileID: 1728118028}
-  - component: {fileID: 1728118027}
   m_Layer: 0
   m_Name: Diamondo5side(Clone)
   m_TagString: Untagged
@@ -13501,20 +13100,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1437446913}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1728118027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1728118025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 2d6efcbf54927a746945f7a9570a2133
 --- !u!114 &1728118028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13662,7 +13247,6 @@ GameObject:
   - component: {fileID: 1749169617}
   - component: {fileID: 1749169616}
   - component: {fileID: 1749169615}
-  - component: {fileID: 1749169614}
   m_Layer: 0
   m_Name: SphereGemSmall(Clone)
   m_TagString: Untagged
@@ -13685,20 +13269,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1437446913}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1749169614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1749169612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 010212a850f56074fa6afb4858fbeae7
 --- !u!114 &1749169615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13846,7 +13416,6 @@ GameObject:
   - component: {fileID: 1775454801}
   - component: {fileID: 1775454800}
   - component: {fileID: 1775454799}
-  - component: {fileID: 1775454798}
   m_Layer: 0
   m_Name: Penta(Clone)
   m_TagString: Untagged
@@ -13869,20 +13438,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1437446913}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1775454798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1775454796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 3c9189a4eae32af49a3470f9adb2d30f
 --- !u!65 &1775454799
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14199,7 +13754,6 @@ GameObject:
   - component: {fileID: 1860320366}
   - component: {fileID: 1860320365}
   - component: {fileID: 1860320364}
-  - component: {fileID: 1860320363}
   m_Layer: 0
   m_Name: SoftStar(Clone)
   m_TagString: Untagged
@@ -14222,20 +13776,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1437446913}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1860320363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1860320361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 81ff6048d5fb6204fab3ab71f03470f3
 --- !u!114 &1860320364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14658,7 +14198,6 @@ GameObject:
   - component: {fileID: 1908327861}
   - component: {fileID: 1908327860}
   - component: {fileID: 1908327859}
-  - component: {fileID: 1908327858}
   m_Layer: 0
   m_Name: Heart(Clone)
   m_TagString: Untagged
@@ -14681,20 +14220,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &1908327858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1908327856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: d1b19d80fc9954e4599dc3af75267676
 --- !u!114 &1908327859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15036,7 +14561,6 @@ GameObject:
   - component: {fileID: 2027094002}
   - component: {fileID: 2027094001}
   - component: {fileID: 2027094000}
-  - component: {fileID: 2027093999}
   m_Layer: 0
   m_Name: Heart(Clone)
   m_TagString: Untagged
@@ -15059,20 +14583,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &2027093999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2027093997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: d1b19d80fc9954e4599dc3af75267676
 --- !u!114 &2027094000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15244,7 +14754,6 @@ GameObject:
   - component: {fileID: 2031939355}
   - component: {fileID: 2031939354}
   - component: {fileID: 2031939353}
-  - component: {fileID: 2031939352}
   m_Layer: 0
   m_Name: Penta(Clone)
   m_TagString: Untagged
@@ -15267,20 +14776,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &2031939352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2031939350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 3c9189a4eae32af49a3470f9adb2d30f
 --- !u!65 &2031939353
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15520,7 +15015,6 @@ GameObject:
   - component: {fileID: 2071323888}
   - component: {fileID: 2071323887}
   - component: {fileID: 2071323886}
-  - component: {fileID: 2071323885}
   m_Layer: 0
   m_Name: CubieBeveled(Clone)
   m_TagString: Untagged
@@ -15543,20 +15037,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1437446913}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &2071323885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2071323883}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: e23ca049a5fc33842af9a535df1db15e
 --- !u!114 &2071323886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15704,7 +15184,6 @@ GameObject:
   - component: {fileID: 2077322805}
   - component: {fileID: 2077322804}
   - component: {fileID: 2077322803}
-  - component: {fileID: 2077322802}
   m_Layer: 0
   m_Name: SphereGemSmall(Clone)
   m_TagString: Untagged
@@ -15727,20 +15206,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1316062529}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &2077322802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2077322800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 010212a850f56074fa6afb4858fbeae7
 --- !u!114 &2077322803
 MonoBehaviour:
   m_ObjectHideFlags: 0
