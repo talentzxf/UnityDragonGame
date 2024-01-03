@@ -101,53 +101,25 @@ public class SplineGemGenerator : AbstractGemGenerator
     
     void SampleCurvePoints(Vector3[] curvePoints, Action<Vector3> processor)
     {
-        float curveLength = CalculateCurveLength(curvePoints);
-
-        float currentDistance = 0f;
-        int currentIndex = 0;
-
-        while (currentDistance <= curveLength)
-        {
-            Vector3 point = GetPointAtDistance(curvePoints, currentDistance, ref currentIndex);
-            processor.Invoke(point);
-            
-            currentDistance += interval;
-        }
-    }
-
-    float CalculateCurveLength(Vector3[] curvePoints)
-    {
-        float length = 0f;
-
+        float segmentStartDistance = 0f;
+        float distance = 0.0f;
+        
         for (int i = 0; i < curvePoints.Length - 1; i++)
-        {
-            length += Vector3.Distance(curvePoints[i], curvePoints[i + 1]);
-        }
-
-        return length;
-    }
-
-    Vector3 GetPointAtDistance(Vector3[] curvePoints, float distance, ref int currentIndex)
-    {
-        float currentDistance = 0f;
-
-        for (int i = currentIndex; i < curvePoints.Length - 1; i++)
         {
             float segmentLength = Vector3.Distance(curvePoints[i], curvePoints[i + 1]);
 
-            if (currentDistance + segmentLength >= distance)
+            while (segmentStartDistance + segmentLength >= distance)
             {
-                float ratio = (distance - currentDistance) / segmentLength;
-                currentIndex = i;
-                return Vector3.Lerp(curvePoints[i], curvePoints[i + 1], ratio);
+                float ratio = (distance - segmentStartDistance) / segmentLength;
+                Vector3 position = Vector3.Lerp(curvePoints[i], curvePoints[i + 1], ratio);
+                processor(position);
+                distance += interval;
             }
-
-            currentDistance += segmentLength;
+            
+            segmentStartDistance += segmentLength;
         }
-
-        return curvePoints[curvePoints.Length - 1];
     }
-
+    
     public override void GenerateGems()
     {
         float calculatedLength = 0.0f;
