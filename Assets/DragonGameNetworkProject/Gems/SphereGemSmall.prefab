@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 183845311277880351}
   - component: {fileID: 5597754220694273943}
   - component: {fileID: 5996773089618170126}
+  - component: {fileID: 1047145925188082330}
   m_Layer: 0
   m_Name: SphereGemSmall
   m_TagString: Untagged
@@ -169,3 +170,49 @@ MonoBehaviour:
   SyncParent: 1
   _autoAOIOverride: 1
   DisableSharedModeInterpolation: 1
+--- !u!114 &1047145925188082330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7845723090300430649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 841b72de2996c5c40bfb394f3d0e0a98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Feedbacks:
+  - {fileID: -391619242486786796, guid: ec25f1f9a8636e7439c50706f7470a92, type: 3}
+  - {fileID: 4152747787062613779, guid: ec25f1f9a8636e7439c50706f7470a92, type: 3}
+  - {fileID: 4058481047890569162, guid: ec25f1f9a8636e7439c50706f7470a92, type: 3}
+  InitializationMode: 2
+  SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
+  AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
+  DebugActive: 0

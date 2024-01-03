@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using Fusion;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 
 public class GemMovement : NetworkBehaviour
@@ -18,6 +19,8 @@ public class GemMovement : NetworkBehaviour
     private ChangeDetector _changeDetector;
     [Networked] private Vector3 targetPosition { get; set; }
     [Networked] private Vector3 startPosition { get; set; }
+
+    private MMFeedbacks _mmFeedbacks;
     
     public override void Spawned()
     {
@@ -40,6 +43,8 @@ public class GemMovement : NetworkBehaviour
         {
             StartMove();
         });
+
+        _mmFeedbacks = GetComponent<MMFeedbacks>();
     }
 
     private void StartMove()
@@ -71,6 +76,8 @@ public class GemMovement : NetworkBehaviour
                 Bonus.Instance.Add(no.StateAuthority, value);
 
                 isVisible = false;
+                
+                _mmFeedbacks.PlayFeedbacks();
             }
         }
     }
