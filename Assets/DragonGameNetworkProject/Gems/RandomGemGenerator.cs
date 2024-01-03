@@ -1,25 +1,66 @@
-using System;
-using System.Collections.Generic;using DragonGameNetworkProject;
-using UnityEditor;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System;
 using Random = UnityEngine.Random;
 
 public abstract class AbstractGemGenerator : MonoBehaviour
 {
+#if UNITY_EDITOR
     [SerializeField] protected List<GameObject> gems;
-
     public abstract void GenerateGems();
-    
+
     public void DeleteAllGems()
     {
-        while (transform.childCount != 0)
+        int remainChild = 0;
+        
+        for (int childIdx = 0; childIdx < transform.childCount; childIdx++)
         {
-            for(int childIdx = 0 ; childIdx < transform.childCount; childIdx++)
+            GameObject go = transform.GetChild(childIdx).gameObject;
+            if (!CanDelete(go))
             {
-                Undo.DestroyObjectImmediate(transform.GetChild(childIdx).gameObject);
-            }            
+                remainChild++;
+            }
+        }
+        
+        while (transform.childCount > remainChild)
+        {
+            for (int childIdx = 0; childIdx < transform.childCount; childIdx++)
+            {
+                GameObject go = transform.GetChild(childIdx).gameObject;
+                if (CanDelete(go))
+                {
+                    Undo.DestroyObjectImmediate(go);                    
+                }
+            }
         }
     }
+
+    protected virtual bool CanDelete(GameObject go)
+    {
+        return true;
+    }
+
+    protected void GenerateGemAtPosition(Vector3 position)
+    {
+        int randomIdx = Random.Range(0, gems.Count);
+        GameObject gemPrefab = gems[randomIdx];
+        GameObject gem = null;
+        try
+        {
+            gem = Instantiate(gemPrefab, position, gemPrefab.transform.rotation);
+        }
+        catch (Exception)
+        {
+            Debug.LogError("Can't spawn the Gem!");
+        }
+        
+        if (gem != null)
+        {
+            gem.transform.parent = transform;
+        }
+    }
+#endif
 }
 
 public class GemGeneratorEditor : Editor
@@ -48,30 +89,18 @@ public class RandomGemGenerator : AbstractGemGenerator
     [SerializeField] private int totalCount = 5;
 
     [CustomEditor(typeof(RandomGemGenerator))]
-    class RandomGemGeneratorEditor: GemGeneratorEditor{}
+    class RandomGemGeneratorEditor : GemGeneratorEditor
+    {
+    }
 
     public override void GenerateGems()
     {
         for (int i = 0; i < totalCount; i++)
         {
-            int randomIdx = Random.Range(0, gems.Count);
-            GameObject gemPrefab = gems[randomIdx];
             Vector3 randomPosition = Random.insideUnitSphere * radius;
             Vector3 position = transform.position + randomPosition;
-            GameObject gem = null;
-            try
-            {
-                gem = Instantiate(gemPrefab, position, gemPrefab.transform.rotation);
-            }
-            catch (Exception)
-            {
-                Debug.LogError("Can't spawn the Gem!");
-            }
-        
-            if (gem != null)
-            {
-                gem.transform.parent = transform;
-            }
+            
+            GenerateGemAtPosition(position);
         }
     }
 
@@ -80,6 +109,5 @@ public class RandomGemGenerator : AbstractGemGenerator
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, radius);
     }
-    
 #endif
 }
