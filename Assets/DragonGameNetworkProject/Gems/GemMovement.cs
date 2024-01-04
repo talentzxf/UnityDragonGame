@@ -1,17 +1,39 @@
+using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using DG.Tweening;
+using ExitGames.Client.Photon.StructWrapping;
 using Fusion;
 using MoreMountains.Feedbacks;
+using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
+enum GemStatus
+{
+    IsActive,
+    IsDisappearing,
+    Disappeared
+}
 
 public class GemMovement : NetworkBehaviour
 {
+    // Forward child collider OnTriggerEnter to parent.
+    class ChildColliderReaction : MonoBehaviour
+    {
+        public GemMovement parentMovement;
+    
+        private void OnTriggerEnter(Collider other)
+        {
+            parentMovement.OnTriggerEnter(other);
+        }
+    }
+
     [SerializeField] private float xDistance = 5f;
     [SerializeField] private float rotationDuration = 5f;
     [SerializeField] private int value = 1;
     [SerializeField] private List<Material> materialList;
     [Networked] private int materIdx { set; get; } = -1;
-    [Networked] private bool isVisible { get; set; } = true;
 
     private MeshRenderer meshRenderer;
     private Collider collider;
@@ -21,6 +43,8 @@ public class GemMovement : NetworkBehaviour
     [Networked] private Vector3 startPosition { get; set; }
 
     private MMFeedbacks _mmFeedbacks;
+    private MMFeedbackScale scaleFeedBack;
+    [Networked] private GemStatus status { get; set; } = GemStatus.IsActive;
     
     public override void Spawned()
     {
@@ -36,8 +60,8 @@ public class GemMovement : NetworkBehaviour
         }
         
         _changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
-        meshRenderer = GetComponent<MeshRenderer>();
-        collider = GetComponent<Collider>();
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
+        collider = GetComponentInChildren<Collider>();
         
         NetworkEventsHandler.SelectedAsMasterClient.AddListener(() =>
         {
@@ -45,6 +69,16 @@ public class GemMovement : NetworkBehaviour
         });
 
         _mmFeedbacks = GetComponent<MMFeedbacks>();
+        foreach (var feedback in _mmFeedbacks.Feedbacks)
+        {
+            if (feedback.IsType<MMFeedbackScale>())
+            {
+                scaleFeedBack = feedback as MMFeedbackScale;
+            }
+        }
+        
+        ChildColliderReaction childColliderReaction = collider.AddComponent<ChildColliderReaction>();
+        childColliderReaction.parentMovement = this;
     }
 
     private void StartMove()
@@ -75,9 +109,34 @@ public class GemMovement : NetworkBehaviour
                 UIController.Instance.ShowGameMsg(msg);
                 Bonus.Instance.Add(no.StateAuthority, value);
 
-                isVisible = false;
+                status = GemStatus.Disappeared;
                 
                 _mmFeedbacks.PlayFeedbacks();
+
+                if (scaleFeedBack != null)
+                {
+                    status = GemStatus.IsDisappearing;
+                }
+                else
+                {
+                    status = GemStatus.Disappeared;
+                }
+            }
+        }
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        base.FixedUpdateNetwork();
+
+        if (HasStateAuthority)
+        {
+            if (status == GemStatus.IsDisappearing)
+            {
+                if (scaleFeedBack == null || !scaleFeedBack.FeedbackPlaying)
+                {
+                    status = GemStatus.Disappeared;
+                }
             }
         }
     }
@@ -86,7 +145,7 @@ public class GemMovement : NetworkBehaviour
     {
         if (_changeDetector == null) // Game has not started.
             return;
-        
+
         if (materIdx != -1 && meshRenderer != null)
         {
             meshRenderer.material = materialList[materIdx];
@@ -96,9 +155,22 @@ public class GemMovement : NetworkBehaviour
         {
             switch (change)
             {
-                case nameof(isVisible):
-                    meshRenderer.enabled = isVisible;
-                    collider.enabled = isVisible;
+                case nameof(status):
+                    switch (status)
+                    {
+                        case GemStatus.IsActive:
+                            meshRenderer.enabled = true;
+                            collider.enabled = true;
+                            break;
+                        case GemStatus.IsDisappearing:
+                            meshRenderer.enabled = true;
+                            collider.enabled = false;
+                            break;
+                        case GemStatus.Disappeared:
+                            meshRenderer.enabled = false;
+                            collider.enabled = false;
+                        break;
+                    }
                     break;
             }
         }
