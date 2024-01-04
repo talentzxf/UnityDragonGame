@@ -97,6 +97,11 @@ public class GemMovement : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (status != GemStatus.IsActive) // Prevent re-entry.
+        {
+            return;
+        }
+        
         if (HasStateAuthority)
         {
             if (other.tag == "Player")
