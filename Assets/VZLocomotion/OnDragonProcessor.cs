@@ -3,7 +3,6 @@ using UnityEngine;
 public class OnDragonProcessor : OnDragonLocomotionProcessor
 {
     private CharacterController _character;
-    private Animator _animator;
 
     private int _climbdown = Animator.StringToHash("climbDown");
 

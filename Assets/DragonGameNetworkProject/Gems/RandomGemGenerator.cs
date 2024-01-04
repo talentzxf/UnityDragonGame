@@ -63,6 +63,7 @@ public abstract class AbstractGemGenerator : MonoBehaviour
 #endif
 }
 
+#if UNITY_EDITOR
 public class GemGeneratorEditor : Editor
 {
     public override void OnInspectorGUI()
@@ -80,6 +81,7 @@ public class GemGeneratorEditor : Editor
         }
     }
 }
+#endif
 
 public class RandomGemGenerator : AbstractGemGenerator
 {
