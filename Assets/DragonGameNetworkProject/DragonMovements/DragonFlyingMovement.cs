@@ -88,7 +88,7 @@ namespace DragonGameNetworkProject.DragonMovements
         [Networked] public Vector3 rigidbodyVelocity { set; get; }
 
         private float rotationSpeed = 1000f;
-        private float camSwitchRotationSpeed = 10.0f;
+        private float camSwitchRotationSpeed = 5.0f;
 
         private int speedFWD = Animator.StringToHash("SpeedFWD");
 
@@ -157,6 +157,7 @@ namespace DragonGameNetworkProject.DragonMovements
         private RectTransform frontSightRT;
         private FirstPersonCamera fpsCamera;
         private Canvas canvas;
+        private RectTransform canvasRect;
 
         public override void Spawned()
         {
@@ -175,6 +176,7 @@ namespace DragonGameNetworkProject.DragonMovements
 
             var canvasGO = GameObject.Find("Canvas");
             canvas = canvasGO.GetComponent<Canvas>();
+            canvasRect = canvasGO.GetComponent<RectTransform>();
             frontSightImg = canvas.transform.Find("FrontSight").GetComponent<Image>();
             frontSightRT = frontSightImg.GetComponent<RectTransform>();
             
@@ -452,12 +454,13 @@ namespace DragonGameNetworkProject.DragonMovements
                 {
                     fpsCamera.enabled = false;
                     Cursor.lockState = CursorLockMode.Confined;
-                    frontSightImg.gameObject.SetActive(true);
+                    Cursor.visible = true;
+                    // frontSightImg.gameObject.SetActive(true);
 
-                    Vector2 canvasDim = new Vector2(frontSightRT.rect.width, frontSightRT.rect.height);
+                    Vector2 canvasDim = new Vector2(canvasRect.rect.width, canvasRect.rect.height);
                     Vector2 canvasCenter = 0.5f * canvasDim;
                     
-                    Vector2 inputMousePosition = canvasCenter + (input.MousePosition - canvasCenter) * 0.1f;
+                    Vector2 inputMousePosition = canvasCenter + (input.MousePosition - canvasCenter) * 0.15f;
                     Vector2 mousePos;
                     RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform,
                         inputMousePosition, canvas.worldCamera, out mousePos);
@@ -489,15 +492,14 @@ namespace DragonGameNetworkProject.DragonMovements
                     // Cam.transform.position = dragonPosition +
                     //                          (Cam.transform.position - dragonPosition).normalized * fpsCamera.distance;
 
-                    // Cam.transform.position = dragonPosition + (dragonPosition - dragonTargetPoint).normalized * fpsCamera.distance;
-
-                    Cam.transform.position = dragonPosition - ccTransform.forward * fpsCamera.distance;
+                    Cam.transform.position = Vector3.Slerp(Cam.transform.position, dragonPosition + (dragonPosition - dragonTargetPoint).normalized * fpsCamera.distance, 10.0f * delta);
 
                     Cam.transform.LookAt(boneRoot);
                 }
                 else
                 {
                     frontSightImg.gameObject.SetActive(false);
+                    Cursor.visible = false;
                     fpsCamera.enabled = true;
                 }
             }
