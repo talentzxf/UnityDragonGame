@@ -454,7 +454,10 @@ namespace DragonGameNetworkProject.DragonMovements
                     Cursor.lockState = CursorLockMode.Confined;
                     frontSightImg.gameObject.SetActive(true);
 
-                    Vector2 inputMousePosition = input.MousePosition;
+                    Vector2 canvasDim = new Vector2(frontSightRT.rect.width, frontSightRT.rect.height);
+                    Vector2 canvasCenter = 0.5f * canvasDim;
+                    
+                    Vector2 inputMousePosition = canvasCenter + (input.MousePosition - canvasCenter) * 0.1f;
                     Vector2 mousePos;
                     RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform,
                         inputMousePosition, canvas.worldCamera, out mousePos);
@@ -483,8 +486,12 @@ namespace DragonGameNetworkProject.DragonMovements
                         (curVelocity.normalized + (dragonTargetPoint - dragonPosition).normalized)
                         .normalized * curVelocityMag;
 
-                    Cam.transform.position = dragonPosition +
-                                             (Cam.transform.position - dragonPosition).normalized * fpsCamera.distance;
+                    // Cam.transform.position = dragonPosition +
+                    //                          (Cam.transform.position - dragonPosition).normalized * fpsCamera.distance;
+
+                    // Cam.transform.position = dragonPosition + (dragonPosition - dragonTargetPoint).normalized * fpsCamera.distance;
+
+                    Cam.transform.position = dragonPosition - ccTransform.forward * fpsCamera.distance;
 
                     Cam.transform.LookAt(boneRoot);
                 }
