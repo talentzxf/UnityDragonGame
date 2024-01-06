@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
-using System.Numerics;
 using UnityEngine;
-using Quaternion = UnityEngine.Quaternion;
-using Vector3 = UnityEngine.Vector3;
 
 public class FirstPersonCamera : MonoBehaviour
 {
@@ -15,7 +12,7 @@ public class FirstPersonCamera : MonoBehaviour
 
     public float distance;
     private float originalDistance;
- 
+
     public Transform target;
     public Transform newTarget;
     private float currentProgress = 0.0f;
@@ -28,7 +25,7 @@ public class FirstPersonCamera : MonoBehaviour
         {
             this.newTarget = playerAnimator.GetBoneTransform(HumanBodyBones.Neck);
         }
-        
+
         StartCoroutine(InternalLerpToDistance(distanceFactor, totalTime));
     }
 
@@ -62,15 +59,15 @@ public class FirstPersonCamera : MonoBehaviour
         {
             Vector3 initDir = Vector3.forward;
             Vector3 resultDir = transform.position - target.position;
-        
+
             Quaternion resultRotation = Quaternion.FromToRotation(initDir, resultDir.normalized);
-        
+
             xAngle = resultRotation.eulerAngles.x;
             yAngle = resultRotation.eulerAngles.y;
-            
+
             Quaternion rotation = Quaternion.Euler(xAngle, yAngle, 0);
             Vector3 newPosition = target.position + (rotation * Vector3.forward).normalized * distance;
-            
+
             Debug.Log("Calculated xAngle:" + xAngle + " yAngle:" + yAngle);
             Debug.Log("Camera error:" + (newPosition - transform.position));
         }
@@ -98,11 +95,27 @@ public class FirstPersonCamera : MonoBehaviour
         originalDistance = distance;
     }
 
+    private int _TerrainLayerMask = -1;
+
+    private int TerrainLayerMask
+    {
+        get
+        {
+            if (_TerrainLayerMask < 0)
+            {
+                _TerrainLayerMask = LayerMask.GetMask("Terrain");
+            }
+
+            return _TerrainLayerMask;
+        }
+    }
+
+
     void SyncTransform()
     {
         if (target == null)
             return;
-        
+
         Vector3 targetPosition = target.position;
 
         if (newTarget != null)
@@ -115,12 +128,21 @@ public class FirstPersonCamera : MonoBehaviour
 
         xAngle += verticalInput;
         yAngle += horizontalInput;
-        
-        if(clampEnabled)
+
+        if (clampEnabled)
             xAngle = Math.Clamp(xAngle, -89, 89);
-        
+
         Quaternion rotation = Quaternion.Euler(xAngle, yAngle, 0);
         Vector3 newPosition = targetPosition + (rotation * Vector3.forward).normalized * distance;
+
+        RaycastHit hit;
+        if (Physics.Raycast(targetPosition, (newPosition - targetPosition).normalized, out hit, distance * 2.0f,
+                TerrainLayerMask))
+        {
+            newPosition = hit.point;
+        }
+
+        Debug.DrawLine(targetPosition, newPosition);
 
         transform.position = newPosition;
         transform.LookAt(targetPosition);
