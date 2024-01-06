@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using DragonGameNetworkProject.FightSystem;
+using UnityEngine;
 
 namespace DragonGameNetworkProject
 {
     public class ShieldNameTag: AbstractNameTag
     {
+        private ShieldEnermy _enermy;
         protected override void InitOnSpawn()
         {
             
@@ -16,7 +18,7 @@ namespace DragonGameNetworkProject
 
         protected override string GetObjectName()
         {
-            return "Shield";
+            return _enermy.GetName();
         }
 
         protected override Vector3 GetTextPosition()

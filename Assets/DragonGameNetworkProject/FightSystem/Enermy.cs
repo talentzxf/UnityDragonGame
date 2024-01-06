@@ -8,7 +8,7 @@ public abstract class Enermy : MonoBehaviour
 {
     [SerializeField] private float hp = 100.0f;
 
-    protected abstract string GetName();
+    public abstract string GetName();
 
     public void DoDamage(float power)
     {

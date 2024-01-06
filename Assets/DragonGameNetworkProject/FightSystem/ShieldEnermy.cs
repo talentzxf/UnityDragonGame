@@ -2,7 +2,7 @@
 {
     public class ShieldEnermy: Enermy
     {
-        protected override string GetName()
+        public override string GetName()
         {
             return "Shield";
         }
