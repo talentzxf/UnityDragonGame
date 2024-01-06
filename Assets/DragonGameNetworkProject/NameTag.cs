@@ -4,28 +4,28 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NameTag : NetworkBehaviour
+public abstract class AbstractNameTag : NetworkBehaviour
 {
-    private Transform avatarTransform;
     private TextMeshProUGUI nameText;
     private string _userId;
-    private float avatarHeight = 1.6f;
+    private Camera mainCamera;
 
     private void Sync()
     {
-        if (isLocal)
+        if (isHide)
             return;
-        
+
         if (nameText != null)
         {
-            var targetPoint = avatarTransform.position + (avatarHeight * 1.1f) * avatarTransform.up;
-            
-            Vector3 screenPoint = Camera.main.WorldToScreenPoint(targetPoint);
+            var targetPoint = GetTextPosition();
 
-            Vector3 cameraRay = targetPoint - Camera.main.transform.position;
-            
-            bool isOutOfScreen = (screenPoint.x < 0 || screenPoint.x > Screen.width || screenPoint.y < 0 || screenPoint.y > Screen.height);
-            if (Vector3.Dot(Camera.main.transform.forward, cameraRay) < 0) // The point is in the back of the camera.
+            Vector3 screenPoint = mainCamera.WorldToScreenPoint(targetPoint);
+
+            Vector3 cameraRay = targetPoint - mainCamera.transform.position;
+
+            bool isOutOfScreen = (screenPoint.x < 0 || screenPoint.x > Screen.width || screenPoint.y < 0 ||
+                                  screenPoint.y > Screen.height);
+            if (Vector3.Dot(mainCamera.transform.forward, cameraRay) < 0) // The point is in the back of the camera.
             {
                 isOutOfScreen = true;
             }
@@ -33,7 +33,7 @@ public class NameTag : NetworkBehaviour
             if (!isOutOfScreen)
             {
                 nameText.enabled = true;
-                nameText.transform.position = screenPoint;                
+                nameText.transform.position = screenPoint;
             }
             else
             {
@@ -59,22 +59,33 @@ public class NameTag : NetworkBehaviour
 
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
-        if (isLocal)
+        if (isHide)
             return;
-        
+
         Destroy(nameText);
     }
 
-    private bool isLocal = false;
-    public override void Spawned()
+    private bool isHide = false;
+
+    protected abstract void InitOnSpawn();
+    protected abstract bool HideLocalObjectName();
+
+    protected abstract string GetObjectName();
+
+    protected abstract Vector3 GetTextPosition();
+
+    public override void Spawned()  
     {
+        InitOnSpawn();
         var no = GetComponent<NetworkObject>();
-        if (no.InputAuthority == Runner.LocalPlayer)
+        if (HideLocalObjectName() && no.InputAuthority == Runner.LocalPlayer)
         {
-            isLocal = true;
+            isHide = true;
             return;
         }
-        
+
+        mainCamera = Camera.main;
+
         GameObject canvasGO = null;
         var canvasComponent = FindObjectOfType<Canvas>();
         if (canvasComponent == null) // Create Cavnas
@@ -94,14 +105,6 @@ public class NameTag : NetworkBehaviour
         nameText.fontSize = 20;
         nameText.alignment = TextAlignmentOptions.Center;
 
-        CharacterController cc = gameObject.GetComponentInChildren<CharacterController>();
-        if (nameText != null && cc != null)
-        {
-            avatarTransform = cc.transform;
-            var runner = no.Runner;
-            var userId = runner.GetPlayerUserId(no.InputAuthority);
-            nameText.text = userId;
-            avatarHeight = cc.height;
-        }
+        nameText.text = GetObjectName();
     }
 }
