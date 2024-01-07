@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DragonGameNetworkProject;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -20,6 +21,13 @@ public abstract class Enermy : MonoBehaviour
     }
 
     protected abstract void DoDie();
+
+    private AbstractNameTag _nameTag;
+    private void Awake()
+    {
+        // EnermyManager.Instance.RegisterEnermy(this);
+        _nameTag = GetComponent<AbstractNameTag>();
+    }
 
     private void Update()
     {

@@ -10,6 +10,18 @@ public abstract class AbstractNameTag : NetworkBehaviour
     private string _userId;
     private Camera mainCamera;
 
+    private string _postFix;
+
+    private string _originalString;
+
+    public void SetPostFix(string postFix)
+    {
+        if (postFix != null)
+            nameText.text = _originalString + postFix;
+        else
+            nameText.text = _originalString;
+    }
+
     private void Sync()
     {
         if (isHide)
@@ -106,5 +118,7 @@ public abstract class AbstractNameTag : NetworkBehaviour
         nameText.alignment = TextAlignmentOptions.Center;
 
         nameText.text = GetObjectName();
+
+        _originalString = nameText.text;
     }
 }

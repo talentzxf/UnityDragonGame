@@ -8,7 +8,7 @@ namespace DragonGameNetworkProject
         private ShieldEnermy _enermy;
         protected override void InitOnSpawn()
         {
-            
+            _enermy = GetComponent<ShieldEnermy>();
         }
 
         protected override bool HideLocalObjectName()
