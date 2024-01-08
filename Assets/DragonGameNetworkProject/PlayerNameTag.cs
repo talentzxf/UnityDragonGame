@@ -32,7 +32,7 @@ namespace DragonGameNetworkProject
             return Runner.GetPlayerUserId(no.InputAuthority);
         }
 
-        protected override Vector3 GetTextPosition()
+        public override Vector3 GetTextPosition()
         {
             return avatarTransform.position + (objectHeight * 1.1f) * avatarTransform.up;
         }

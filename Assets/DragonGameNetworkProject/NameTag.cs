@@ -1,11 +1,14 @@
-using System;
+using System.Collections.Generic;
 using Fusion;
+using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public abstract class AbstractNameTag : NetworkBehaviour
 {
+    [SerializeField] private GameObject nameTagPrefab;
+
     private TextMeshProUGUI nameText;
     private string _userId;
     private Camera mainCamera;
@@ -14,6 +17,11 @@ public abstract class AbstractNameTag : NetworkBehaviour
 
     private string _originalString;
 
+    public void SetTextColor(Color textColor)
+    {
+        nameText.color = textColor;
+    }
+    
     public void SetPostFix(string postFix)
     {
         if (postFix != null)
@@ -74,20 +82,12 @@ public abstract class AbstractNameTag : NetworkBehaviour
 
     protected abstract string GetObjectName();
 
-    protected abstract Vector3 GetTextPosition();
+    public abstract Vector3 GetTextPosition();
 
-    public override void Spawned()  
+    private void Awake()
     {
-        InitOnSpawn();
-        var no = GetComponent<NetworkObject>();
-        if (HideLocalObjectName() && no.InputAuthority == Runner.LocalPlayer)
-        {
-            isHide = true;
-            return;
-        }
-
         mainCamera = Camera.main;
-
+        
         GameObject canvasGO = null;
         var canvasComponent = FindObjectOfType<Canvas>();
         if (canvasComponent == null) // Create Cavnas
@@ -101,14 +101,39 @@ public abstract class AbstractNameTag : NetworkBehaviour
             canvasGO = canvasComponent.gameObject;
         }
 
-        var nameTextGO = new GameObject("NameTag");
-        nameTextGO.transform.parent = canvasGO.transform;
-        nameText = nameTextGO.AddComponent<TextMeshProUGUI>();
+        var nameTextGO = Instantiate(nameTagPrefab, canvasGO.transform, true);
+        nameText = nameTextGO.GetComponent<TextMeshProUGUI>();
         nameText.fontSize = 20;
         nameText.alignment = TextAlignmentOptions.Center;
+    }
+    
+    public override void Spawned()  
+    {
+        InitOnSpawn();
+        var no = GetComponent<NetworkObject>();
+        if (HideLocalObjectName() && no.InputAuthority == Runner.LocalPlayer)
+        {
+            isHide = true;
+            return;
+        }
 
         nameText.text = GetObjectName();
 
         _originalString = nameText.text;
+    }
+
+    private Dictionary<string, MMFeedbacks> _effects = new();
+    public void PlayEffect(string effectName)
+    {
+        if (!_effects.TryGetValue(effectName, out MMFeedbacks feedback))
+        {
+            feedback = nameText.transform.Find(effectName)?.GetComponent<MMFeedbacks>();
+            if (feedback != null)
+            {
+                _effects.Add(effectName, feedback);
+            }
+        }
+        
+        feedback?.PlayFeedbacks();
     }
 }
