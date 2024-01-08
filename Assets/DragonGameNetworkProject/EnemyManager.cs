@@ -85,6 +85,18 @@ namespace DragonGameNetworkProject
 
         private EnemyInfo _lockedEnemy;
 
+        public Enemy GetCurrentLockedTarget()
+        {
+            if (_lockedEnemy == null)
+                return null;
+            
+            _lockedEnemy.Update();
+            if (!_lockedEnemy.IsLockable)
+                return null;
+
+            return _lockedEnemy.Enemy;
+        }
+        
         private void Update()
         {
             if (_lockedEnemy != null)

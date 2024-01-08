@@ -4,14 +4,18 @@ using UnityEngine;
 
 namespace DragonGameNetworkProject.FightSystem
 {
-    public class MissleMove: NetworkBehaviour
+    public class MissleMove : NetworkBehaviour
     {
         [SerializeField] private Transform _target;
-        [SerializeField] private float initSpeed = 100.0f;
+        [SerializeField] private float initSpeed = 10.0f;
 
         [SerializeField] private float rotationSpeed = 100.0f;
-        
-        public Transform target => _target;
+
+        public Transform Target
+        {
+            get => _target;
+            set => _target = value;
+        }
 
         private Rigidbody rb;
 
@@ -23,35 +27,22 @@ namespace DragonGameNetworkProject.FightSystem
 
         void AdjustAim(float delta)
         {
-            if (target == null)
+            if (Target == null)
                 return;
 
-            Vector3 heading = target.position - transform.position;
-            Quaternion lookRotation = Quaternion.LookRotation(heading, transform.up);
+            Vector3 heading = Target.position - transform.position;
+            Quaternion lookRotation = Quaternion.LookRotation(heading);
             rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, lookRotation, rotationSpeed * delta));
-            
-            rb.velocity = transform.up * initSpeed;
+
+            rb.velocity = transform.forward * initSpeed;
         }
 
-        private bool hasLaunched = false; 
-        private void Update()
+       public override void FixedUpdateNetwork()
         {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                rb.velocity = transform.up * initSpeed;
-                hasLaunched = true;
-            }
-        }
-
-        private void FixedUpdate()
-        {
-            if (!hasLaunched)
-                return;
-
             if (HasStateAuthority)
             {
-                AdjustAim(Time.deltaTime);
-            }            
+                AdjustAim(Runner.DeltaTime);
+            }
         }
     }
 }
