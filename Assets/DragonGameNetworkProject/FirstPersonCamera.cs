@@ -135,10 +135,11 @@ public class FirstPersonCamera : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(xAngle, yAngle, 0);
         Vector3 newPosition;
 
+        float minCameraHeight = 0.5f;
         if (Physics.Raycast(targetPosition, Vector3.down, out RaycastHit hit, distance * 2.0f,
-                TerrainLayerMask) && hit.distance < 0.5f)
+                TerrainLayerMask) && Vector3.Distance(targetPosition, hit.point) < minCameraHeight)
         {
-            newPosition = hit.point + 0.5f * Vector3.up;
+            newPosition = hit.point + minCameraHeight * Vector3.up;
         }
         else
         {
