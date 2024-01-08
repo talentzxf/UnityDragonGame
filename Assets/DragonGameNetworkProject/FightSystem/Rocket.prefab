@@ -72,8 +72,8 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -141,9 +141,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d27b6d7bc78e4124bc6c52f2129b9126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _explodePrefab: {fileID: 450171620467282876, guid: 560a2449a09dc7e40add761adf6f6f17, type: 3}
   _target: {fileID: 0}
-  initSpeed: 20
-  rotationSpeed: 100
+  initSpeed: 5
+  rotationSpeed: 1000
 --- !u!1 &6531533520134970401
 GameObject:
   m_ObjectHideFlags: 0

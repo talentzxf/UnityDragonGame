@@ -133,13 +133,16 @@ public class FirstPersonCamera : MonoBehaviour
             xAngle = Math.Clamp(xAngle, -89, 89);
 
         Quaternion rotation = Quaternion.Euler(xAngle, yAngle, 0);
-        Vector3 newPosition = targetPosition + (rotation * Vector3.forward).normalized * distance;
+        Vector3 newPosition;
 
-        RaycastHit hit;
-        if (Physics.Raycast(targetPosition, (newPosition - targetPosition).normalized, out hit, distance * 2.0f,
-                TerrainLayerMask))
+        if (Physics.Raycast(targetPosition, Vector3.down, out RaycastHit hit, distance * 2.0f,
+                TerrainLayerMask) && hit.distance < 0.5f)
         {
-            newPosition = hit.point;
+            newPosition = hit.point + 0.5f * Vector3.up;
+        }
+        else
+        {
+            newPosition = targetPosition + (rotation * Vector3.forward).normalized * distance;
         }
 
         Debug.DrawLine(targetPosition, newPosition);
