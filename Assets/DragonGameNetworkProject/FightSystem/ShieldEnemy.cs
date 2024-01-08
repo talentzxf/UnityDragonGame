@@ -1,6 +1,6 @@
 ﻿namespace DragonGameNetworkProject.FightSystem
 {
-    public class ShieldEnermy: Enermy
+    public class ShieldEnemy: Enemy
     {
         public override string GetName()
         {

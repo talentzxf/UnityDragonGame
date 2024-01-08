@@ -2,6 +2,21 @@ using UnityEngine;
 
 public class Utility
 {
+    public static bool IsVisibleOnScreen(Camera cam, Vector3 targetPoint, out Vector3 screenPoint)
+    {
+        screenPoint = cam.WorldToScreenPoint(targetPoint);
+
+        Vector3 cameraRay = targetPoint - cam.transform.position;
+
+        if (Vector3.Dot(cam.transform.forward, cameraRay) < 0) // The point is in the back of the camera.
+        {
+            return false;
+        }
+
+        return (screenPoint.x >= 0 && screenPoint.x <= Screen.width && screenPoint.y >= 0 &&
+                screenPoint.y <= Screen.height);
+    }
+    
     public static Transform RecursiveFind(Transform parent, string childName)
     {
         Transform result = null;

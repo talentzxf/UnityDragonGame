@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.42222098, g: 0.64365846, b: 0.7936594, a: 1}
+  m_IndirectSpecularColor: {r: 0.42221254, g: 0.64316183, b: 0.793691, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3052,7 +3052,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8645111910130682687, guid: c223540238442d840ab313795686d6d2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8822820015229895422, guid: c223540238442d840ab313795686d6d2, type: 3}
       propertyPath: m_IsTrigger
@@ -14139,6 +14139,7 @@ GameObject:
   - component: {fileID: 1448746979}
   - component: {fileID: 1448746980}
   - component: {fileID: 1448746981}
+  - component: {fileID: 1448746982}
   m_Layer: 0
   m_Name: GamePlay
   m_TagString: Untagged
@@ -14191,67 +14192,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbb6135f6213b541ba644c5396d9489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &1456756576
-PrefabInstance:
+--- !u!114 &1448746982
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3502654976704766322, guid: e055e3ec9d798da48aff123819c1a3b5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 52.77
-      objectReference: {fileID: 0}
-    - target: {fileID: 3502654976704766322, guid: e055e3ec9d798da48aff123819c1a3b5, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 6.34
-      objectReference: {fileID: 0}
-    - target: {fileID: 3502654976704766322, guid: e055e3ec9d798da48aff123819c1a3b5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 68.08
-      objectReference: {fileID: 0}
-    - target: {fileID: 3502654976704766322, guid: e055e3ec9d798da48aff123819c1a3b5, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.83915555
-      objectReference: {fileID: 0}
-    - target: {fileID: 3502654976704766322, guid: e055e3ec9d798da48aff123819c1a3b5, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.30342135
-      objectReference: {fileID: 0}
-    - target: {fileID: 3502654976704766322, guid: e055e3ec9d798da48aff123819c1a3b5, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.29422566
-      objectReference: {fileID: 0}
-    - target: {fileID: 3502654976704766322, guid: e055e3ec9d798da48aff123819c1a3b5, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.34232265
-      objectReference: {fileID: 0}
-    - target: {fileID: 3502654976704766322, guid: e055e3ec9d798da48aff123819c1a3b5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -17.926
-      objectReference: {fileID: 0}
-    - target: {fileID: 3502654976704766322, guid: e055e3ec9d798da48aff123819c1a3b5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 47.505
-      objectReference: {fileID: 0}
-    - target: {fileID: 3502654976704766322, guid: e055e3ec9d798da48aff123819c1a3b5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -52.326
-      objectReference: {fileID: 0}
-    - target: {fileID: 3502941325190920122, guid: e055e3ec9d798da48aff123819c1a3b5, type: 3}
-      propertyPath: _target
-      value: 
-      objectReference: {fileID: 253395462}
-    - target: {fileID: 6218341245850011874, guid: e055e3ec9d798da48aff123819c1a3b5, type: 3}
-      propertyPath: m_Name
-      value: Missile
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e055e3ec9d798da48aff123819c1a3b5, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1448746978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 224d9aca62d9475ea77148c438c013c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1457815487
 GameObject:
   m_ObjectHideFlags: 0
@@ -23909,4 +23861,3 @@ SceneRoots:
   - {fileID: 590040919}
   - {fileID: 1306349319}
   - {fileID: 240935555}
-  - {fileID: 1456756576}

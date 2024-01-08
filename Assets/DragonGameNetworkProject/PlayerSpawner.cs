@@ -20,6 +20,8 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
             controller.avatarGO.transform.position = spawnPoint.position;
             controller.avatarGO.transform.rotation = spawnPoint.rotation;
             controller.SwitchTo<PlayerGroundMovement>();
+            
+            EnemyManager.Instance.SetLocalPlayer(controller);
 
             Camera camera = Camera.main;
             FirstPersonCamera fpsCamera = camera.GetComponent<Camera>().GetComponent<FirstPersonCamera>();

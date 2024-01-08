@@ -5,10 +5,10 @@ namespace DragonGameNetworkProject
 {
     public class ShieldNameTag: AbstractNameTag
     {
-        private ShieldEnermy _enermy;
+        private ShieldEnemy _enemy;
         protected override void InitOnSpawn()
         {
-            _enermy = GetComponent<ShieldEnermy>();
+            _enemy = GetComponent<ShieldEnemy>();
         }
 
         protected override bool HideLocalObjectName()
@@ -18,7 +18,7 @@ namespace DragonGameNetworkProject
 
         protected override string GetObjectName()
         {
-            return _enermy.GetName();
+            return _enemy.GetName();
         }
 
         protected override Vector3 GetTextPosition()

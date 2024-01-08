@@ -31,18 +31,8 @@ public abstract class AbstractNameTag : NetworkBehaviour
         {
             var targetPoint = GetTextPosition();
 
-            Vector3 screenPoint = mainCamera.WorldToScreenPoint(targetPoint);
-
-            Vector3 cameraRay = targetPoint - mainCamera.transform.position;
-
-            bool isOutOfScreen = (screenPoint.x < 0 || screenPoint.x > Screen.width || screenPoint.y < 0 ||
-                                  screenPoint.y > Screen.height);
-            if (Vector3.Dot(mainCamera.transform.forward, cameraRay) < 0) // The point is in the back of the camera.
-            {
-                isOutOfScreen = true;
-            }
-
-            if (!isOutOfScreen)
+            bool isInScreen = Utility.IsVisibleOnScreen(mainCamera, targetPoint, out Vector3 screenPoint);
+            if (isInScreen)
             {
                 nameText.enabled = true;
                 nameText.transform.position = screenPoint;
