@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace DragonGameNetworkProject.DragonAvatarMovements
@@ -29,6 +30,22 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             }
         }
 
+        private bool isWalking = false;
+        private void Update()
+        {
+            if (!cc.isGrounded)
+            {
+                cc.Move(Physics.gravity * Time.deltaTime);
+            }
+            
+            if (isWalking)
+            {
+                // cc.SimpleMove(ccTransform.forward * walkSpeed);
+                Vector3 vel = ccTransform.forward * walkSpeed;
+                cc.Move(vel * Time.deltaTime);
+            }
+        }
+
         public override void FixedUpdateNetwork()
         {
             if (HasStateAuthority == false)
@@ -39,10 +56,12 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
             if (vertical == 0 && horizontal == 0)
             {
+                isWalking = false;
                 networkAnimator.Animator.SetBool(_isWalkingHash, false);
                 return;
             }
-            
+
+            isWalking = true;
             networkAnimator.Animator.SetBool(_isWalkingHash, true);
             
             Transform camTransform = camera.transform;
@@ -63,7 +82,6 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             resultRotation.z = 0;
 
             ccTransform.rotation = resultRotation;
-            cc.SimpleMove(resultVelocityDir * walkSpeed);
         }
     }
 }
