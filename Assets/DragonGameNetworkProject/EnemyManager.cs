@@ -69,11 +69,11 @@ namespace DragonGameNetworkProject
 
         public static EnemyManager Instance => _instance;
 
-        private PlayerMovementController _localPlayer;
+        private CharacterMovementController _localPlayer;
 
-        public PlayerMovementController LocalPlayer => _localPlayer;
+        public CharacterMovementController LocalPlayer => _localPlayer;
 
-        public void SetLocalPlayer(PlayerMovementController localPlayer)
+        public void SetLocalPlayer(CharacterMovementController localPlayer)
         {
             _localPlayer = localPlayer;
         }

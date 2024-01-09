@@ -8877,9 +8877,9 @@ GameObject:
   - component: {fileID: 867932015}
   - component: {fileID: 867932014}
   - component: {fileID: 867932013}
-  - component: {fileID: 867932016}
   - component: {fileID: 867932017}
   - component: {fileID: 867932018}
+  - component: {fileID: 867932019}
   m_Layer: 0
   m_Name: Prototype Runner
   m_TagString: Untagged
@@ -8983,22 +8983,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &867932016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 867932012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baeada627cf29a0498d38e5c072900d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 1565871044}
-  playerPrefab: {fileID: 7844063035658194730, guid: d3d9b87a68a2dca4d985d53102efc648, type: 3}
-  dragonSpawnPoint: {fileID: 933784034}
-  dragonPrefab: {fileID: 6840503093361006397, guid: 68d64682014ed314a8116eef19e4c0f9, type: 3}
 --- !u!114 &867932017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9028,6 +9012,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 317281f35b9e5924285b718a79e2d0ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &867932019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867932012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 516b60d1815f4de8a8ce02761f3a6c73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoint: {fileID: 1565871044}
+  dragonAvatarPrefab: {fileID: 0}
 --- !u!1 &894822542
 GameObject:
   m_ObjectHideFlags: 0
