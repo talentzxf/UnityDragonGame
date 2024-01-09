@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3527395885148677006}
   - component: {fileID: 5427608380929071441}
   - component: {fileID: 1853745313510136375}
-  - component: {fileID: 5726320273136793534}
   - component: {fileID: 3273457548630906966}
+  - component: {fileID: 9091357869982347419}
   m_Layer: 0
   m_Name: AdjustForward
   m_TagString: Untagged
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2012087414474815433}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
@@ -73,7 +73,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!143 &5726320273136793534
+--- !u!114 &3273457548630906966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012087414474815433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Animator: {fileID: 1853745313510136375}
+  TotalWords: 2
+  ApplyTiming: 2
+  SyncSettings: 79
+  StateHashes: 00000000ad2e86dbb7bfbc31b76789a484d4ac9389f787200dd451cf24f04e26a6bf02a3f94df4877d6e2268
+  TriggerHashes: 00000000
+--- !u!143 &9091357869982347419
 CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,25 +116,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: -0.8}
---- !u!114 &3273457548630906966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2012087414474815433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Animator: {fileID: 1853745313510136375}
-  TotalWords: 2
-  ApplyTiming: 2
-  SyncSettings: 79
-  StateHashes: 00000000ad2e86dbb7bfbc31b76789a484d4ac9389f787200dd451cf24f04e26a6bf02a3f94df4877d6e2268
-  TriggerHashes: 00000000
+  m_Center: {x: 0, y: 1, z: -1}
 --- !u!1 &2426696650724372332
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,6 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
+  walkSpeed: 10
 --- !u!1001 &5233549536102651092
 PrefabInstance:
   m_ObjectHideFlags: 0
