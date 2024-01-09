@@ -7,8 +7,8 @@ using UnityEngine.Events;
 
 public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
 {
-    public static readonly UnityEvent<string> LocalPlayerJoined = new();
-    public static readonly UnityEvent<PlayerRef> PlayerJoined = new();
+    public static readonly UnityEvent<NetworkRunner, string> LocalPlayerJoined = new();
+    public static readonly UnityEvent<NetworkRunner, PlayerRef> PlayerJoined = new();
     public static readonly UnityEvent<PlayerRef> PlayerLeft = new(); 
     public static readonly UnityEvent<string> ServerDisconnected = new();
     public static readonly UnityEvent<string> ConnectFailed = new();
@@ -51,8 +51,8 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
     {
         string playerId = runner.GetPlayerUserId(player);
         if (player == runner.LocalPlayer)
-            LocalPlayerJoined?.Invoke( playerId);
-        PlayerJoined?.Invoke(player);
+            LocalPlayerJoined?.Invoke(runner, playerId);
+        PlayerJoined?.Invoke(runner, player);
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)

@@ -29,7 +29,7 @@ public class Bonus : NetworkBehaviour
 
         _changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
 
-        NetworkEventsHandler.PlayerJoined.AddListener(playerRef =>
+        NetworkEventsHandler.PlayerJoined.AddListener((runner, playerRef) =>
         {
             if (PlayerCoins.ContainsKey(playerRef))
             {
