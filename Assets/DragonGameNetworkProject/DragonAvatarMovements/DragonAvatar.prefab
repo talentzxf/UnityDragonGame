@@ -112,10 +112,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 1853745313510136375}
-  TotalWords: 0
+  TotalWords: 2
   ApplyTiming: 2
   SyncSettings: 79
-  StateHashes: 00000000ad2e86dbb7bfbc31
+  StateHashes: 00000000ad2e86dbb7bfbc31b76789a484d4ac9389f787200dd451cf24f04e26a6bf02a3f94df4877d6e2268
   TriggerHashes: 00000000
 --- !u!1 &2426696650724372332
 GameObject:
@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 9016255048603633601}
   - component: {fileID: 2766260767806506161}
   - component: {fileID: 709095898195727178}
+  - component: {fileID: 4961621977295650935}
   m_Layer: 0
   m_Name: DragonAvatar
   m_TagString: Untagged
@@ -169,6 +170,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 709095898195727178}
+  - {fileID: 4961621977295650935}
   - {fileID: 5427608380929071441}
   - {fileID: 3273457548630906966}
 --- !u!114 &709095898195727178
@@ -186,6 +188,19 @@ MonoBehaviour:
   avatarGO: {fileID: 2012087414474815433}
   _currentMovement: {fileID: 0}
   prevMovement: {fileID: 0}
+--- !u!114 &4961621977295650935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2426696650724372332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b64baf28348643b4a63cd88e4fb695ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 10
 --- !u!1001 &5233549536102651092
 PrefabInstance:
   m_ObjectHideFlags: 0

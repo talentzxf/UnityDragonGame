@@ -79,20 +79,26 @@ public class FirstPersonCamera : MonoBehaviour
         Cursor.visible = false;
     }
 
-    public void SetCameraTarget(GameObject playerGO, bool hideCursor = true)
+    public void SetCameraTargetByTransform(Transform targetTransform)
     {
-        LockCursor();
-
-        target = playerGO.transform;
-        Animator playerAnimator = playerGO.GetComponentInChildren<Animator>();
-        if (playerAnimator && playerAnimator.isHuman)
-        {
-            target = playerAnimator.GetBoneTransform(HumanBodyBones.Neck);
-        }
-
+        target = targetTransform;
         Vector3 offset = target.position - transform.position;
         distance = offset.magnitude;
         originalDistance = distance;
+    }
+
+    public void SetCameraTarget(GameObject playerGO)
+    {
+        LockCursor();
+
+        Transform targetTransform = playerGO.transform;
+        Animator playerAnimator = playerGO.GetComponentInChildren<Animator>();
+        if (playerAnimator && playerAnimator.isHuman)
+        {
+            targetTransform = playerAnimator.GetBoneTransform(HumanBodyBones.Neck);
+        }
+        
+        SetCameraTargetByTransform(targetTransform);
     }
 
     private int _TerrainLayerMask = -1;

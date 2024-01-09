@@ -24,7 +24,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
             EnemyManager.Instance.SetLocalPlayer(controller);
 
             Camera camera = Camera.main;
-            FirstPersonCamera fpsCamera = camera.GetComponent<Camera>().GetComponent<FirstPersonCamera>();
+            FirstPersonCamera fpsCamera = camera.GetComponent<FirstPersonCamera>();
             fpsCamera.SetCameraTarget(controller.avatarGO);
 
             if (Runner.IsSharedModeMasterClient)

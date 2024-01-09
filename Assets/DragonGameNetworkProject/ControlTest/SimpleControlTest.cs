@@ -23,7 +23,7 @@ public class SimpleControlTest : MonoBehaviour
     {
         Cam = Camera.main.GetComponent<Camera>();
         fpsCamera = Cam.GetComponent<FirstPersonCamera>();
-        fpsCamera.SetCameraTarget(gameObject, false);
+        fpsCamera.SetCameraTarget(gameObject);
 
         GameObject canvasGO = GameObject.Find("Canvas");
         canvas = canvasGO.GetComponent<Canvas>();
