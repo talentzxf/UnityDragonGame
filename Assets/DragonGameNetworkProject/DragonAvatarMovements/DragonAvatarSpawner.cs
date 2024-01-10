@@ -1,4 +1,5 @@
 using Fusion;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DragonGameNetworkProject.DragonAvatarMovements
@@ -19,7 +20,17 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 
                 Camera camera = Camera.main;
                 FirstPersonCamera fpsCamera = camera.GetComponent<FirstPersonCamera>();
-                fpsCamera.SetCameraTarget(controller.avatarGO);
+
+                Transform neckBone = Utility.RecursiveFind(no.transform, "Neck");
+                if (neckBone != null)
+                {
+                    fpsCamera.SetCameraTargetByTransform(neckBone);
+                }
+                else
+                {
+                    fpsCamera.SetCameraTarget(controller.avatarGO);
+                }
+                
 
                 Physics.SyncTransforms(); // Need to sync transforms, or character controller will always reset character position to 0,0,0;
             }
