@@ -49,6 +49,8 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             rb.isKinematic = false;
             rb.useGravity = false; // Control gravity by myself.
 
+            UIController.Instance.ShowDragonControlUI();
+            
             // Apply a init velocity.
             BoostSpeed();
 
@@ -141,6 +143,8 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     // Cam.transform.position = Vector3.Lerp(Cam.transform.position, 
                     //     dragonPosition + (dragonPosition - dragonTargetPoint).normalized * fpsCamera.distance, 10.0f * delta);
                     // Cam.transform.LookAt(ccTransform);
+                    
+                    UIController.Instance.ShowSpeed(rb.velocity, MaxSpeed);
                 }
                 else
                 {
