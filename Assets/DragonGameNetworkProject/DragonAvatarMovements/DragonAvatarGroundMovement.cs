@@ -1,19 +1,42 @@
 using System;
+using DragonGameNetworkProject.DragonMovements;
 using UnityEngine;
 
 namespace DragonGameNetworkProject.DragonAvatarMovements
 {
+    class GroundInput
+    {
+        public float Vertical;
+        public float Horizontal;
+        public bool SpacePressed;
+
+        public void Update()
+        {
+            Vertical = Input.GetAxis("Vertical");
+            Horizontal = Input.GetAxis("Horizontal");
+
+            SpacePressed = Input.GetKeyDown(KeyCode.Space);
+        }
+
+        public void Reset()
+        {
+            Vertical = 0;
+            Horizontal = 0;
+            SpacePressed = false;
+        }
+    }
+    
     public class DragonAvatarGroundMovement : AbstractCharacterMovement
     {
-        private float maxSpeed = 2f;
-
         public float rotationSpeed = 10.0f;
 
-        public float walkSpeed = 10f;
+        public float walkSpeed = 3f;
 
         private Camera camera;
 
         private int _isWalkingHash = Animator.StringToHash("IsWalking");
+
+        private GroundInput _groundInput = new GroundInput();
 
         public override void Spawned()
         {
@@ -30,19 +53,11 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             }
         }
 
-        private bool isWalking = false;
         private void Update()
         {
-            if (!cc.isGrounded)
+            if (HasStateAuthority)
             {
-                cc.Move(Physics.gravity * Time.deltaTime);
-            }
-            
-            if (isWalking)
-            {
-                // cc.SimpleMove(ccTransform.forward * walkSpeed);
-                Vector3 vel = ccTransform.forward * walkSpeed;
-                cc.Move(vel * Time.deltaTime);
+                _groundInput.Update();
             }
         }
 
@@ -51,37 +66,56 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             if (HasStateAuthority == false)
                 return;
 
-            float vertical = Input.GetAxis("Vertical");
-            float horizontal = Input.GetAxis("Horizontal");
-
-            if (vertical == 0 && horizontal == 0)
+            try
             {
-                isWalking = false;
-                networkAnimator.Animator.SetBool(_isWalkingHash, false);
-                return;
+                if (_groundInput.SpacePressed)
+                {
+                    controller.SwitchTo<DragonAvatarTakeOffMovement>();
+                    return;
+                }
+
+                // Add Gravity.
+                float delta = Runner.DeltaTime;
+                if (!cc.isGrounded)
+                {
+                    cc.Move(Physics.gravity * delta);
+                }
+
+                // Take inputs and react.
+
+                if (_groundInput.Vertical == 0 && _groundInput.Horizontal == 0)
+                {
+                    networkAnimator.Animator.SetBool(_isWalkingHash, false);
+                    return;
+                }
+
+                networkAnimator.Animator.SetBool(_isWalkingHash, true);
+
+                Transform camTransform = camera.transform;
+
+                Vector3 forwardVelocity = _groundInput.Vertical * camTransform.forward;
+                Vector3 horizontalVelocity = _groundInput.Horizontal * camTransform.right;
+
+                Vector3 addedVelocity = forwardVelocity + horizontalVelocity;
+                addedVelocity.y = 0.0f; // No need to care about y axis.
+                Vector3 resultVelocityDir = addedVelocity.normalized;
+
+                // Lerp rotate the character.
+                Quaternion targetRotation = Quaternion.LookRotation(resultVelocityDir, Vector3.up);
+                Quaternion resultRotation =
+                    Quaternion.Slerp(ccTransform.rotation, targetRotation, rotationSpeed * Runner.DeltaTime);
+                // Keep the character always up.
+                resultRotation.x = 0;
+                resultRotation.z = 0;
+
+                ccTransform.rotation = resultRotation;
+
+                cc.Move(walkSpeed * delta * ccTransform.forward);
             }
-
-            isWalking = true;
-            networkAnimator.Animator.SetBool(_isWalkingHash, true);
-            
-            Transform camTransform = camera.transform;
-
-            Vector3 forwardVelocity = vertical * camTransform.forward;
-            Vector3 horizontalVelocity = horizontal * camTransform.right;
-
-            Vector3 addedVelocity = forwardVelocity + horizontalVelocity;
-            addedVelocity.y = 0.0f; // No need to care about y axis.
-            Vector3 resultVelocityDir = addedVelocity.normalized;
-            
-            // Lerp rotate the character.
-            Quaternion targetRotation = Quaternion.LookRotation(resultVelocityDir, Vector3.up);
-            Quaternion resultRotation =
-                Quaternion.Slerp(ccTransform.rotation, targetRotation, rotationSpeed * Runner.DeltaTime);
-            // Keep the character always up.
-            resultRotation.x = 0;
-            resultRotation.z = 0;
-
-            ccTransform.rotation = resultRotation;
+            finally
+            {
+                _groundInput.Reset();
+            }
         }
     }
 }

@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 2766260767806506161}
   - component: {fileID: 709095898195727178}
   - component: {fileID: 4961621977295650935}
+  - component: {fileID: 6206578147945310235}
   m_Layer: 0
   m_Name: DragonAvatar
   m_TagString: Untagged
@@ -171,6 +172,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 709095898195727178}
   - {fileID: 4961621977295650935}
+  - {fileID: 6206578147945310235}
   - {fileID: 5427608380929071441}
   - {fileID: 3273457548630906966}
 --- !u!114 &709095898195727178
@@ -201,7 +203,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 10
-  walkSpeed: 10
+  walkSpeed: 3
+--- !u!114 &6206578147945310235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2426696650724372332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf01e877635b4a00b6317dd2db0f99ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5233549536102651092
 PrefabInstance:
   m_ObjectHideFlags: 0
