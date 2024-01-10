@@ -50,6 +50,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             if (HasStateAuthority)
             {
                 camera.GetComponent<FirstPersonCamera>().clampEnabled = true;
+                cc.enabled = true;
             }
         }
 
