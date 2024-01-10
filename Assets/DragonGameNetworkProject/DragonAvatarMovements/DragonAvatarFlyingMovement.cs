@@ -68,6 +68,13 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             if (HasStateAuthority)
             {
                 _inputHandler.Update();
+
+                if (_inputHandler.IsRightMouseHold)
+                {
+                    Cam.transform.position = Vector3.Lerp(Cam.transform.position, 
+                        ccTransform.position - ccTransform.forward * fpsCamera.distance, 10.0f * Time.deltaTime);
+                    Cam.transform.LookAt(ccTransform);
+                }
             }
         }
 
@@ -131,10 +138,9 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     
                     rb.velocity = ccTransform.forward * curVelocityMag;
                     
-                    Cam.transform.position = Vector3.Slerp(Cam.transform.position, 
-                        dragonPosition + (dragonPosition - dragonTargetPoint).normalized * fpsCamera.distance, delta);
-
-                    Cam.transform.LookAt(ccTransform);
+                    // Cam.transform.position = Vector3.Lerp(Cam.transform.position, 
+                    //     dragonPosition + (dragonPosition - dragonTargetPoint).normalized * fpsCamera.distance, 10.0f * delta);
+                    // Cam.transform.LookAt(ccTransform);
                 }
                 else
                 {
