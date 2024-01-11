@@ -1,31 +1,19 @@
+using System;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
 namespace DragonGameNetworkProject.DragonAvatarMovements
 {
-
-    
-    public class DragonAvatarController: CharacterMovementController
+    public class DragonAvatarController : CharacterMovementController
     {
-#if UNITY_EDITOR
-        [CustomEditor(typeof(DragonAvatarController))]
-        public class DragonAvatarControllerEditor : Editor
+        private void Awake()
         {
-            public override void OnInspectorGUI()
+            Collider[] colliders = GetComponentsInChildren<Collider>(true);
+            foreach (var collider in colliders)
             {
-                base.OnInspectorGUI();
-                DragonAvatarController dragonAvatarController = target as DragonAvatarController;
-                if (GUILayout.Button("Setup All Colliders"))
-                {
-                    Collider[] colliders = dragonAvatarController.GetComponentsInChildren<Collider>(true);
-                    foreach (var collider in colliders)
-                    {
-                        collider.gameObject.tag = "Player";
-                    }
-                }
+                collider.gameObject.tag = "Player"; // Setup tags.
             }
         }
-#endif
     }
 }

@@ -59,6 +59,16 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             if (HasStateAuthority)
             {
                 _groundInput.Update();
+
+                if (_groundInput.Horizontal == 0.0f && _groundInput.Vertical == 0.0f)
+                {
+                    networkAnimator.Animator.SetBool(_isWalkingHash, false);
+                }
+                else
+                {
+                    networkAnimator.Animator.SetBool(_isWalkingHash, true);
+                }
+                    
             }
         }
 
@@ -86,12 +96,9 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
                 if (_groundInput.Vertical == 0 && _groundInput.Horizontal == 0)
                 {
-                    networkAnimator.Animator.SetBool(_isWalkingHash, false);
                     return;
                 }
-
-                networkAnimator.Animator.SetBool(_isWalkingHash, true);
-
+                
                 Transform camTransform = camera.transform;
 
                 Vector3 forwardVelocity = _groundInput.Vertical * camTransform.forward;
