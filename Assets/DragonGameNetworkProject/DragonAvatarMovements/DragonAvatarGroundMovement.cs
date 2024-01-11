@@ -50,6 +50,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 GameTimer.Instance.onGameStart.AddListener(() =>
                 {
                     _controllable = true;
+                    UIController.Instance.ShowPrompt("Press space to take off");
                 });                
             }
         }

@@ -1,5 +1,6 @@
 using System;
 using Fusion;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace DragonGameNetworkProject
@@ -7,7 +8,9 @@ namespace DragonGameNetworkProject
     public class GameTimer : NetworkBehaviour
     {
         public UnityEvent onGameStart;
-        
+
+        [SerializeField] private float countDownTime = 5.0f;
+        [SerializeField] private float goTime = 1.0f;
         
         private static GameTimer _instance;
         public static GameTimer Instance => _instance;
@@ -30,7 +33,7 @@ namespace DragonGameNetworkProject
             base.Spawned();
             if (Runner.IsSharedModeMasterClient || Runner.IsSinglePlayer)
             {
-                timer = TickTimer.CreateFromSeconds(Runner,11.0f);
+                timer = TickTimer.CreateFromSeconds(Runner,countDownTime + goTime);
             }
         }
 
@@ -39,18 +42,18 @@ namespace DragonGameNetworkProject
         {
             if (timer.RemainingTime(Runner) >= 1.0f)
             {
-                UIController.Instance.SetTimerText($"Game will start in { (timer.RemainingTime(Runner) + 1.0f)?.ToString("F2")} seconds");
+                UIController.Instance.SetTimerText($"Game will start in { (timer.RemainingTime(Runner) - 1.0f)?.ToString("F2")} seconds");
             }
 
             if (timer.RemainingTime(Runner) <= 1.0f && !timer.Expired(Runner))
             {
                 UIController.Instance.SetTimerText("Go!!");
-            }
 
-            if (timer.Expired(Runner) && gameStartEventTriggered == false)
-            {
-                onGameStart?.Invoke();
-                gameStartEventTriggered = true;
+                if (!gameStartEventTriggered)
+                {
+                    onGameStart?.Invoke();
+                    gameStartEventTriggered = true;
+                }
             }
         }
     }

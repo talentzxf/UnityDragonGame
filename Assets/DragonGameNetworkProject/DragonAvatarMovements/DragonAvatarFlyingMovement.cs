@@ -55,6 +55,8 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             BoostSpeed();
 
             animator.SetBool(isFlying, true);
+            
+            UIController.Instance.ShowPrompt("Hold mouse right button to control");
         }
 
 

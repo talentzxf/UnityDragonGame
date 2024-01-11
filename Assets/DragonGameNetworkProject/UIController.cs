@@ -39,6 +39,7 @@ public class UIController : MonoBehaviour
     private Label bonusLabel;
     private Label playerListLabel;
     private Label timerLabel;
+    private Label dragonControlPrompt;
 
     private Queue<Message> curMessages = new Queue<Message>();
 
@@ -62,6 +63,12 @@ public class UIController : MonoBehaviour
         speedBar.highValue = maxSpeed;
 
         speedBar.title = "Speed:" + curSpeedMag.ToString("F2");
+    }
+
+    public void ShowPrompt(string prompt)
+    {
+        dragonControlPrompt.visible = true;
+        dragonControlPrompt.text = prompt;
     }
 
     public void ShowDragonControlUI()
@@ -89,6 +96,7 @@ public class UIController : MonoBehaviour
         playerListLabel = uiDocument.rootVisualElement.Q<Label>("PlayerList");
 
         timerLabel = uiDocument.rootVisualElement.Q<Label>("Timer");
+        dragonControlPrompt = uiDocument.rootVisualElement.Q<Label>("DragonControlPrompt");
         HideDragonControlUI();
     }
 
