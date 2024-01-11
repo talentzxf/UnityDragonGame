@@ -107,7 +107,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 {
                     BoostSpeed();
                 }
-
+                
                 if (_inputHandler.IsRightMouseHold)
                 {
                     fpsCamera.enabled = false;
@@ -162,6 +162,12 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             {
                 try
                 {
+                    if(_inputHandler.Land)
+                    {
+                        controller.SwitchTo<DragonAvatarLandMovement>();
+                        return;
+                    }
+                    
                     // Add a small amount of gravity.
                     Vector3 levitationForce = Physics.gravity * flyingGravityPortion;
                     rb.AddForce(levitationForce, ForceMode.Acceleration);

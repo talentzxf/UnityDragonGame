@@ -80,6 +80,7 @@ public class UIController : MonoBehaviour
     public void HideDragonControlUI()
     {
         dragonControlUI.style.visibility = Visibility.Hidden;
+        dragonControlPrompt.visible = false;
     }
 
     private void ActivateUiDocument()

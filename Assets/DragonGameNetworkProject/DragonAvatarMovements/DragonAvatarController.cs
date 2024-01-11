@@ -13,6 +13,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             foreach (var collider in colliders)
             {
                 collider.gameObject.tag = "Player"; // Setup tags.
+                collider.isTrigger = true;
             }
         }
     }
