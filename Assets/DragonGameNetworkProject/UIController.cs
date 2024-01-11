@@ -38,6 +38,7 @@ public class UIController : MonoBehaviour
 
     private Label bonusLabel;
     private Label playerListLabel;
+    private Label timerLabel;
 
     private Queue<Message> curMessages = new Queue<Message>();
 
@@ -86,6 +87,8 @@ public class UIController : MonoBehaviour
         bonusLabel = uiDocument.rootVisualElement.Q<Label>("Bonus");
 
         playerListLabel = uiDocument.rootVisualElement.Q<Label>("PlayerList");
+
+        timerLabel = uiDocument.rootVisualElement.Q<Label>("Timer");
         HideDragonControlUI();
     }
 
@@ -165,6 +168,11 @@ public class UIController : MonoBehaviour
 
         if (messageLabel != null)
             messageLabel.text = resultMessage;
+    }
+
+    public void SetTimerText(string text)
+    {
+        timerLabel.text = text;
     }
 
     public void UpdatePlayerCoins(NetworkDictionary<PlayerRef, int> playerCoins, NetworkRunner runner)

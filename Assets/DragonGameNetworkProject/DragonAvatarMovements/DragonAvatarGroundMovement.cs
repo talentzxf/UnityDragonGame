@@ -28,9 +28,11 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
     
     public class DragonAvatarGroundMovement : AbstractCharacterMovement
     {
+        private bool _controllable; // Player can only control after count down.
+        
         public float rotationSpeed = 10.0f;
 
-        public float walkSpeed = 3f;
+        public float walkSpeed = 5f;
 
         private Camera camera;
 
@@ -42,6 +44,14 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         {
             base.Spawned();
             camera = Camera.main;
+
+            if (HasStateAuthority)
+            {
+                GameTimer.Instance.onGameStart.AddListener(() =>
+                {
+                    _controllable = true;
+                });                
+            }
         }
 
         public override void OnEnterMovement()
@@ -81,7 +91,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             {
                 if (_groundInput.SpacePressed)
                 {
-                    controller.SwitchTo<DragonAvatarTakeOffMovement>();
+                     controller.SwitchTo<DragonAvatarTakeOffMovement>();
                     return;
                 }
 
@@ -94,7 +104,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
                 // Take inputs and react.
 
-                if (_groundInput.Vertical == 0 && _groundInput.Horizontal == 0)
+                if (!_controllable || (_groundInput.Vertical == 0 && _groundInput.Horizontal == 0))
                 {
                     return;
                 }
