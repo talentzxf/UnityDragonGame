@@ -100,6 +100,9 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
             try
             {
+                if (!_controllable)
+                    return;
+                
                 if (_groundInput.SpacePressed)
                 {
                      controller.SwitchTo<DragonAvatarTakeOffMovement>();
@@ -115,7 +118,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
                 // Take inputs and react.
 
-                if (!_controllable || (_groundInput.Vertical == 0 && _groundInput.Horizontal == 0))
+                if ((_groundInput.Vertical == 0 && _groundInput.Horizontal == 0))
                 {
                     return;
                 }

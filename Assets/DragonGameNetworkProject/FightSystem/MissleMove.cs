@@ -1,5 +1,8 @@
-﻿using Fusion;
+﻿using System;
+using Fusion;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace DragonGameNetworkProject.FightSystem
 {
@@ -12,6 +15,8 @@ namespace DragonGameNetworkProject.FightSystem
 
         [SerializeField] private float rotationSpeed = 100.0f;
 
+        [SerializeField] private bool equipped = false;
+
         public Transform Target
         {
             get => _target;
@@ -20,10 +25,25 @@ namespace DragonGameNetworkProject.FightSystem
 
         private Rigidbody rb;
 
+        private Collider _collider;
         public override void Spawned()
         {
             base.Spawned();
             rb = GetComponent<Rigidbody>();
+
+            equipped = false;
+            _collider = GetComponent<Collider>();
+
+            _collider.isTrigger = true;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == "Player")
+            {
+                var inventory = other.GetComponentInParent<Inventory>();
+                inventory.Equip()
+            }
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -31,8 +51,7 @@ namespace DragonGameNetworkProject.FightSystem
             foreach (ContactPoint contact in collision.contacts)
             {
                 var otherColliderNO = contact.otherCollider.GetComponentInParent<NetworkObject>();
-                var enemy =
-                    contact.otherCollider.GetComponentInParent<Enemy>();
+                var enemy = contact.otherCollider.GetComponentInParent<Enemy>();
 
                 // It's Room object or it's a character but not me.
                 if (enemy != null && !otherColliderNO.HasInputAuthority)
