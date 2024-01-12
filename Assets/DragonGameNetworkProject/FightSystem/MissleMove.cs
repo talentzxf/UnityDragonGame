@@ -39,10 +39,10 @@ namespace DragonGameNetworkProject.FightSystem
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "Player")
+            if (other.gameObject.tag == "Player" && HasStateAuthority)
             {
                 var inventory = other.GetComponentInParent<Inventory>();
-                inventory.Equip()
+                inventory.Equip(WEAPONTYPE.ROCKET);
             }
         }
 

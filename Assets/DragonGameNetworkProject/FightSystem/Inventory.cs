@@ -4,9 +4,11 @@ namespace DragonGameNetworkProject.FightSystem
 {
     public class Inventory : NetworkBehaviour
     {
-        public override void Spawned()
+        private WEAPONTYPE _primaryWeapon;
+
+        public void Equip(WEAPONTYPE weapon)
         {
-            base.Spawned();
+            _primaryWeapon = weapon;
         }
     }
 }
