@@ -6,24 +6,38 @@ using UnityEngine;
 public abstract class Enemy : NetworkBehaviour
 {
     [Networked] protected float hp { set; get; } = 100.0f;
-    
+    [Networked] private bool isAlive { set; get; } = true;
+
     [SerializeField] private GameObject indicatorPrefab;
     private GameObject _indicatorGO;
 
+    protected bool IsInvincible() => false;
+
     public abstract string GetName();
 
-    public void DoDamage(float power)
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void DoDamageRpc(float damage)
     {
-        hp -= power;
-        if (hp < 0)
+        if (!IsInvincible())
         {
-            DoDie();
+            hp -= damage;
+            if (hp < 0)
+            {
+                isAlive = false;
+            }            
         }
     }
-
-    protected abstract void DoDie();
-
+    
     private AbstractNameTag _nameTag;
+
+    private ChangeDetector _changeDetector;
+    protected NetworkObject _no;
+    public override void Spawned()
+    {
+        base.Spawned();
+        _changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
+        _no = GetComponent<NetworkObject>();
+    }
 
     private void Awake()
     {
@@ -63,8 +77,21 @@ public abstract class Enemy : NetworkBehaviour
         _nameTag.SetPostFix($"({distance:F2})");
     }
 
+    protected abstract void DoDie();
+
     private void Update()
     {
-        // Show the nametag on user's screen.
+        foreach (var change in _changeDetector.DetectChanges(this))
+        {
+            switch (change)
+            {
+                case nameof(isAlive):
+                    if (isAlive == false)
+                    {
+                        DoDie();
+                    }
+                    break;
+            }
+        }
     }
 }

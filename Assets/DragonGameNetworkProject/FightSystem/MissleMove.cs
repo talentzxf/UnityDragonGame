@@ -44,7 +44,7 @@ namespace DragonGameNetworkProject.FightSystem
                     if (HasStateAuthority)
                     {
                         Runner.Despawn(GetComponent<NetworkObject>()); // Only State auth can despawn the rocket.
-                        enemy.DoDamage(1000.0f);
+                        enemy.DoDamageRpc(1000.0f);
                     }
                 }
             }
