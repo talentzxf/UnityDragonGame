@@ -9,12 +9,12 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         private int Land = Animator.StringToHash("Land");
         private Rigidbody rb;
 
-        private float landHeight = 2.0f;
+        private float landHeight = 1f;
         
         private float maxDistance = 100f;
         
-        private float distanceThreshold = 0.01f;
-        private float angleThreshold = 0.01f;
+        private float distanceThreshold = 0.1f;
+        private float angleThreshold = 0.1f;
         
         public float moveSpeed = 10f;
         public float rotateSpeed = 30f;
@@ -34,6 +34,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             if (HasStateAuthority)
             {
                 UIController.Instance.HideDragonControlUI();
+                StartCoroutine(DoLand(Runner.DeltaTime));
             }
         }
         
@@ -85,23 +86,27 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     rotateStep);
                 yield return null;
             }
+            
+            Debug.Log("Second phase, playing animation!");
 
             ccTransform.position = targetPosition;
             ccTransform.rotation = targetRotation;
-        }
-
-        public override void FixedUpdateNetwork()
-        {
-            if (!HasStateAuthority)
-                return;
-
-            float landProgress = animator.GetFloat("LandProgress");
-            if (landProgress > 0.0f)
+            
+            animator.SetBool(Land, true);
+            float landProgress = 0.0f;
+            // Drop to hit point.
+            while (Vector3.Distance(ccTransform.position, hit.point) > distanceThreshold || landProgress < 0.99f)
             {
-                animator.SetBool(Land, false);
+                landProgress = animator.GetFloat("LandProgress");
+                ccTransform.position = Vector3.Lerp(targetPosition, hit.point, landProgress);
+                
+                Debug.Log($"Second phase land progress:{landProgress}");
+                yield return null;
             }
 
-            StartCoroutine(DoLand(Runner.DeltaTime));
+            ccTransform.position = hit.point;
+            
+            controller.SwitchTo<DragonAvatarGroundMovement>();
         }
     }
 }

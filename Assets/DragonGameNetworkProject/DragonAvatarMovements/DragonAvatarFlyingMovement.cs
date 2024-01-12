@@ -65,6 +65,9 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             rb.isKinematic = false;
             cc.enabled = true; // Still use cc to control the character. 
             animator.SetBool(isFlying, false);
+            
+            Cursor.visible = false;
+            fpsCamera.enabled = true;
         }
 
         private void Update()

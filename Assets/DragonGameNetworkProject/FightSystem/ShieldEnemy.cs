@@ -1,4 +1,6 @@
-﻿namespace DragonGameNetworkProject.FightSystem
+﻿using Unity.VisualScripting;
+
+namespace DragonGameNetworkProject.FightSystem
 {
     public class ShieldEnemy: Enemy
     {
@@ -6,7 +8,7 @@
         {
             return "Shield";
         }
-
+        
         protected override void DoDie()
         {
             gameObject.SetActive(false);

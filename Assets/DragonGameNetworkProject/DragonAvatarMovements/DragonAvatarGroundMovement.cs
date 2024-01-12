@@ -65,6 +65,16 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             }
         }
 
+        public override void OnLeaveMovement()
+        {
+            base.OnLeaveMovement();
+
+            if (HasStateAuthority)
+            {
+                animator.SetBool(_isWalkingHash, false);
+            }
+        }
+
         private void Update()
         {
             if (HasStateAuthority)

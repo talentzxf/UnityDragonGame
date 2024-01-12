@@ -31,11 +31,11 @@ namespace DragonGameNetworkProject.FightSystem
             foreach (ContactPoint contact in collision.contacts)
             {
                 var otherColliderNO = contact.otherCollider.GetComponentInParent<NetworkObject>();
-                var otherColliderCharacterController =
-                    contact.otherCollider.GetComponentInParent<CharacterController>();
+                var enemy =
+                    contact.otherCollider.GetComponentInParent<Enemy>();
 
                 // It's Room object or it's a character but not me.
-                if (otherColliderCharacterController == null || !otherColliderNO.HasInputAuthority)
+                if (enemy != null && !otherColliderNO.HasInputAuthority)
                 {
                     var explosionPrefab = Instantiate(_explodePrefab);
                     explosionPrefab.transform.position = contact.point;
@@ -44,6 +44,7 @@ namespace DragonGameNetworkProject.FightSystem
                     if (HasStateAuthority)
                     {
                         Runner.Despawn(GetComponent<NetworkObject>()); // Only State auth can despawn the rocket.
+                        enemy.DoDamage(1000.0f);
                     }
                 }
             }

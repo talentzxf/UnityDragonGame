@@ -1,10 +1,12 @@
 using DragonGameNetworkProject;
+using Fusion;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : NetworkBehaviour
 {
-    [SerializeField] private float hp = 100.0f;
+    [Networked] protected float hp { set; get; } = 100.0f;
+    
     [SerializeField] private GameObject indicatorPrefab;
     private GameObject _indicatorGO;
 
@@ -22,10 +24,11 @@ public abstract class Enemy : MonoBehaviour
     protected abstract void DoDie();
 
     private AbstractNameTag _nameTag;
+
     private void Awake()
     {
         _nameTag = GetComponent<AbstractNameTag>();
-        
+
         _indicatorGO = Instantiate(indicatorPrefab, transform);
         _indicatorGO.SetActive(false);
     }
