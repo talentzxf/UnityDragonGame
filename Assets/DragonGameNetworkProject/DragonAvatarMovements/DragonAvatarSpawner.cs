@@ -21,6 +21,9 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 Camera camera = Camera.main;
                 FirstPersonCamera fpsCamera = camera.GetComponent<FirstPersonCamera>();
 
+                var smr = no.gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
+                smr.materials[3].color = Color.red;
+
                 Transform neckBone = Utility.RecursiveFind(no.transform, "Neck");
                 if (neckBone != null)
                 {

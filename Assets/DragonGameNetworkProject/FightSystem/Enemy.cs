@@ -81,6 +81,9 @@ public abstract class Enemy : NetworkBehaviour
 
     private void Update()
     {
+        if (_changeDetector == null)
+            return;
+        
         foreach (var change in _changeDetector.DetectChanges(this))
         {
             switch (change)
