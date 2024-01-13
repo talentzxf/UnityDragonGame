@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.42221254, g: 0.64316183, b: 0.793691, a: 1}
+  m_IndirectSpecularColor: {r: 0.42222098, g: 0.64365846, b: 0.7936594, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9637,7 +9637,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f2fef3120ba4a04a66b150ecd490200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
   indicatorPrefab: {fileID: 2614922164667745320, guid: d0fec619670282441840c06932e83e9e, type: 3}
 --- !u!114 &996579430
 MonoBehaviour:
@@ -9656,6 +9655,7 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
+  - {fileID: 996579429}
   - {fileID: 996579431}
 --- !u!114 &996579431
 MonoBehaviour:
