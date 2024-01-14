@@ -1,17 +1,56 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
-public class PrepareUI : MonoBehaviour
+class ColorPicker : VisualElement
 {
-    private UIDocument uiDoc;
-    [SerializeField] private Texture avatarRenderTexture;
-
     private Color[] preDefinedColors =
     {
         Color.black, Color.blue, Color.cyan, Color.gray, Color.green, Color.magenta, Color.red, Color.white,
         Color.yellow
     };
     
+    public ColorPicker(string label, UnityEvent<Color> onColorClicked)
+    {
+        style.flexDirection = FlexDirection.Row;
+        style.flexWrap = Wrap.Wrap;
+        var labelEle = new Label(label)
+        {
+            style =
+            {
+                width = new Length(100.0f, LengthUnit.Percent)
+            }
+        };
+        Add(labelEle);
+
+        foreach (var color in preDefinedColors)
+        {
+            var button = new Button
+            {
+                style =
+                {
+                    width = new Length(30.0f, LengthUnit.Percent),
+                    backgroundColor = color
+                }
+            };
+            button.clicked += ()=>
+            {
+                onColorClicked?.Invoke(color);
+            };
+            
+            Add(button);
+        }
+    }
+}
+
+public class PrepareUI : MonoBehaviour
+{
+    private UIDocument uiDoc;
+    [SerializeField] private Texture avatarRenderTexture;
+
+    private UnityEvent<Color> onBodyColorPicked;
+    private UnityEvent<Color> onHairColorPicked;
+
     private void Awake()
     {
         uiDoc = GetComponent<UIDocument>();
@@ -19,14 +58,10 @@ public class PrepareUI : MonoBehaviour
         Image img1P = uiDoc.rootVisualElement.Q<Image>("AvatarImage_1P");
         img1P.image = avatarRenderTexture;
 
-        var ColorPicker = uiDoc.rootVisualElement.Q<VisualElement>("ColorPicker");
-        // Generate a 2d texture.
-        foreach (var color in preDefinedColors)
-        {
-            var button = new Button();
-            button.style.backgroundColor = color;
-            ColorPicker.Add(button);            
-        }
+        var colorPickerContainer = uiDoc.rootVisualElement.Q<VisualElement>("ColorPickers");
+        colorPickerContainer.Add(new ColorPicker("Hair Color", onHairColorPicked));
+        colorPickerContainer.Add(new ColorPicker("Body Color", onBodyColorPicked));
+        
     }
     
     // Texture2D GenerateTexture()
