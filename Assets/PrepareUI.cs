@@ -1,3 +1,4 @@
+using System.ComponentModel.Design.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
@@ -48,11 +49,23 @@ public class PrepareUI : MonoBehaviour
     private UIDocument uiDoc;
     [SerializeField] private Texture avatarRenderTexture;
 
-    private UnityEvent<Color> onBodyColorPicked;
-    private UnityEvent<Color> onHairColorPicked;
+    public UnityEvent<Color> onBodyColorPicked;
+    public UnityEvent<Color> onHairColorPicked;
+
+    private static PrepareUI _instance;
+
+    public static PrepareUI Instance => _instance;
 
     private void Awake()
     {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        _instance = this;
+        
         uiDoc = GetComponent<UIDocument>();
 
         Image img1P = uiDoc.rootVisualElement.Q<Image>("AvatarImage_1P");
@@ -61,7 +74,6 @@ public class PrepareUI : MonoBehaviour
         var colorPickerContainer = uiDoc.rootVisualElement.Q<VisualElement>("ColorPickers");
         colorPickerContainer.Add(new ColorPicker("Hair Color", onHairColorPicked));
         colorPickerContainer.Add(new ColorPicker("Body Color", onBodyColorPicked));
-        
     }
     
     // Texture2D GenerateTexture()

@@ -21,9 +21,6 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 Camera camera = Camera.main;
                 FirstPersonCamera fpsCamera = camera.GetComponent<FirstPersonCamera>();
 
-                var smr = no.gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
-                smr.materials[3].color = Color.red;
-
                 Transform neckBone = Utility.RecursiveFind(no.transform, "Neck");
                 if (neckBone != null)
                 {
@@ -33,6 +30,17 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 {
                     fpsCamera.SetCameraTarget(controller.avatarGO);
                 }
+
+                var smr = no.gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
+                PrepareUI.Instance.onBodyColorPicked.AddListener((color)=>
+                {
+                    smr.materials[3].color = color;
+                });
+                
+                PrepareUI.Instance.onHairColorPicked.AddListener((color) =>
+                {
+                    smr.materials[0].color = color;
+                });
                 
                 Physics.SyncTransforms(); // Need to sync transforms, or character controller will always reset character position to 0,0,0;
             }
