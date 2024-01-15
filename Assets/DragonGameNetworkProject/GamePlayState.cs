@@ -46,6 +46,13 @@ namespace DragonGameNetworkProject
                             
                             // Set dragon controller.
                             DragonAvatarController.LocalController.SwitchTo<DragonAvatarGroundMovement>();
+
+                            Camera.main.GetComponent<FirstPersonCamera>().enabled = true;
+
+                            if (Runner.IsSharedModeMasterClient || Runner.IsSinglePlayer)
+                            {
+                                GameTimer.Instance.StartTimer();
+                            }
                         }
                         break;
                 }
