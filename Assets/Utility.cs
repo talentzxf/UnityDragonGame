@@ -2,6 +2,15 @@ using UnityEngine;
 
 public class Utility
 {
+    public static void SetLayerRecursively(GameObject obj, int layerMask)
+    {
+        obj.layer = layerMask;
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, layerMask);
+        }
+    }
+    
     public static bool IsVisibleOnScreen(Camera cam, Vector3 targetPoint, out Vector3 screenPoint)
     {
         screenPoint = cam.WorldToScreenPoint(targetPoint);

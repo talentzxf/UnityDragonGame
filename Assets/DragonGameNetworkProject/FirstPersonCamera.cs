@@ -11,7 +11,7 @@ public class FirstPersonCamera : MonoBehaviour
     private float yAngle;
 
     public float distance;
-    private float originalDistance;
+    private float originalDistance = 10.0f;
 
     public Transform target;
     public Transform newTarget;
@@ -82,9 +82,9 @@ public class FirstPersonCamera : MonoBehaviour
     public void SetCameraTargetByTransform(Transform targetTransform)
     {
         target = targetTransform;
-        Vector3 offset = target.position - transform.position;
-        distance = offset.magnitude;
-        originalDistance = distance;
+
+        transform.position = target.position + (target.forward + target.up) * originalDistance;
+        distance = originalDistance;
     }
 
     public void SetCameraTarget(GameObject playerGO)

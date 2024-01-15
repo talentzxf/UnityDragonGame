@@ -8,6 +8,8 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 {
     public class DragonAvatarController : CharacterMovementController
     {
+        [Networked] private bool isReady { set; get; }
+        
         [Networked] private Color bodyColor { set; get; }
         [Networked] private Color hairColor { set; get; }
 
@@ -37,10 +39,53 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         }
 
         private ChangeDetector _changeDetector;
+        private NetworkObject _no;
+        
+        private void SetupPrepareUI()
+        {
+            int avatarLayerMask = LayerMask.NameToLayer("AvatarPreview");
+            Utility.SetLayerRecursively(avatarGO, avatarLayerMask);
+
+            // Create Camera
+            GameObject camera = new GameObject("AvatarCamera_" + _no.InputAuthority.PlayerId);
+            Camera cameraComp = camera.AddComponent<Camera>();
+            var avatarTransform = avatarGO.transform;
+            camera.transform.position = avatarTransform.position + 5.0f * avatarTransform.forward + 2.0f * avatarTransform.up;
+            camera.transform.LookAt(avatarTransform.position + avatarTransform.up);
+            
+            cameraComp.fieldOfView = 60f;
+            cameraComp.clearFlags = CameraClearFlags.Color;
+            cameraComp.backgroundColor = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+            cameraComp.cullingMask = 1 << avatarLayerMask;
+
+            RenderTexture rt = new RenderTexture(512, 512, 24);
+            rt.format = RenderTextureFormat.ARGB32;
+            rt.depth = 24;
+            rt.useMipMap = false;
+            cameraComp.targetTexture = rt;
+            PrepareUI.Instance.SetupAvatarUI(Runner, _no.InputAuthority, rt);
+
+            if (HasInputAuthority)
+            {
+                PrepareUI.Instance.onBodyColorPicked.AddListener((color)=>
+                {
+                    SetBodyColor(color);
+                });
+                
+                PrepareUI.Instance.onHairColorPicked.AddListener((color) =>
+                {
+                    SetHairColor(color);
+                });                
+            }
+        }
 
         public override void Spawned()
         {
             _changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
+            _no = GetComponent<NetworkObject>();
+            
+            // Setup UI here.
+            SetupPrepareUI();
         }
 
         private void Update()
