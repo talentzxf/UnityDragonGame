@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using DragonGameNetworkProject.FightSystem;
+using Fusion;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
@@ -96,7 +99,7 @@ namespace DragonGameNetworkProject
 
             return _lockedEnemy.Enemy;
         }
-        
+
         private void Update()
         {
             if (_lockedEnemy != null)
@@ -116,7 +119,17 @@ namespace DragonGameNetworkProject
             
             if (Input.GetKeyDown(KeyCode.Tab)) // Every time press tab to lock the nearest visible enermy.
             {
-                _enemies.RemoveAll(item => item == null || item.Enemy == null);
+                _enemies.RemoveAll(item =>
+                {
+                    if (item.Enemy is PlayerEnemy && (item.Enemy.GetComponent<NetworkObject>()?.HasInputAuthority ?? false))
+                    {
+                        return true;
+                    }
+                        
+                    return item.Enemy == null ||
+                           !item.Enemy.gameObject.activeSelf || !item.Enemy.enabled;
+                });
+                
                 if (_enemies.Count == 0)
                 {
                     UIController.Instance.ShowGameMsg("Can't lock enermy");
@@ -125,21 +138,36 @@ namespace DragonGameNetworkProject
                 
                 _enemies.ForEach(item => item.Update());
                 _enemies.Sort(); // Sort by distance.
+
+                float currentDistance = _lockedEnemy?.Distance ?? 0.0f;
                 
                 _lockedEnemy = null;
                 foreach (var candidateEnemy in _enemies)
                 {
                     if (candidateEnemy.IsLockable)
                     {
-                        candidateEnemy.Enemy.Lock(); // Invoke it's lock method to lock it!
-                        if (_lockedEnemy == null)
+                        if (_lockedEnemy == null && candidateEnemy.Distance > currentDistance)
                         {
+                            candidateEnemy.Enemy.Lock(); // Invoke it's lock method to lock it!
                             _lockedEnemy = candidateEnemy; // Lock the nearest enermy.
                             break;
                         }
                     }
                 }
 
+                if (_lockedEnemy == null)
+                {
+                    foreach (var candidateEnemy in _enemies)
+                    {
+                        if (candidateEnemy.IsLockable)
+                        {
+                            candidateEnemy.Enemy.Lock(); // Invoke it's lock method to lock it!
+                            _lockedEnemy = candidateEnemy; // Lock the nearest enermy.
+                            break;
+                        }
+                    }
+                }
+                
                 if (_lockedEnemy == null)
                 {
                     UIController.Instance.ShowGameMsg("Can't lock enermy");

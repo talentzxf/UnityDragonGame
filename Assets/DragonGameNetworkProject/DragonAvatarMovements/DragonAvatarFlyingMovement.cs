@@ -56,14 +56,14 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
             animator.SetBool(isFlying, true);
             
-            // Collider[] colliders = GetComponentsInChildren<Collider>(true);
-            // foreach (var collider in colliders)
-            // {
-            //     if (collider is not CharacterController)
-            //     {
-            //         collider.isTrigger = false;
-            //     }
-            // }
+            Collider[] colliders = GetComponentsInChildren<Collider>(true);
+            foreach (var collider in colliders)
+            {
+                if (collider is not CharacterController)
+                {
+                    collider.isTrigger = false;
+                }
+            }
             
             UIController.Instance.ShowPrompt("Hold mouse right button to control");
         }

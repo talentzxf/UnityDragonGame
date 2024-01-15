@@ -1,6 +1,4 @@
-﻿using Unity.VisualScripting;
-
-namespace DragonGameNetworkProject.FightSystem
+﻿namespace DragonGameNetworkProject.FightSystem
 {
     public class ShieldEnemy: Enemy
     {
@@ -12,6 +10,7 @@ namespace DragonGameNetworkProject.FightSystem
         protected override void DoDie()
         {
             gameObject.SetActive(false);
+            _nameTag.Hide();
         }
     }
 }

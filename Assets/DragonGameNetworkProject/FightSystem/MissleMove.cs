@@ -26,6 +26,7 @@ namespace DragonGameNetworkProject.FightSystem
         private Rigidbody rb;
 
         private Collider _collider;
+
         public override void Spawned()
         {
             base.Spawned();
@@ -34,7 +35,7 @@ namespace DragonGameNetworkProject.FightSystem
             equipped = false;
             _collider = GetComponent<Collider>();
 
-            _collider.isTrigger = true;
+            // _collider.isTrigger = true;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -53,8 +54,9 @@ namespace DragonGameNetworkProject.FightSystem
                 var otherColliderNO = contact.otherCollider.GetComponentInParent<NetworkObject>();
                 var enemy = contact.otherCollider.GetComponentInParent<Enemy>();
 
-                // It's Room object or it's a character but not me.
-                if (enemy != null && !otherColliderNO.HasInputAuthority)
+                if (enemy is PlayerEnemy && otherColliderNO.HasInputAuthority) // Can't hit myself.
+                    continue;
+
                 {
                     var explosionPrefab = Instantiate(_explodePrefab);
                     explosionPrefab.transform.position = contact.point;
@@ -63,7 +65,8 @@ namespace DragonGameNetworkProject.FightSystem
                     if (HasStateAuthority)
                     {
                         Runner.Despawn(GetComponent<NetworkObject>()); // Only State auth can despawn the rocket.
-                        enemy.DoDamageRpc(1000.0f);
+                        if (enemy)
+                            enemy.DoDamageRpc(1000.0f);
                     }
                 }
             }
@@ -84,10 +87,13 @@ namespace DragonGameNetworkProject.FightSystem
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, Target.transform.position);
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, transform.position + rb.velocity * 10.0f);
+            if (Target != null)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(transform.position, Target.transform.position);
+                Gizmos.color = Color.green;
+                Gizmos.DrawLine(transform.position, transform.position + rb.velocity * 10.0f);
+            }
         }
 #endif
 

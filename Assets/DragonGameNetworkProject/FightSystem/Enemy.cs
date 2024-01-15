@@ -28,14 +28,12 @@ public abstract class Enemy : NetworkBehaviour
         }
     }
     
-    private AbstractNameTag _nameTag;
+    protected AbstractNameTag _nameTag;
 
-    private ChangeDetector _changeDetector;
     protected NetworkObject _no;
     public override void Spawned()
     {
         base.Spawned();
-        _changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
         _no = GetComponent<NetworkObject>();
     }
 
@@ -79,22 +77,14 @@ public abstract class Enemy : NetworkBehaviour
 
     protected abstract void DoDie();
 
-    private void Update()
+    private bool hasDoneDie = false;
+
+    public override void FixedUpdateNetwork()
     {
-        if (_changeDetector == null)
-            return;
-        
-        foreach (var change in _changeDetector.DetectChanges(this))
+        if (!isAlive && !hasDoneDie)
         {
-            switch (change)
-            {
-                case nameof(isAlive):
-                    if (isAlive == false)
-                    {
-                        DoDie();
-                    }
-                    break;
-            }
+            DoDie();
+            hasDoneDie = true;
         }
     }
 }

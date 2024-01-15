@@ -21,6 +21,13 @@ public abstract class AbstractNameTag : NetworkBehaviour
     {
         nameText.color = textColor;
     }
+
+    public void Hide()
+    {
+        isHide = true;
+        nameText.gameObject.SetActive(false);
+        nameText.enabled = false;
+    }
     
     public void SetPostFix(string postFix)
     {
