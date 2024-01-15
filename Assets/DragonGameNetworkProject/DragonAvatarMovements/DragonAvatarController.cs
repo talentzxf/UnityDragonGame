@@ -8,7 +8,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 {
     public class DragonAvatarController : CharacterMovementController
     {
-        [Networked] private bool isReady { set; get; }
+        [Networked] public bool isReady { set; get; }
         
         [Networked] private Color bodyColor { set; get; }
         [Networked] private Color hairColor { set; get; }
@@ -64,6 +64,8 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             rt.useMipMap = false;
             cameraComp.targetTexture = rt;
             PrepareUI.Instance.SetupAvatarUI(Runner, _no.InputAuthority, rt);
+            
+            PrepareUI.Instance.RegisterDragonAvatarController(this);
 
             if (HasInputAuthority)
             {

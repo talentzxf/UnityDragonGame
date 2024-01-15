@@ -1,11 +1,16 @@
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using DragonGameNetworkProject;
+using DragonGameNetworkProject.DragonAvatarMovements;
 using ExitGames.Client.Photon.StructWrapping;
 using Fusion;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
+using ColorUtility = UnityEngine.ColorUtility;
 
 class ColorPicker : VisualElement
 {
@@ -55,8 +60,9 @@ public class PrepareUI : MonoBehaviour
     public UnityEvent<Color> onBodyColorPicked;
     public UnityEvent<Color> onHairColorPicked;
 
-    private static PrepareUI _instance;
+    private Button readyOrStartBtn;
 
+    private static PrepareUI _instance;
     public static PrepareUI Instance => _instance;
 
     private string PlayerUIPath = "Assets/DragonGameNetworkProject/UI/PlayerSelector.uxml";
@@ -65,6 +71,7 @@ public class PrepareUI : MonoBehaviour
     {
         _runner = runner;
         uiDoc.enabled = true;
+        enabled = true;
         
         var leftBar = uiDoc.rootVisualElement.Q<VisualElement>("Left");
 
@@ -89,6 +96,61 @@ public class PrepareUI : MonoBehaviour
         leftBar.Add(playerEle);
     }
 
+    private HashSet<DragonAvatarController> _controllers = new();
+
+    public void RegisterDragonAvatarController(DragonAvatarController controller)
+    {
+        _controllers.Add(controller);
+    }
+
+    private void Update()
+    {
+        if (_controllers == null || _runner == null)
+            return;
+
+        if (_runner.IsSharedModeMasterClient || _runner.IsSinglePlayer)
+        {
+            bool allReady = true;
+        
+            foreach (var controller in _controllers)
+            {
+                if (!controller.isReady && !controller.HasInputAuthority)
+                {
+                    allReady = false;
+                }
+            }
+
+            if (allReady)
+            {
+                readyOrStartBtn.text = "Start";
+                readyOrStartBtn.SetEnabled(true);
+            }
+            else
+            {
+                readyOrStartBtn.text = "Waiting";
+                readyOrStartBtn.SetEnabled(false);
+            }
+        }
+        else
+        {
+            foreach (var controller in _controllers)
+            {
+                if (controller.HasInputAuthority)
+                {
+                    if (controller.isReady)
+                    {
+                        readyOrStartBtn.text = "Not Ready";
+                    }
+                    else
+                    {
+                        readyOrStartBtn.text = "Ready";
+                    }
+                }
+            }
+            readyOrStartBtn.SetEnabled(true);
+        }
+    }
+
     private NetworkRunner _runner;
     private void Awake()
     {
@@ -99,12 +161,24 @@ public class PrepareUI : MonoBehaviour
         }
 
         _instance = this;
-        
         uiDoc = GetComponent<UIDocument>();
         
         var colorPickerContainer = uiDoc.rootVisualElement.Q<VisualElement>("ColorPickers");
         colorPickerContainer.Add(new ColorPicker("Hair Color", onHairColorPicked));
         colorPickerContainer.Add(new ColorPicker("Body Color", onBodyColorPicked));
+
+        readyOrStartBtn = uiDoc.rootVisualElement.Q<Button>("StartOrReady");
+        
+        readyOrStartBtn.clicked += () =>
+        {
+            foreach (var controller in _controllers)
+            {
+                if (controller.HasInputAuthority)
+                {
+                    controller.isReady = !controller.isReady;
+                }
+            }
+        };
         
         NetworkEventsHandler.ServerConnected.AddListener(runner =>
         {
