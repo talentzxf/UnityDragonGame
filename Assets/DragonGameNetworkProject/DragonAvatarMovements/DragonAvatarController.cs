@@ -13,6 +13,8 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         [Networked] private Color bodyColor { set; get; }
         [Networked] private Color hairColor { set; get; }
 
+        public static DragonAvatarController LocalController = null;
+
         public void SetBodyColor(Color bodyColor)
         {
             this.bodyColor = bodyColor;
@@ -85,6 +87,11 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         {
             _changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
             _no = GetComponent<NetworkObject>();
+
+            if (_no.HasInputAuthority)
+            {
+                LocalController = this;
+            }
             
             // Setup UI here.
             SetupPrepareUI();

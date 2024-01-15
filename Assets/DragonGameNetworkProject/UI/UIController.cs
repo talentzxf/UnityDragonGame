@@ -82,7 +82,7 @@ public class UIController : MonoBehaviour
         dragonControlPrompt.visible = false;
     }
 
-    private void ActivateUiDocument()
+    public void ActivateUiDocument()
     {
         uiDocument.gameObject.SetActive(true);
         messageLabel = uiDocument.rootVisualElement.Q<Label>("Messages");

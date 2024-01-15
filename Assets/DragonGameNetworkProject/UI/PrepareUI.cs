@@ -171,12 +171,13 @@ public class PrepareUI : MonoBehaviour
         
         readyOrStartBtn.clicked += () =>
         {
-            foreach (var controller in _controllers)
+            if (!_runner.IsSharedModeMasterClient && !_runner.IsSinglePlayer)
             {
-                if (controller.HasInputAuthority)
-                {
-                    controller.isReady = !controller.isReady;
-                }
+                DragonAvatarController.LocalController.isReady = !DragonAvatarController.LocalController.isReady;
+            }
+            else
+            {
+                GamePlayState.Instance.gameStarted = true;
             }
         };
         
