@@ -1,5 +1,9 @@
 using System.ComponentModel.Design.Serialization;
+using DragonGameNetworkProject;
+using ExitGames.Client.Photon.StructWrapping;
+using Fusion;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 
@@ -47,7 +51,6 @@ class ColorPicker : VisualElement
 public class PrepareUI : MonoBehaviour
 {
     private UIDocument uiDoc;
-    [SerializeField] private Texture avatarRenderTexture;
 
     public UnityEvent<Color> onBodyColorPicked;
     public UnityEvent<Color> onHairColorPicked;
@@ -56,6 +59,37 @@ public class PrepareUI : MonoBehaviour
 
     public static PrepareUI Instance => _instance;
 
+    private string PlayerUIPath = "Assets/DragonGameNetworkProject/UI/PlayerSelector.uxml";
+
+    public void SetupAvatarUI(NetworkRunner runner, PlayerRef playerRef, Texture texture)
+    {
+        _runner = runner;
+        uiDoc.enabled = true;
+        
+        var leftBar = uiDoc.rootVisualElement.Q<VisualElement>("Left");
+
+        VisualElement playerEle = new VisualElement();
+        playerEle.style.borderBottomLeftRadius = playerEle.style.borderBottomRightRadius =
+            playerEle.style.borderTopLeftRadius =
+                playerEle.style.borderTopRightRadius = new Length(10, LengthUnit.Pixel);
+        ColorUtility.TryParseHtmlString("#FFC200", out Color bgColor);
+        playerEle.style.backgroundColor = bgColor;
+        playerEle.style.marginTop = playerEle.style.marginBottom =
+            playerEle.style.marginLeft = playerEle.style.marginRight = new Length(50, LengthUnit.Pixel);
+        playerEle.style.width = new Length(33, LengthUnit.Percent);
+        playerEle.style.height = new Length(40, LengthUnit.Percent);
+
+        Image avatarImg = new Image();
+        avatarImg.image = texture;
+        
+        Label nameLabel = new Label();
+        nameLabel.text = "Player:" + _runner.GetPlayerUserId(playerRef);
+        playerEle.Add(avatarImg);
+        playerEle.Add(nameLabel);
+        leftBar.Add(playerEle);
+    }
+
+    private NetworkRunner _runner;
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -67,13 +101,27 @@ public class PrepareUI : MonoBehaviour
         _instance = this;
         
         uiDoc = GetComponent<UIDocument>();
-
-        Image img1P = uiDoc.rootVisualElement.Q<Image>("AvatarImage_1P");
-        img1P.image = avatarRenderTexture;
-
+        
         var colorPickerContainer = uiDoc.rootVisualElement.Q<VisualElement>("ColorPickers");
         colorPickerContainer.Add(new ColorPicker("Hair Color", onHairColorPicked));
         colorPickerContainer.Add(new ColorPicker("Body Color", onBodyColorPicked));
+        
+        NetworkEventsHandler.ServerConnected.AddListener(runner =>
+        {
+            ActivateUiDocument();
+            string roomName = runner.SessionInfo.Name + "@" + runner.SessionInfo.Region;
+            uiDoc.rootVisualElement.Q<Label>("RoomName").text = "Room:" + roomName;
+            
+            uiDoc.rootVisualElement.Q<Label>("GameMode").text = "Collect Coins";
+            uiDoc.rootVisualElement.Q<Label>("GameTime").text = GameTimer.Instance.TotalTime + "s";
+        
+            _runner = runner;
+        });
+    }
+
+    public void ActivateUiDocument()
+    {
+        uiDoc.gameObject.SetActive(true);
     }
     
     // Texture2D GenerateTexture()

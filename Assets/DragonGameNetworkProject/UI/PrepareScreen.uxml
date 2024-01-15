@@ -1,28 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/DragonGameNetworkProject/UI/ui.uss?fileID=7433441132597879392&amp;guid=c9515413da703244388830684a8a0cd0&amp;type=3#ui" />
     <ui:VisualElement name="MainWindow" style="flex-grow: 1; flex-direction: row;">
-        <ui:VisualElement name="Left" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap; width: 80%; height: 100%; justify-content: flex-start;">
-            <ui:VisualElement name="1P" class="PlayerBGDiv" style="height: 45%;">
-                <ui:Label tabindex="-1" text="1P&#10;" parse-escape-sequences="true" display-tooltip-when-elided="true" style="position: absolute; font-size: 40px; top: 63px; left: 58px;" />
-                <ui:Image name="AvatarImage_1P" style="flex-grow: 1;" />
-                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="P1Name" style="font-size: 30px; position: absolute; top: 524px; left: 395px;" />
-            </ui:VisualElement>
-            <ui:VisualElement name="2P" class="PlayerBGDiv" style="height: 45%;">
-                <ui:Label tabindex="-1" text="2P" parse-escape-sequences="true" display-tooltip-when-elided="true" style="position: absolute; font-size: 40px; top: 63px; left: 58px;" />
-                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="P2Name" style="font-size: 30px; position: absolute; top: 524px; left: 395px;" />
-                <ui:Image name="AvatarImage_1P" style="flex-grow: 1;" />
-            </ui:VisualElement>
-            <ui:VisualElement name="3P" class="PlayerBGDiv" style="height: 45%;">
-                <ui:Label tabindex="-1" text="3P" parse-escape-sequences="true" display-tooltip-when-elided="true" style="position: absolute; font-size: 40px; top: 63px; left: 58px;" />
-                <ui:Image name="AvatarImage_1P" style="flex-grow: 1;" />
-                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="P3Name" style="font-size: 30px; position: absolute; top: 524px; left: 395px;" />
-            </ui:VisualElement>
-            <ui:VisualElement name="4P" class="PlayerBGDiv" style="height: 45%;">
-                <ui:Label tabindex="-1" text="4P" parse-escape-sequences="true" display-tooltip-when-elided="true" style="position: absolute; font-size: 40px; top: 63px; left: 58px;" />
-                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="P4Name" style="font-size: 30px; position: absolute; top: 524px; left: 395px;" />
-                <ui:Image name="AvatarImage_1P" style="flex-grow: 1;" />
-            </ui:VisualElement>
-        </ui:VisualElement>
+        <ui:VisualElement name="Left" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap; width: 80%; height: 100%; justify-content: flex-start;" />
         <ui:VisualElement name="Right" style="flex-grow: 1; flex-shrink: 2; justify-content: flex-start; width: 20%;">
             <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="RoomName" class="toplabel" />
             <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="GameMode" class="toplabel" />

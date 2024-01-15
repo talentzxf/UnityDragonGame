@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="PlayerEle" class="PlayerBGDiv" style="height: 100%; width: 100%;">
+        <ui:Label tabindex="-1" text="1P&#10;" parse-escape-sequences="true" display-tooltip-when-elided="true" style="position: absolute; font-size: 40px; top: 63px; left: 58px;" />
+        <ui:Image name="AvatarImage_1P" style="flex-grow: 1;" />
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="P1Name" style="font-size: 30px; position: absolute; top: 524px; left: 395px;" />
+    </ui:VisualElement>
+</ui:UXML>

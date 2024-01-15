@@ -15,6 +15,8 @@ namespace DragonGameNetworkProject
         private static GameTimer _instance;
         public static GameTimer Instance => _instance;
 
+        public int TotalTime = 300;
+
         private void Awake()
         {
             if (_instance != null && _instance != this)
@@ -28,9 +30,8 @@ namespace DragonGameNetworkProject
         
         [Networked] private TickTimer timer { get; set; }
 
-        public override void Spawned()
+        public void StartTimer()
         {
-            base.Spawned();
             if (Runner.IsSharedModeMasterClient || Runner.IsSinglePlayer)
             {
                 timer = TickTimer.CreateFromSeconds(Runner,countDownTime + goTime);
@@ -40,6 +41,9 @@ namespace DragonGameNetworkProject
         private bool gameStartEventTriggered = false; 
         public override void FixedUpdateNetwork()
         {
+            if (!timer.IsRunning)
+                return;
+            
             if (timer.RemainingTime(Runner) >= 1.0f)
             {
                 UIController.Instance.SetTimerText($"Game will start in { (timer.RemainingTime(Runner) - 1.0f)?.ToString("F2")} seconds");

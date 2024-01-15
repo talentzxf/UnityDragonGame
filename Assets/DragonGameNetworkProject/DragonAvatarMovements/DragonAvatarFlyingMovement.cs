@@ -163,6 +163,9 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         {
             if (HasStateAuthority)
             {
+                if (controller.currentMovement != this) // I'm not the current movement.
+                    return;
+                
                 try
                 {
                     if(_inputHandler.Land)
