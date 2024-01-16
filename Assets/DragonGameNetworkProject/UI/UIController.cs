@@ -97,6 +97,11 @@ public class UIController : MonoBehaviour
 
         timerLabel = uiDocument.rootVisualElement.Q<Label>("Timer");
         dragonControlPrompt = uiDocument.rootVisualElement.Q<Label>("DragonControlPrompt");
+        
+        uiDocument.rootVisualElement.Q<Label>("LocalUserID").text = "UserID:" + _runner.GetPlayerUserId(_runner.LocalPlayer);
+        
+        string roomName = _runner.SessionInfo.Name + "@" + _runner.SessionInfo.Region;
+        uiDocument.rootVisualElement.Q<Label>("RoomName").text = "Room:" + roomName;
         HideDragonControlUI();
     }
 
@@ -109,30 +114,7 @@ public class UIController : MonoBehaviour
         }
 
         _instance = this;
-
-        // NetworkEventsHandler.LocalPlayerJoined.AddListener((runner, userId) =>
-        // {
-        //     _runner = runner;
-        //     ActivateUiDocument();
-        //     string localPlayerId = userId;
-        //
-        //     uiDocument.rootVisualElement.Q<Label>("LocalUserID").text = "UserID:" + localPlayerId;
-        // });
-        //
-        // NetworkEventsHandler.ServerConnected.AddListener(runner =>
-        // {
-        //     ActivateUiDocument();
-        //
-        //     uiDocument.gameObject.SetActive(true);
-        //
-        //     string roomName = runner.SessionInfo.Name + "@" + runner.SessionInfo.Region;
-        //     uiDocument.rootVisualElement.Q<Label>("RoomName").text = "Room:" + roomName;
-        //
-        //     this._runner = runner;
-        //
-        //     ShowSysMsg("Connected to server.");
-        // });
-
+        
         NetworkEventsHandler.PlayerJoined.AddListener((runner, userId) =>
         {
             _runner = runner;
