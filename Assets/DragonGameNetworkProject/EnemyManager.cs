@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DragonGameNetworkProject.DragonAvatarMovements;
 using DragonGameNetworkProject.FightSystem;
 using Fusion;
 using Unity.VisualScripting;
@@ -22,7 +23,7 @@ namespace DragonGameNetworkProject
             {
                 if (_playerTransform == null)
                 {
-                    _playerTransform = EnemyManager.Instance.LocalPlayer.avatarGO.transform;
+                    _playerTransform = DragonAvatarController.LocalController.avatarGO.transform;
                 }
 
                 return _playerTransform;
@@ -73,13 +74,6 @@ namespace DragonGameNetworkProject
         public static EnemyManager Instance => _instance;
 
         private CharacterMovementController _localPlayer;
-
-        public CharacterMovementController LocalPlayer => _localPlayer;
-
-        public void SetLocalPlayer(CharacterMovementController localPlayer)
-        {
-            _localPlayer = localPlayer;
-        }
 
         public void RegisterEnemy(Enemy enemy)
         {

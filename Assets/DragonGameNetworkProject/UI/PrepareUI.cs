@@ -67,7 +67,7 @@ public class PrepareUI : MonoBehaviour
 
     private string PlayerUIPath = "Assets/DragonGameNetworkProject/UI/PlayerSelector.uxml";
 
-    public void SetupAvatarUI(NetworkRunner runner, PlayerRef playerRef, Texture texture)
+    public VisualElement SetupAvatarUI(NetworkRunner runner, PlayerRef playerRef, Texture texture)
     {
         ActivateUiDocument();
         
@@ -82,7 +82,7 @@ public class PrepareUI : MonoBehaviour
         ColorUtility.TryParseHtmlString("#FFC200", out Color bgColor);
         playerEle.style.backgroundColor = bgColor;
         playerEle.style.marginTop = playerEle.style.marginBottom =
-            playerEle.style.marginLeft = playerEle.style.marginRight = new Length(50, LengthUnit.Pixel);
+            playerEle.style.marginLeft = playerEle.style.marginRight = new Length(20, LengthUnit.Pixel);
         playerEle.style.width = new Length(33, LengthUnit.Percent);
         playerEle.style.height = new Length(40, LengthUnit.Percent);
 
@@ -94,6 +94,8 @@ public class PrepareUI : MonoBehaviour
         playerEle.Add(avatarImg);
         playerEle.Add(nameLabel);
         leftBar.Add(playerEle);
+        
+        return playerEle;
     }
 
     private HashSet<DragonAvatarController> _controllers = new();
@@ -162,6 +164,18 @@ public class PrepareUI : MonoBehaviour
 
         _instance = this;
         uiDoc = GetComponent<UIDocument>();
+        
+        NetworkEventsHandler.ServerConnected.AddListener(runner =>
+        {
+            ActivateUiDocument();
+            string roomName = runner.SessionInfo.Name + "@" + runner.SessionInfo.Region;
+            uiDoc.rootVisualElement.Q<Label>("RoomName").text = "Room:" + roomName;
+            
+            uiDoc.rootVisualElement.Q<Label>("GameMode").text = "Collect Coins";
+            uiDoc.rootVisualElement.Q<Label>("GameTime").text = GameTimer.Instance.TotalTime + "s";
+        
+            _runner = runner;
+        });
     }
 
     public void ActivateUiDocument()
@@ -190,18 +204,6 @@ public class PrepareUI : MonoBehaviour
                 GamePlayState.Instance.gameStarted = true;
             }
         };
-        
-        NetworkEventsHandler.ServerConnected.AddListener(runner =>
-        {
-            ActivateUiDocument();
-            string roomName = runner.SessionInfo.Name + "@" + runner.SessionInfo.Region;
-            uiDoc.rootVisualElement.Q<Label>("RoomName").text = "Room:" + roomName;
-            
-            uiDoc.rootVisualElement.Q<Label>("GameMode").text = "Collect Coins";
-            uiDoc.rootVisualElement.Q<Label>("GameTime").text = GameTimer.Instance.TotalTime + "s";
-        
-            _runner = runner;
-        });
     }
     
     // Texture2D GenerateTexture()

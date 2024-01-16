@@ -30,8 +30,8 @@ namespace DragonGameNetworkProject
             base.Spawned();
             _changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
         }
-
-        public override void FixedUpdateNetwork()
+        
+        private void Update()
         {
             foreach (var change in _changeDetector.DetectChanges(this))
             {

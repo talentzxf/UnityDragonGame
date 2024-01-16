@@ -142,7 +142,7 @@ public class UIController : MonoBehaviour
             ShowSysMsg("Player:" + _runner.GetPlayerUserId(userId) + " left the room"));
         NetworkEventsHandler.ServerDisconnected.AddListener(msg => ShowSysMsg("Server Disconnected, reason:" + msg));
         NetworkEventsHandler.ConnectFailed.AddListener(msg => ShowSysMsg("Connect failed, reason:" + msg));
-        NetworkEventsHandler.SceneLoadDone.AddListener(() => ShowSysMsg("Scene Load Done."));
+        NetworkEventsHandler.SceneLoadDone.AddListener((_runner) => ShowSysMsg("Scene Load Done."));
         NetworkEventsHandler.SceneLoadStart.AddListener(() => ShowSysMsg("Start loading scene."));
         NetworkEventsHandler.HostMigrated.AddListener(() => ShowSysMsg("Host Migrated!"));
 

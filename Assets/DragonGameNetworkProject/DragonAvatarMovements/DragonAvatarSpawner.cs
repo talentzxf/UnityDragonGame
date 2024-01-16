@@ -18,11 +18,14 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 int totalSpawnPoints = spawnPoints.Length;
 
                 Transform spawnPoint = spawnPoints[currentPlayerCount % totalSpawnPoints];
+                
+                Debug.Log("Spawn at:" + spawnPoint.position + " rotation:" + spawnPoint.rotation);
                     
-                NetworkObject no = Runner.Spawn(dragonAvatarPrefab, spawnPoint.position, spawnPoint.rotation, player);
+                NetworkObject no = Runner.Spawn(dragonAvatarPrefab, null, null, player);
                 var controller = no.GetComponent<DragonAvatarController>();
+                controller.avatarGO.transform.position = spawnPoint.position;
+                controller.avatarGO.transform.rotation = spawnPoint.rotation;
                 // controller.SwitchTo<DragonAvatarGroundMovement>();
-                EnemyManager.Instance.SetLocalPlayer(controller);
                 
                 Camera camera = Camera.main;
                 FirstPersonCamera fpsCamera = camera.GetComponent<FirstPersonCamera>();

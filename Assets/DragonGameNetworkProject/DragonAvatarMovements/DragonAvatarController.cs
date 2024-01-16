@@ -3,6 +3,7 @@ using Fusion;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace DragonGameNetworkProject.DragonAvatarMovements
 {
@@ -42,8 +43,21 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
         private ChangeDetector _changeDetector;
         private NetworkObject _no;
-        
-        private void SetupPrepareUI()
+        private VisualElement prepareUIEle;
+
+        public override void Despawned(NetworkRunner runner, bool hasState)
+        {
+            base.Despawned(runner, hasState);
+            if (prepareUIEle != null)
+            {
+                prepareUIEle.visible = false;
+                prepareUIEle.style.visibility = Visibility.Hidden;
+                prepareUIEle.parent.Remove(prepareUIEle);
+                prepareUIEle = null;
+            }
+        }
+
+        public void SetupPrepareUI()
         {
             int avatarLayerMask = LayerMask.NameToLayer("AvatarPreview");
             Utility.SetLayerRecursively(avatarGO, avatarLayerMask);
@@ -60,12 +74,14 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             cameraComp.backgroundColor = new Color(0.0f, 0.0f, 0.0f, 0.0f);
             cameraComp.cullingMask = 1 << avatarLayerMask;
 
-            RenderTexture rt = new RenderTexture(512, 512, 24);
-            rt.format = RenderTextureFormat.ARGB32;
-            rt.depth = 24;
-            rt.useMipMap = false;
+            RenderTexture rt = new RenderTexture(512, 512, 24)
+            {
+                format = RenderTextureFormat.ARGB32,
+                depth = 24,
+                useMipMap = false
+            };
             cameraComp.targetTexture = rt;
-            PrepareUI.Instance.SetupAvatarUI(Runner, _no.InputAuthority, rt);
+            prepareUIEle = PrepareUI.Instance.SetupAvatarUI(Runner, _no.InputAuthority, rt);
             
             PrepareUI.Instance.RegisterDragonAvatarController(this);
 
@@ -92,13 +108,22 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             {
                 LocalController = this;
             }
-            
-            // Setup UI here.
-            SetupPrepareUI();
+
+            needPrepareUI = true;
         }
+        
+        private bool needPrepareUI = false;
 
         private void Update()
         {
+            if (needPrepareUI)
+            {
+                SetupPrepareUI();
+                smr.materials[3].color = bodyColor;
+                smr.materials[2].color = hairColor;
+                needPrepareUI = false;
+            }
+            
             foreach (var change in _changeDetector.DetectChanges(this))
             {
                 switch (change)

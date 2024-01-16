@@ -12,7 +12,7 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
     public static readonly UnityEvent<PlayerRef> PlayerLeft = new(); 
     public static readonly UnityEvent<string> ServerDisconnected = new();
     public static readonly UnityEvent<string> ConnectFailed = new();
-    public static readonly UnityEvent SceneLoadDone = new();
+    public static readonly UnityEvent<NetworkRunner> SceneLoadDone = new();
     public static readonly UnityEvent SceneLoadStart = new();
     public static readonly UnityEvent HostMigrated = new(); // Seems this will never trigger in shared host mode.
     public static readonly UnityEvent SelectedAsMasterClient = new();
@@ -120,7 +120,7 @@ public class NetworkEventsHandler : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSceneLoadDone(NetworkRunner runner)
     {
-        SceneLoadDone?.Invoke();
+        SceneLoadDone?.Invoke(runner);
     }
 
     public void OnSceneLoadStart(NetworkRunner runner)
