@@ -45,14 +45,18 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
         public override void OnEnterMovement()
         {
-            cc.enabled = false;
-            rb.isKinematic = false;
-            rb.useGravity = false; // Control gravity by myself.
+            if (HasStateAuthority)
+            {
+                cc.enabled = false;
+                rb.isKinematic = false;
+                rb.useGravity = false; // Control gravity by myself.
 
-            UIController.Instance.ShowDragonControlUI();
-            
-            // Apply a init velocity.
-            BoostSpeed();
+                UIController.Instance.ShowDragonControlUI();
+                UIController.Instance.ShowPrompt("Hold mouse right button to control");
+                
+                // Apply an init velocity.
+                BoostSpeed();
+            }
 
             animator.SetBool(isFlying, true);
             
@@ -64,8 +68,6 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     collider.isTrigger = false;
                 }
             }
-            
-            UIController.Instance.ShowPrompt("Hold mouse right button to control");
         }
 
 

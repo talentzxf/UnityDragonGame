@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
+using System.Threading;
 using Fusion;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace DragonGameNetworkProject.FightSystem
 {
@@ -51,7 +49,7 @@ namespace DragonGameNetworkProject.FightSystem
         [Networked] private bool exploded { set; get; }
         [Networked] private Vector3 explosionPoint { set; get; }
         [Networked] private Vector3 explosionNormal { set; get; }
-        
+
         private void OnCollisionEnter(Collision collision)
         {
             foreach (ContactPoint contact in collision.contacts)
@@ -114,12 +112,15 @@ namespace DragonGameNetworkProject.FightSystem
                 explosionPrefab.transform.rotation = Quaternion.LookRotation(explosionNormal);
                 
                 gameObject.SetActive(false);
-                
-                // if (HasStateAuthority)
-                // {
-                //     Runner.Despawn(GetComponent<NetworkObject>()); // Only State auth can despawn the rocket.
-                // }
+                // StartCoroutine(DespawnMySelf());
             }
+        }
+
+        // TODO: Run GC in another function.
+        private IEnumerator DespawnMySelf()
+        {
+            yield return new WaitForSeconds(1); // After 1 second to ensure all clients explosion effect played.
+            Runner.Despawn(GetComponent<NetworkObject>()); // Only State auth can despawn the rocket.
         }
 
         public override void FixedUpdateNetwork()

@@ -9,12 +9,7 @@ namespace DragonGameNetworkProject.FightSystem
 
         private NetworkObject rocketNO;
         
-        private bool _launchRocket = false;
-
-        public override void Spawned()
-        {
-            base.Spawned();
-        }
+        private bool _launchRocket;
 
         void Update()
         {
