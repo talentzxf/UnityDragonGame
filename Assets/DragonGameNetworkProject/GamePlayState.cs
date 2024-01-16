@@ -6,10 +6,10 @@ using UnityEngine;
 
 namespace DragonGameNetworkProject
 {
-    public class GamePlayState: NetworkBehaviour
+    public class GamePlayState : NetworkBehaviour
     {
         [Networked] public bool gameStarted { set; get; } = false;
-        
+
         private static GamePlayState _instance;
         public static GamePlayState Instance => _instance;
 
@@ -25,36 +25,41 @@ namespace DragonGameNetworkProject
         }
 
         private ChangeDetector _changeDetector;
+
         public override void Spawned()
         {
             base.Spawned();
             _changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
         }
-        
+
         private void Update()
         {
-            foreach (var change in _changeDetector.DetectChanges(this))
+            if (_changeDetector != null)
             {
-                switch (change)
+                foreach (var change in _changeDetector.DetectChanges(this))
                 {
-                    case nameof(gameStarted):
-                        if (gameStarted)
-                        {
-                            // Hide UI.
-                            PrepareUI.Instance.gameObject.SetActive(false);
-                            UIController.Instance.ActivateUiDocument();
-                            
-                            // Set dragon controller.
-                            DragonAvatarController.LocalController.SwitchTo<DragonAvatarGroundMovement>();
-
-                            Camera.main.GetComponent<FirstPersonCamera>().enabled = true;
-
-                            if (Runner.IsSharedModeMasterClient || Runner.IsSinglePlayer)
+                    switch (change)
+                    {
+                        case nameof(gameStarted):
+                            if (gameStarted)
                             {
-                                GameTimer.Instance.StartTimer();
+                                // Hide UI.
+                                PrepareUI.Instance.gameObject.SetActive(false);
+                                UIController.Instance.ActivateUiDocument();
+
+                                // Set dragon controller.
+                                DragonAvatarController.LocalController.SwitchTo<DragonAvatarGroundMovement>();
+
+                                Camera.main.GetComponent<FirstPersonCamera>().enabled = true;
+
+                                if (Runner.IsSharedModeMasterClient || Runner.IsSinglePlayer)
+                                {
+                                    GameTimer.Instance.StartTimer();
+                                }
                             }
-                        }
-                        break;
+
+                            break;
+                    }
                 }
             }
         }
