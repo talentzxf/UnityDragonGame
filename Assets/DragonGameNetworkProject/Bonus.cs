@@ -20,12 +20,7 @@ public class Bonus : NetworkBehaviour
 
         _instance = this;
     }
-
-    public int GetPlayerCount()
-    {
-        return PlayerCoins.Count;
-    }
-
+    
     private bool spawned = false;
 
     public override void Spawned()

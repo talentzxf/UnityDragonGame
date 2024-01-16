@@ -1,3 +1,4 @@
+using System.Linq;
 using Fusion;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         {
             if (player == Runner.LocalPlayer)
             {
-                int currentPlayerCount = Bonus.Instance.GetPlayerCount();
+                int currentPlayerCount = Runner.ActivePlayers.Count();
                 int totalSpawnPoints = spawnPoints.Length;
 
                 Transform spawnPoint = spawnPoints[currentPlayerCount % totalSpawnPoints];

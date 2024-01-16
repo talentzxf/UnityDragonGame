@@ -69,9 +69,9 @@ public class PrepareUI : MonoBehaviour
 
     public void SetupAvatarUI(NetworkRunner runner, PlayerRef playerRef, Texture texture)
     {
+        ActivateUiDocument();
+        
         _runner = runner;
-        uiDoc.enabled = true;
-        enabled = true;
         
         var leftBar = uiDoc.rootVisualElement.Q<VisualElement>("Left");
 
@@ -162,6 +162,16 @@ public class PrepareUI : MonoBehaviour
 
         _instance = this;
         uiDoc = GetComponent<UIDocument>();
+    }
+
+    public void ActivateUiDocument()
+    {
+        if (uiDoc.enabled && enabled && gameObject.activeSelf)
+            return;
+        
+        gameObject.SetActive(true);
+        uiDoc.enabled = true;
+        enabled = true;
         
         var colorPickerContainer = uiDoc.rootVisualElement.Q<VisualElement>("ColorPickers");
         colorPickerContainer.Add(new ColorPicker("Hair Color", onHairColorPicked));
@@ -192,11 +202,6 @@ public class PrepareUI : MonoBehaviour
         
             _runner = runner;
         });
-    }
-
-    public void ActivateUiDocument()
-    {
-        uiDoc.gameObject.SetActive(true);
     }
     
     // Texture2D GenerateTexture()
