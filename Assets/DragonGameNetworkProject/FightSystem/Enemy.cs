@@ -1,4 +1,5 @@
 using DragonGameNetworkProject;
+using DragonGameNetworkProject.FightSystem;
 using Fusion;
 using MoreMountains.Feedbacks;
 using UnityEngine;
@@ -24,22 +25,27 @@ public abstract class Enemy : NetworkBehaviour
             if (hp < 0)
             {
                 isAlive = false;
-            }            
+            }
         }
     }
-    
+
     protected AbstractNameTag _nameTag;
 
     protected NetworkObject _no;
+
     public override void Spawned()
     {
         base.Spawned();
         _no = GetComponent<NetworkObject>();
+        if (_no == null)
+            _no = GetComponentInParent<NetworkObject>();
     }
 
     private void Awake()
     {
         _nameTag = GetComponent<AbstractNameTag>();
+        if (_nameTag == null)
+            _nameTag = GetComponentInParent<AbstractNameTag>();
 
         _indicatorGO = Instantiate(indicatorPrefab, transform);
         _indicatorGO.SetActive(false);
@@ -47,6 +53,11 @@ public abstract class Enemy : NetworkBehaviour
 
     private void Start()
     {
+        if (this is PlayerEnemy && HasInputAuthority) // Don't lock myself.
+        {
+            return;
+        }
+        
         EnemyManager.Instance.RegisterEnemy(this);
 
         _nameTag.SetTextColor(Color.red);
@@ -79,8 +90,11 @@ public abstract class Enemy : NetworkBehaviour
 
     private bool hasDoneDie = false;
 
-    public override void FixedUpdateNetwork()
+    private void Update()
     {
+        if (Runner == null || Runner.State != NetworkRunner.States.Running)
+            return;
+
         if (!isAlive && !hasDoneDie)
         {
             DoDie();

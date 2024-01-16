@@ -690,6 +690,7 @@ GameObject:
   - component: {fileID: 3273457548630906966}
   - component: {fileID: 9091357869982347419}
   - component: {fileID: 2329208308604724418}
+  - component: {fileID: 6447961507659731854}
   m_Layer: 0
   m_Name: AdjustForward
   m_TagString: Untagged
@@ -821,6 +822,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6447961507659731854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012087414474815433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec9a911828ae4ab780771252b826b734, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  indicatorPrefab: {fileID: 2614922164667745320, guid: d0fec619670282441840c06932e83e9e, type: 3}
 --- !u!1 &2314552956544738864
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,7 +914,6 @@ GameObject:
   - component: {fileID: 756411451520107700}
   - component: {fileID: 6783156346000343129}
   - component: {fileID: 7840558605725316009}
-  - component: {fileID: 1315633550652593013}
   - component: {fileID: 6104593674878873168}
   m_Layer: 0
   m_Name: DragonAvatar
@@ -948,10 +961,10 @@ MonoBehaviour:
   - {fileID: 756411451520107700}
   - {fileID: 6783156346000343129}
   - {fileID: 7840558605725316009}
-  - {fileID: 1315633550652593013}
   - {fileID: 6104593674878873168}
   - {fileID: 5427608380929071441}
   - {fileID: 3273457548630906966}
+  - {fileID: 6447961507659731854}
   - {fileID: 1514868645477688699}
 --- !u!114 &709095898195727178
 MonoBehaviour:
@@ -1038,19 +1051,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameTagPrefab: {fileID: 4468395198564285584, guid: 6a06d0ed8013bb34fbed44e6cb004aed, type: 3}
---- !u!114 &1315633550652593013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2426696650724372332}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec9a911828ae4ab780771252b826b734, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  indicatorPrefab: {fileID: 2614922164667745320, guid: d0fec619670282441840c06932e83e9e, type: 3}
 --- !u!114 &6104593674878873168
 MonoBehaviour:
   m_ObjectHideFlags: 0

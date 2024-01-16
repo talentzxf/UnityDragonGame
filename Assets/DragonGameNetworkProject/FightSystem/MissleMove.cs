@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Fusion;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,7 +16,6 @@ namespace DragonGameNetworkProject.FightSystem
         [SerializeField] private float initSpeed = 10.0f;
 
         [SerializeField] private float rotationSpeed = 100.0f;
-
         [SerializeField] private bool equipped = false;
 
         public Transform Target
@@ -47,6 +48,10 @@ namespace DragonGameNetworkProject.FightSystem
             }
         }
 
+        [Networked] private bool exploded { set; get; }
+        [Networked] private Vector3 explosionPoint { set; get; }
+        [Networked] private Vector3 explosionNormal { set; get; }
+        
         private void OnCollisionEnter(Collision collision)
         {
             foreach (ContactPoint contact in collision.contacts)
@@ -58,13 +63,13 @@ namespace DragonGameNetworkProject.FightSystem
                     continue;
 
                 {
-                    var explosionPrefab = Instantiate(_explodePrefab);
-                    explosionPrefab.transform.position = contact.point;
-                    explosionPrefab.transform.rotation = Quaternion.LookRotation(contact.normal);
-
                     if (HasStateAuthority)
                     {
-                        Runner.Despawn(GetComponent<NetworkObject>()); // Only State auth can despawn the rocket.
+                        explosionPoint = contact.point;
+                        explosionNormal = contact.normal;
+
+                        exploded = true;
+
                         if (enemy)
                             enemy.DoDamageRpc(1000.0f);
                     }
@@ -96,6 +101,26 @@ namespace DragonGameNetworkProject.FightSystem
             }
         }
 #endif
+
+        private void Update()
+        {
+            if (Runner == null || Runner.State != NetworkRunner.States.Running)
+                return;
+
+            if (exploded)
+            {
+                var explosionPrefab = Instantiate(_explodePrefab);
+                explosionPrefab.transform.position = explosionPoint;
+                explosionPrefab.transform.rotation = Quaternion.LookRotation(explosionNormal);
+                
+                gameObject.SetActive(false);
+                
+                // if (HasStateAuthority)
+                // {
+                //     Runner.Despawn(GetComponent<NetworkObject>()); // Only State auth can despawn the rocket.
+                // }
+            }
+        }
 
         public override void FixedUpdateNetwork()
         {
