@@ -103,10 +103,13 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         {
             _changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
             _no = GetComponent<NetworkObject>();
-
+            
             if (_no.HasInputAuthority)
             {
                 LocalController = this;
+                
+                bodyColor = smr.materials[3].color;
+                hairColor = smr.materials[2].color;
             }
 
             needPrepareUI = true;

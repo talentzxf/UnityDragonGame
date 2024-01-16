@@ -1,5 +1,6 @@
 using System;
 using Fusion;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -39,8 +40,12 @@ namespace DragonGameNetworkProject
         }
 
         private bool gameStartEventTriggered = false; 
-        public override void FixedUpdateNetwork()
+        
+        private void Update()
         {
+            if (Runner == null || Runner.State != NetworkRunner.States.Running)
+                return;
+            
             if (!timer.IsRunning)
                 return;
             

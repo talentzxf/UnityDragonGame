@@ -43,8 +43,10 @@ namespace DragonGameNetworkProject
                         case nameof(gameStarted):
                             if (gameStarted)
                             {
-                                // Hide UI.
+                                // Hide Prepare UI.
                                 PrepareUI.Instance.gameObject.SetActive(false);
+                                
+                                // Show in game UI.
                                 UIController.Instance.ActivateUiDocument();
 
                                 // Set dragon controller.
@@ -56,6 +58,8 @@ namespace DragonGameNetworkProject
                                 {
                                     GameTimer.Instance.StartTimer();
                                 }
+                                
+                                // How to close the room so nobody else can join????
                             }
 
                             break;
