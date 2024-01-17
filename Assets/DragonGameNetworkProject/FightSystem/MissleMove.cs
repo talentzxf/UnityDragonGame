@@ -84,6 +84,9 @@ namespace DragonGameNetworkProject.FightSystem
 
             if (!Target.gameObject.activeSelf)
             {
+                explosionPoint = transform.position;
+                explosionNormal = Vector3.up;
+
                 exploded = true;
                 return;
             }
