@@ -2,6 +2,7 @@
 using Fusion;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace DragonGameNetworkProject.FightSystem
 {
@@ -77,7 +78,16 @@ namespace DragonGameNetworkProject.FightSystem
         void AdjustAim(float delta)
         {
             if (Target == null)
+            {
                 return;
+            }
+
+            if (!Target.gameObject.activeSelf)
+            {
+                exploded = true;
+                return;
+            }
+
 
             Vector3 heading = Target.position - transform.position;
             Quaternion lookRotation = Quaternion.LookRotation(heading);

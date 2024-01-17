@@ -6,7 +6,7 @@ namespace DragonGameNetworkProject.FightSystem
 {
     public class ShieldEnemy: Enemy
     {
-        private float reflectForceMag = 2.0f;
+        private float reflectForceMag = 5.0f;
         private void OnCollisionEnter(Collision other)
         {
             AvoidCollision(other);
