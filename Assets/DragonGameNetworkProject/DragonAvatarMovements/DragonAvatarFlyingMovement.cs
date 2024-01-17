@@ -24,6 +24,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
         private int isFlying = Animator.StringToHash("IsFlying");
         private int isDashing = Animator.StringToHash("IsDashing");
+        private int flyingSpeed = Animator.StringToHash("FlyingSpeed");
 
         private float projectDistance = 10f;
         private Rigidbody rb;
@@ -232,7 +233,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     
                     EasyControl();
                     
-                    // Vector3 xzVelocity = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z);
+                    Vector3 xzVelocity = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z);
                     //
                     // float speedPortion = xzVelocity.magnitude;
                     // float levitationForce = speedPortion * speedPortion;
@@ -247,7 +248,9 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     // rb.AddForce(remainGravityForce, ForceMode.Acceleration);
                     //
                     // Debug.Log("Gravity is:" + remainGravityForce);
-                    
+
+                    animator.SetFloat(flyingSpeed, xzVelocity.magnitude / MaxSpeed);
+
                     UIController.Instance.ShowSpeed(rb.velocity, MaxSpeed);
                 }
                 finally
