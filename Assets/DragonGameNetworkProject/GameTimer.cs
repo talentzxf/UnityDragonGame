@@ -17,7 +17,7 @@ namespace DragonGameNetworkProject
         private static GameTimer _instance;
         public static GameTimer Instance => _instance;
 
-        public int TotalTime = 5;
+        public int TotalTime = 120;
 
         private void Awake()
         {
@@ -42,7 +42,8 @@ namespace DragonGameNetworkProject
             }
         }
 
-        private bool gameStartEventTriggered = false; 
+        private bool gameStartEventTriggered = false;
+        private bool gameCompletEventTriggered = false;
         
         private void Update()
         {
@@ -79,7 +80,11 @@ namespace DragonGameNetworkProject
                 }
                 else
                 {
-                    onGameCompleted?.Invoke();
+                    if (!gameCompletEventTriggered)
+                    {
+                        onGameCompleted?.Invoke();
+                        gameCompletEventTriggered = true;
+                    }
                 }
             }
         }
