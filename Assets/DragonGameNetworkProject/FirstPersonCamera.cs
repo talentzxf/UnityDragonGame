@@ -83,7 +83,7 @@ public class FirstPersonCamera : MonoBehaviour
     {
         target = targetTransform;
 
-        transform.position = target.position + (Vector3.forward + Vector3.up).normalized * originalDistance;
+        transform.position = target.position + (targetTransform.up + targetTransform.right).normalized * originalDistance;
         distance = originalDistance;
     }
 
