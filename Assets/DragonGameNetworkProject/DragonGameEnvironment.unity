@@ -8224,6 +8224,9 @@ MonoBehaviour:
   onHairColorPicked:
     m_PersistentCalls:
       m_Calls: []
+  onBellyColorPicked:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &807026045
 GameObject:
   m_ObjectHideFlags: 0
@@ -14831,6 +14834,9 @@ MonoBehaviour:
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
+  onGameCompleted:
+    m_PersistentCalls:
+      m_Calls: []
   countDownTime: 5
   goTime: 1
   TotalTime: 300
@@ -14846,6 +14852,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbb9613e3a9d4576a2e47ae0a0dc1b9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleMusic: {fileID: 8300000, guid: d8a94edabf217a14fb93bda5ab8687e2, type: 3}
+  waitingMusic: {fileID: 8300000, guid: c54fc9d44e5103f4e900abdf00f590f4, type: 3}
+  gameMusic: {fileID: 8300000, guid: 5d092b6b40c0ac649a460b2c23da9b03, type: 3}
+  resultMusic: {fileID: 8300000, guid: d4d5f826ac2cdd440bac1ffd825f5861, type: 3}
   _gameStarted: 0
 --- !u!1 &1457815487
 GameObject:

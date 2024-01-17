@@ -9,6 +9,7 @@ namespace DragonGameNetworkProject
     public class GameTimer : NetworkBehaviour
     {
         public UnityEvent onGameStart;
+        public UnityEvent onGameCompleted;
 
         [SerializeField] private float countDownTime = 5.0f;
         [SerializeField] private float goTime = 1.0f;
@@ -16,7 +17,7 @@ namespace DragonGameNetworkProject
         private static GameTimer _instance;
         public static GameTimer Instance => _instance;
 
-        public int TotalTime = 300;
+        public int TotalTime = 5;
 
         private void Awake()
         {
@@ -29,13 +30,15 @@ namespace DragonGameNetworkProject
             _instance = this;
         }
         
-        [Networked] private TickTimer timer { get; set; }
+        [Networked] private TickTimer waitingTimer { get; set; }
+        
+        [Networked] private TickTimer gameTimer { get; set; }
 
         public void StartTimer()
         {
             if (Runner.IsSharedModeMasterClient || Runner.IsSinglePlayer)
             {
-                timer = TickTimer.CreateFromSeconds(Runner,countDownTime + goTime);
+                waitingTimer = TickTimer.CreateFromSeconds(Runner,countDownTime + goTime);
             }
         }
 
@@ -46,15 +49,15 @@ namespace DragonGameNetworkProject
             if (Runner == null || Runner.State != NetworkRunner.States.Running)
                 return;
             
-            if (!timer.IsRunning)
+            if (!waitingTimer.IsRunning)
                 return;
             
-            if (timer.RemainingTime(Runner) >= 1.0f)
+            if (waitingTimer.RemainingTime(Runner) >= 1.0f)
             {
-                UIController.Instance.SetTimerText($"Game will start in { (timer.RemainingTime(Runner) - 1.0f)?.ToString("F2")} seconds");
+                UIController.Instance.SetTimerText($"Game will start in { (waitingTimer.RemainingTime(Runner) - 1.0f)?.ToString("F2")} seconds");
             }
 
-            if (timer.RemainingTime(Runner) <= 1.0f && !timer.Expired(Runner))
+            if (waitingTimer.RemainingTime(Runner) <= 1.0f && !waitingTimer.Expired(Runner))
             {
                 UIController.Instance.SetTimerText("Go!!");
 
@@ -62,6 +65,21 @@ namespace DragonGameNetworkProject
                 {
                     onGameStart?.Invoke();
                     gameStartEventTriggered = true;
+                    
+                    if(Runner.IsSharedModeMasterClient || Runner.IsSinglePlayer)
+                        gameTimer = TickTimer.CreateFromSeconds(Runner, TotalTime);
+                }
+            }
+
+            if (gameStartEventTriggered && waitingTimer.Expired(Runner))
+            {
+                if (!gameTimer.Expired(Runner))
+                {
+                    UIController.Instance.SetTimerText($"Remaining game time:{gameTimer.RemainingTime(Runner)?.ToString("F2")} seconds");
+                }
+                else
+                {
+                    onGameCompleted?.Invoke();
                 }
             }
         }

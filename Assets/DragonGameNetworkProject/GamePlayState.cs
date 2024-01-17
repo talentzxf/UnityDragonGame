@@ -1,4 +1,3 @@
-using System;
 using DragonGameNetworkProject.DragonAvatarMovements;
 using Fusion;
 using Unity.VisualScripting;
@@ -8,6 +7,13 @@ namespace DragonGameNetworkProject
 {
     public class GamePlayState : NetworkBehaviour
     {
+        public AudioClip titleMusic;
+        public AudioClip waitingMusic;
+        public AudioClip gameMusic;
+        public AudioClip resultMusic;
+
+        private AudioSource _audioSource;
+        
         [Networked] public bool gameStarted { set; get; } = false;
 
         private static GamePlayState _instance;
@@ -22,6 +28,17 @@ namespace DragonGameNetworkProject
             }
 
             _instance = this;
+            _audioSource = gameObject.AddComponent<AudioSource>();
+            _audioSource.loop = true;
+
+            _audioSource.clip = titleMusic;
+            _audioSource.Play();
+            
+            GameTimer.Instance.onGameCompleted.AddListener(() =>
+            {
+                _audioSource.clip = resultMusic;
+                _audioSource.Play();
+            });
         }
 
         private ChangeDetector _changeDetector;
@@ -30,6 +47,8 @@ namespace DragonGameNetworkProject
         {
             base.Spawned();
             _changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
+            _audioSource.clip = waitingMusic;
+            _audioSource.Play();
         }
 
         private void Update()
@@ -58,7 +77,9 @@ namespace DragonGameNetworkProject
                                 {
                                     GameTimer.Instance.StartTimer();
                                 }
-                                
+
+                                _audioSource.clip = gameMusic;
+                                _audioSource.Play();
                                 // How to close the room so nobody else can join????
                             }
 
