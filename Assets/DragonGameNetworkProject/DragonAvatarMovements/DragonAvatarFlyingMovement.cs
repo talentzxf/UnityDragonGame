@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using DragonGameNetworkProject.DragonMovements;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         private float projectDistance = 10f;
         private Rigidbody rb;
 
-        public float flyingGravityPortion = 0.1f;
+        public float flyingGravityPortion = 0.01f;
 
         private InputHandler _inputHandler = new();
 
@@ -142,7 +143,10 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             rb.velocity += ccTransform.forward * BoostSpeedAcc;
             if (curMag > MaxSpeed) // Clamp
             {
-                rb.velocity = MaxSpeed * ccTransform.forward;
+                Vector3 maxSpeed = MaxSpeed * ccTransform.forward;
+                maxSpeed.y = rb.velocity.y; // Keep y velocity.
+
+                rb.velocity = maxSpeed;
             }
         }
 
@@ -175,7 +179,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     Vector2 canvasDim = new Vector2(canvasRect.rect.width, canvasRect.rect.height);
                     Vector2 canvasCenter = 0.5f * canvasDim;
 
-                    Vector2 inputMousePosition = canvasCenter + (_inputHandler.MousePosition - canvasCenter) * 0.5f;
+                    Vector2 inputMousePosition = canvasCenter + (_inputHandler.MousePosition - canvasCenter) * 0.3f;
                     Vector2 mousePos;
                     RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform,
                         inputMousePosition, canvas.worldCamera, out mousePos);
@@ -197,8 +201,9 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
                     Vector3 curVelocity = rb.velocity;
                     float curVelocityMag = curVelocity.magnitude;
-
+                    
                     rb.velocity = ccTransform.forward * curVelocityMag;
+                    // rb.MoveRotation(targetRotation);
                 }
                 else
                 {
@@ -227,14 +232,21 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     
                     EasyControl();
                     
-                    Vector3 xzVelocity = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z);
-
-                    float gravityPortion = Math.Max(flyingGravityPortion, 1.0f - xzVelocity.magnitude / MaxSpeed);
-                    
-                    Vector3 remainGravityForce = Physics.gravity * gravityPortion;
-                    rb.velocity += remainGravityForce * Runner.DeltaTime;
-                    
-                    Debug.Log("Gravity is:" + remainGravityForce);
+                    // Vector3 xzVelocity = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z);
+                    //
+                    // float speedPortion = xzVelocity.magnitude;
+                    // float levitationForce = speedPortion * speedPortion;
+                    // float maxLevitationForce = MaxSpeed * MaxSpeed;
+                    //
+                    // float resultLevitationForcePortion = levitationForce / maxLevitationForce;
+                    //
+                    // float gravityPortion = 0.1f * Math.Max(flyingGravityPortion, 1.0f - resultLevitationForcePortion);
+                    //
+                    // Vector3 remainGravityForce = Physics.gravity * gravityPortion;
+                    //
+                    // rb.AddForce(remainGravityForce, ForceMode.Acceleration);
+                    //
+                    // Debug.Log("Gravity is:" + remainGravityForce);
                     
                     UIController.Instance.ShowSpeed(rb.velocity, MaxSpeed);
                 }

@@ -173,7 +173,7 @@ public class UIController : MonoBehaviour
         string resultStr = "";
         foreach (var playerCoin in playerCoins)
         {
-            if (playerCoin.Key == runner.LocalPlayer)
+            if (playerCoin.Key == runner.LocalPlayer || runner.IsSinglePlayer)
             {
                 bonusLabel.text = "Points:" + playerCoin.Value;
             }
