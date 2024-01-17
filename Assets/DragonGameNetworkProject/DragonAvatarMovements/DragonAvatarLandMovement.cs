@@ -45,7 +45,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             {
                 int layerMask = LayerMask.GetMask("Terrain");
             
-                bool result = Physics.Raycast(ccTransform.position, Vector3.down, out hit, maxDistance, layerMask);
+                bool result = Physics.Raycast(ccTransform.position + Vector3.up * 10.0f, Vector3.down, out hit, maxDistance, layerMask);
 
                 if (!result)
                 {

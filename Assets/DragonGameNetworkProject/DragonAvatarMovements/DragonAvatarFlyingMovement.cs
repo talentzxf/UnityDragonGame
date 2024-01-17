@@ -1,5 +1,6 @@
 using System;
 using DragonGameNetworkProject.DragonMovements;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,35 +8,35 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 {
     class DragonAvatarCollideReactor : MonoBehaviour
     {
-        public UnityEvent<ControllerColliderHit> collideAction;
-        
-        private void OnControllerColliderHit(ControllerColliderHit hit)
+        public UnityEvent<Collision> collideAction = new();
+
+        private void OnCollisionEnter(Collision collision)
         {
-            collideAction?.Invoke(hit);
+            collideAction?.Invoke(collision);
         }
     }
-    
+
     public class DragonAvatarFlyingMovement : AbstractCharacterMovement
     {
         [SerializeField] private float MaxSpeed = 15f; //max speed for basic movement
         [SerializeField] private float BoostSpeedAcc = 5.0f;
-        
+
         private int isFlying = Animator.StringToHash("IsFlying");
         private int isDashing = Animator.StringToHash("IsDashing");
-        
+
         private float projectDistance = 10f;
         private Rigidbody rb;
 
         public float flyingGravityPortion = 0.1f;
 
         private InputHandler _inputHandler = new();
-        
+
         private FirstPersonCamera fpsCamera;
         private Canvas canvas;
         private RectTransform canvasRect;
         private Transform Cam;
         private Camera CamComp;
-        
+
         private float camSwitchRotationSpeed = 5.0f;
 
         public override void Spawned()
@@ -45,11 +46,11 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             if (HasStateAuthority)
             {
                 rb = ccTransform.GetComponent<Rigidbody>();
-                
+
                 Cam = Camera.main.transform;
                 CamComp = Cam.GetComponent<Camera>();
                 fpsCamera = Cam.GetComponent<FirstPersonCamera>();
-                
+
                 var canvasGO = GameObject.Find("Canvas");
                 canvas = canvasGO.GetComponent<Canvas>();
                 canvasRect = canvasGO.GetComponent<RectTransform>();
@@ -66,29 +67,49 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
                 UIController.Instance.ShowDragonControlUI();
                 UIController.Instance.ShowPrompt("Hold mouse right button to control");
-                
+
                 // Apply an init velocity.
                 BoostSpeed();
             }
 
             animator.SetBool(isFlying, true);
-            
+
             Collider[] colliders = GetComponentsInChildren<Collider>(true);
             foreach (var collider in colliders)
             {
+                collider.gameObject.tag = "Player";
                 if (collider is not CharacterController)
                 {
                     collider.isTrigger = false;
                 }
+
+                if (collider.gameObject.GetComponent<DragonAvatarCollideReactor>() == null)
+                {
+                    var collideReactor = collider.gameObject.AddComponent<DragonAvatarCollideReactor>();
+
+                    collideReactor.collideAction.AddListener(OnCollisionEnter);
+                }
             }
         }
-        
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (HasStateAuthority)
+            {
+                if (collision.gameObject.CompareTag("Terrain"))
+                {
+                    Debug.Log("Collided with terrain, begin to land!");
+                    controller.SwitchTo<DragonAvatarLandMovement>();
+                }                
+            }
+        }
+
         public override void OnLeaveMovement()
         {
             rb.isKinematic = false;
             cc.enabled = true; // Still use cc to control the character. 
             animator.SetBool(isFlying, false);
-            
+
             Cursor.visible = false;
             fpsCamera.enabled = true;
         }
@@ -101,7 +122,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
                 if (_inputHandler.IsRightMouseHold)
                 {
-                    Cam.transform.position = Vector3.Lerp(Cam.transform.position, 
+                    Cam.transform.position = Vector3.Lerp(Cam.transform.position,
                         ccTransform.position - ccTransform.forward * fpsCamera.distance, 10.0f * Time.deltaTime);
                     Cam.transform.LookAt(ccTransform);
                 }
@@ -132,7 +153,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 if (_inputHandler.Jump)
                 {
                     BoostSpeed();
-                    
+
                     animator.SetBool(isDashing, true);
                 }
                 else
@@ -142,16 +163,16 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                         animator.SetBool(isDashing, false);
                     }
                 }
-                
+
                 if (_inputHandler.IsRightMouseHold)
                 {
                     fpsCamera.enabled = false;
                     Cursor.lockState = CursorLockMode.Confined;
                     Cursor.visible = true;
-                    
+
                     Vector2 canvasDim = new Vector2(canvasRect.rect.width, canvasRect.rect.height);
                     Vector2 canvasCenter = 0.5f * canvasDim;
-                    
+
                     Vector2 inputMousePosition = canvasCenter + (_inputHandler.MousePosition - canvasCenter) * 0.15f;
                     Vector2 mousePos;
                     RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform,
@@ -174,9 +195,9 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
                     Vector3 curVelocity = rb.velocity;
                     float curVelocityMag = curVelocity.magnitude;
-                    
+
                     rb.velocity = ccTransform.forward * curVelocityMag;
-                    
+
                     // Cam.transform.position = Vector3.Lerp(Cam.transform.position, 
                     //     dragonPosition + (dragonPosition - dragonTargetPoint).normalized * fpsCamera.distance, 10.0f * delta);
                     // Cam.transform.LookAt(ccTransform);
@@ -186,7 +207,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     Cursor.visible = false;
                     fpsCamera.enabled = true;
                 }
-                
+
                 UIController.Instance.ShowSpeed(rb.velocity, MaxSpeed);
             }
         }
@@ -197,15 +218,15 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             {
                 if (controller.currentMovement != this) // I'm not the current movement.
                     return;
-                
+
                 try
                 {
-                    if(_inputHandler.Land)
+                    if (_inputHandler.Land)
                     {
                         controller.SwitchTo<DragonAvatarLandMovement>();
                         return;
                     }
-                    
+
                     // Add a small amount of gravity.
                     Vector3 levitationForce = Physics.gravity * flyingGravityPortion;
                     rb.AddForce(levitationForce, ForceMode.Acceleration);
