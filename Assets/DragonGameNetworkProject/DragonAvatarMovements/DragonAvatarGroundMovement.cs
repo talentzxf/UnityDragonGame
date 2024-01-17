@@ -104,20 +104,20 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
             try
             {
-                if (!_controllable)
-                    return;
-                
-                if (_groundInput.SpacePressed)
-                {
-                     controller.SwitchTo<DragonAvatarTakeOffMovement>();
-                    return;
-                }
-
                 // Add Gravity.
                 float delta = Runner.DeltaTime;
                 if (!cc.isGrounded)
                 {
                     cc.Move(Physics.gravity * delta);
+                }
+                
+                if (!_controllable)
+                    return;
+                
+                if (_groundInput.SpacePressed)
+                {
+                    controller.SwitchTo<DragonAvatarTakeOffMovement>();
+                    return;
                 }
 
                 // Take inputs and react.

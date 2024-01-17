@@ -6,7 +6,7 @@ namespace DragonGameNetworkProject.FightSystem
 {
     public class ShieldEnemy: Enemy
     {
-        [SerializeField] private float reflectForceMag = 1.0f;
+        private float reflectForceMag = 2.0f;
         private void OnCollisionEnter(Collision other)
         {
             AvoidCollision(other);
@@ -25,13 +25,16 @@ namespace DragonGameNetworkProject.FightSystem
             {
                 var rb = other.gameObject.GetComponentInParent<Rigidbody>();
 
-                Vector3 bumpDir = (other.transform.position - transform.position).normalized;
+                Vector3 impulseForce = (other.transform.position - transform.position).normalized * reflectForceMag;
 
-                Vector3 forceDir = Vector3.Cross(bumpDir, other.transform.up);
-                    
-                Debug.Log("Collided with shield, add a force.");
+                // Vector3 forceDir = Vector3.Cross(bumpDir, other.transform.up);
+                //
+                // forceDir += bumpDir;
 
-                rb.AddForce(forceDir.normalized * reflectForceMag, ForceMode.Impulse);
+                // Vector3 impulseForce = forceDir.normalized * reflectForceMag;
+                Debug.Log($"Collided with shield, add a force.{impulseForce}");
+
+                rb.AddForce(impulseForce, ForceMode.Impulse);
             }
         }
 

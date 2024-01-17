@@ -197,7 +197,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     float curVelocityMag = curVelocity.magnitude;
 
                     rb.velocity = ccTransform.forward * curVelocityMag;
-
+                    
                     // Cam.transform.position = Vector3.Lerp(Cam.transform.position, 
                     //     dragonPosition + (dragonPosition - dragonTargetPoint).normalized * fpsCamera.distance, 10.0f * delta);
                     // Cam.transform.LookAt(ccTransform);
@@ -216,9 +216,6 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         {
             if (HasStateAuthority)
             {
-                if (controller.currentMovement != this) // I'm not the current movement.
-                    return;
-
                 try
                 {
                     if (_inputHandler.Land)
@@ -226,12 +223,20 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                         controller.SwitchTo<DragonAvatarLandMovement>();
                         return;
                     }
+                    
+                    if (controller.currentMovement == this) // I'm not the current movement.
+                    {
+                        EasyControl();
+                    }
+                    
+                    Vector3 xzVelocity = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z);
 
-                    // Add a small amount of gravity.
-                    Vector3 levitationForce = Physics.gravity * flyingGravityPortion;
-                    rb.AddForce(levitationForce, ForceMode.Acceleration);
-
-                    EasyControl();
+                    float gravityPortion = Math.Max(flyingGravityPortion, 1.0f - xzVelocity.magnitude / MaxSpeed);
+                    
+                    Vector3 remainGravityForce = Physics.gravity * gravityPortion;
+                    rb.velocity += remainGravityForce * Runner.DeltaTime;
+                    
+                    Debug.Log("Gravity is:" + remainGravityForce);
                 }
                 finally
                 {
