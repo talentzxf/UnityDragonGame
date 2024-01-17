@@ -13,6 +13,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         
         [Networked] private Color bodyColor { set; get; }
         [Networked] private Color hairColor { set; get; }
+        [Networked] private Color bellyColor { set; get; }
 
         public static DragonAvatarController LocalController = null;
 
@@ -24,6 +25,11 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         public void SetHairColor(Color hairColor)
         {
             this.hairColor = hairColor;
+        }
+
+        public void SetBellyColor(Color bellyColor)
+        {
+            this.bellyColor = bellyColor;
         }
 
         private SkinnedMeshRenderer smr;
@@ -95,7 +101,12 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 PrepareUI.Instance.onHairColorPicked.AddListener((color) =>
                 {
                     SetHairColor(color);
-                });                
+                });
+                
+                PrepareUI.Instance.onBellyColorPicked.AddListener((color) =>
+                {
+                    SetBellyColor(color);
+                });
             }
         }
 
@@ -110,6 +121,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 
                 bodyColor = smr.materials[3].color;
                 hairColor = smr.materials[2].color;
+                bellyColor = smr.materials[4].color;
             }
 
             needPrepareUI = true;
@@ -124,6 +136,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 SetupPrepareUI();
                 smr.materials[3].color = bodyColor;
                 smr.materials[2].color = hairColor;
+                smr.materials[4].color = bellyColor;
                 needPrepareUI = false;
             }
             
@@ -136,6 +149,9 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                         break;
                     case nameof(hairColor):
                         smr.materials[2].color = hairColor;
+                        break;
+                    case nameof(bellyColor):
+                        smr.materials[4].color = bellyColor;
                         break;
                 }
             }

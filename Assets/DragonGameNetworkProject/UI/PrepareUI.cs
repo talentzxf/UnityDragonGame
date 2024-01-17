@@ -39,7 +39,8 @@ class ColorPicker : VisualElement
             {
                 style =
                 {
-                    width = new Length(30.0f, LengthUnit.Percent),
+                    width = new Length(10.0f, LengthUnit.Percent),
+                    height = new Length(10.0f, LengthUnit.Percent),
                     backgroundColor = color
                 }
             };
@@ -59,6 +60,7 @@ public class PrepareUI : MonoBehaviour
 
     public UnityEvent<Color> onBodyColorPicked;
     public UnityEvent<Color> onHairColorPicked;
+    public UnityEvent<Color> onBellyColorPicked;
 
     private Button readyOrStartBtn;
 
@@ -171,7 +173,7 @@ public class PrepareUI : MonoBehaviour
             string roomName = runner.SessionInfo.Name + "@" + runner.SessionInfo.Region;
             uiDoc.rootVisualElement.Q<Label>("RoomName").text = "Room:" + roomName;
             
-            uiDoc.rootVisualElement.Q<Label>("GameMode").text = "Collect Coins";
+            uiDoc.rootVisualElement.Q<Label>("GameMode").text = "GameMode: Collect Coins";
             uiDoc.rootVisualElement.Q<Label>("GameTime").text = GameTimer.Instance.TotalTime + "s";
         
             _runner = runner;
@@ -190,6 +192,7 @@ public class PrepareUI : MonoBehaviour
         var colorPickerContainer = uiDoc.rootVisualElement.Q<VisualElement>("ColorPickers");
         colorPickerContainer.Add(new ColorPicker("Hair Color", onHairColorPicked));
         colorPickerContainer.Add(new ColorPicker("Body Color", onBodyColorPicked));
+        colorPickerContainer.Add(new ColorPicker("Belly Color", onBellyColorPicked));
 
         readyOrStartBtn = uiDoc.rootVisualElement.Q<Button>("StartOrReady");
         
