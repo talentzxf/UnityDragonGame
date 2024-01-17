@@ -729,7 +729,7 @@ MonoBehaviour:
   SyncScale: 0
   SyncParent: 0
   _autoAOIOverride: 1
-  DisableSharedModeInterpolation: 1
+  DisableSharedModeInterpolation: 0
 --- !u!95 &1853745313510136375
 Animator:
   serializedVersion: 5
@@ -764,10 +764,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animator: {fileID: 1853745313510136375}
-  TotalWords: 2
+  TotalWords: 4
   ApplyTiming: 2
   SyncSettings: 79
-  StateHashes: 00000000ad2e86dbb7bfbc31b76789a484d4ac9389f787200dd451cf24f04e26a6bf02a3f94df4877d6e2268c71eafa0dd8f954ab4da308c876915bb
+  StateHashes: 00000000ad2e86dbb7bfbc31b76789a484d4ac9389f787200dd451cf24f04e26a6bf02a3dce6973f37251fc24741282699ea69453e725c3b6c282312
   TriggerHashes: 00000000
 --- !u!143 &9091357869982347419
 CharacterController:
@@ -1021,7 +1021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d8c83a962c943919da8d59d839ae0d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxSpeed: 15
+  MaxSpeed: 30
   BoostSpeedAcc: 5
   flyingGravityPortion: 0.1
 --- !u!114 &6783156346000343129

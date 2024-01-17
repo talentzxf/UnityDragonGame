@@ -83,7 +83,7 @@ public class FirstPersonCamera : MonoBehaviour
     {
         target = targetTransform;
 
-        transform.position = target.position + (target.forward + target.up) * originalDistance;
+        transform.position = target.position + (Vector3.forward + Vector3.up).normalized * originalDistance;
         distance = originalDistance;
     }
 
@@ -135,8 +135,8 @@ public class FirstPersonCamera : MonoBehaviour
         xAngle += verticalInput;
         yAngle += horizontalInput;
 
-        if (clampEnabled)
-            xAngle = Math.Clamp(xAngle, -89, 89);
+        // if (clampEnabled)
+        //     xAngle = Math.Clamp(xAngle, -89, 89);
 
         Quaternion rotation = Quaternion.Euler(xAngle, yAngle, 0);
         Vector3 newPosition = targetPosition + (rotation * Vector3.forward).normalized * distance;

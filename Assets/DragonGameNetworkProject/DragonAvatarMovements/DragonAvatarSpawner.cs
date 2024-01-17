@@ -39,7 +39,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 {
                     fpsCamera.SetCameraTarget(controller.avatarGO);
                 }
-                
+
                 Physics.SyncTransforms(); // Need to sync transforms, or character controller will always reset character position to 0,0,0;
             }
         }

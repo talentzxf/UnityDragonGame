@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Fusion;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DragonGameNetworkProject.FightSystem
@@ -103,6 +104,11 @@ namespace DragonGameNetworkProject.FightSystem
             if (Runner == null || Runner.State != NetworkRunner.States.Running)
                 return;
 
+            if (HasStateAuthority)
+            {
+                AdjustAim(Time.deltaTime);
+            }
+            
             if (exploded)
             {
                 var explosionPrefab = Instantiate(_explodePrefab);
@@ -121,12 +127,12 @@ namespace DragonGameNetworkProject.FightSystem
             Runner.Despawn(GetComponent<NetworkObject>()); // Only State auth can despawn the rocket.
         }
 
-        public override void FixedUpdateNetwork()
-        {
-            if (HasStateAuthority)
-            {
-                AdjustAim(Runner.DeltaTime);
-            }
-        }
+        // public override void FixedUpdateNetwork()
+        // {
+        //     if (HasStateAuthority)
+        //     {
+        //         AdjustAim(Runner.DeltaTime);
+        //     }
+        // }
     }
 }

@@ -18,7 +18,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
     public class DragonAvatarFlyingMovement : AbstractCharacterMovement
     {
-        [SerializeField] private float MaxSpeed = 15f; //max speed for basic movement
+        [SerializeField] private float MaxSpeed = 30f; //max speed for basic movement
         [SerializeField] private float BoostSpeedAcc = 5.0f;
 
         private int isFlying = Animator.StringToHash("IsFlying");
@@ -100,7 +100,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 {
                     Debug.Log("Collided with terrain, begin to land!");
                     controller.SwitchTo<DragonAvatarLandMovement>();
-                }                
+                }
             }
         }
 
@@ -122,9 +122,11 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
                 if (_inputHandler.IsRightMouseHold)
                 {
+                    Vector3 targetPosition = fpsCamera.target.position;
+                    
                     Cam.transform.position = Vector3.Lerp(Cam.transform.position,
-                        ccTransform.position - ccTransform.forward * fpsCamera.distance, 10.0f * Time.deltaTime);
-                    Cam.transform.LookAt(ccTransform);
+                        targetPosition - ccTransform.forward * fpsCamera.distance, 10.0f * Time.deltaTime);
+                    Cam.transform.LookAt(targetPosition);
                 }
             }
         }
@@ -173,7 +175,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     Vector2 canvasDim = new Vector2(canvasRect.rect.width, canvasRect.rect.height);
                     Vector2 canvasCenter = 0.5f * canvasDim;
 
-                    Vector2 inputMousePosition = canvasCenter + (_inputHandler.MousePosition - canvasCenter) * 0.15f;
+                    Vector2 inputMousePosition = canvasCenter + (_inputHandler.MousePosition - canvasCenter); // * 0.3f;
                     Vector2 mousePos;
                     RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform,
                         inputMousePosition, canvas.worldCamera, out mousePos);
@@ -197,18 +199,12 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     float curVelocityMag = curVelocity.magnitude;
 
                     rb.velocity = ccTransform.forward * curVelocityMag;
-                    
-                    // Cam.transform.position = Vector3.Lerp(Cam.transform.position, 
-                    //     dragonPosition + (dragonPosition - dragonTargetPoint).normalized * fpsCamera.distance, 10.0f * delta);
-                    // Cam.transform.LookAt(ccTransform);
                 }
                 else
                 {
                     Cursor.visible = false;
                     fpsCamera.enabled = true;
                 }
-
-                UIController.Instance.ShowSpeed(rb.velocity, MaxSpeed);
             }
         }
 
@@ -218,16 +214,18 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             {
                 try
                 {
+                    if (controller.currentMovement != this) // I'm not the current movement.
+                    {
+                        return;
+                    }
+                    
                     if (_inputHandler.Land)
                     {
                         controller.SwitchTo<DragonAvatarLandMovement>();
                         return;
                     }
                     
-                    if (controller.currentMovement == this) // I'm not the current movement.
-                    {
-                        EasyControl();
-                    }
+                    EasyControl();
                     
                     Vector3 xzVelocity = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z);
 
@@ -237,6 +235,8 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     rb.velocity += remainGravityForce * Runner.DeltaTime;
                     
                     Debug.Log("Gravity is:" + remainGravityForce);
+                    
+                    UIController.Instance.ShowSpeed(rb.velocity, MaxSpeed);
                 }
                 finally
                 {
