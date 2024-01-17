@@ -33,6 +33,12 @@ namespace DragonGameNetworkProject.DragonMovements
             Vertical = Input.GetAxis("Vertical");
 
             Jump = Input.GetButtonDown("Jump");
+
+            if (Jump)
+            {
+                Debug.Log("Pressed Space!!!!");
+            }
+            
             JumpHold = Input.GetButton("Jump");
             Fly = JumpHold;
 

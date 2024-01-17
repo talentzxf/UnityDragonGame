@@ -1,15 +1,28 @@
 using System;
 using DragonGameNetworkProject.DragonMovements;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DragonGameNetworkProject.DragonAvatarMovements
 {
+    class DragonAvatarCollideReactor : MonoBehaviour
+    {
+        public UnityEvent<ControllerColliderHit> collideAction;
+        
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            collideAction?.Invoke(hit);
+        }
+    }
+    
     public class DragonAvatarFlyingMovement : AbstractCharacterMovement
     {
         [SerializeField] private float MaxSpeed = 15f; //max speed for basic movement
         [SerializeField] private float BoostSpeedAcc = 5.0f;
         
         private int isFlying = Animator.StringToHash("IsFlying");
+        private int isDashing = Animator.StringToHash("IsDashing");
+        
         private float projectDistance = 10f;
         private Rigidbody rb;
 
@@ -69,8 +82,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 }
             }
         }
-
-
+        
         public override void OnLeaveMovement()
         {
             rb.isKinematic = false;
@@ -113,13 +125,22 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
         private void EasyControl()
         {
-            if (Runner.IsForward)
+            // if (Runner.IsForward)
             {
                 float delta = Runner.DeltaTime;
 
                 if (_inputHandler.Jump)
                 {
                     BoostSpeed();
+                    
+                    animator.SetBool(isDashing, true);
+                }
+                else
+                {
+                    if (animator.GetFloat("DashProgress") > 0.0f)
+                    {
+                        animator.SetBool(isDashing, false);
+                    }
                 }
                 
                 if (_inputHandler.IsRightMouseHold)
@@ -159,14 +180,14 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     // Cam.transform.position = Vector3.Lerp(Cam.transform.position, 
                     //     dragonPosition + (dragonPosition - dragonTargetPoint).normalized * fpsCamera.distance, 10.0f * delta);
                     // Cam.transform.LookAt(ccTransform);
-                    
-                    UIController.Instance.ShowSpeed(rb.velocity, MaxSpeed);
                 }
                 else
                 {
                     Cursor.visible = false;
                     fpsCamera.enabled = true;
                 }
+                
+                UIController.Instance.ShowSpeed(rb.velocity, MaxSpeed);
             }
         }
 

@@ -16,6 +16,10 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             Horizontal = Input.GetAxis("Horizontal");
 
             SpacePressed = Input.GetKeyDown(KeyCode.Space);
+            if (SpacePressed)
+            {
+                Debug.Log("Pressed space, begin to take off!");
+            }
         }
 
         public void Reset()
