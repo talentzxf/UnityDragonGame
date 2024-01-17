@@ -108,12 +108,15 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
         public override void OnLeaveMovement()
         {
-            rb.isKinematic = false;
-            cc.enabled = true; // Still use cc to control the character. 
-            animator.SetBool(isFlying, false);
+            if (HasStateAuthority)
+            {
+                rb.isKinematic = false;
+                cc.enabled = true; // Still use cc to control the character. 
+                animator.SetBool(isFlying, false);
 
-            Cursor.visible = false;
-            fpsCamera.enabled = true;
+                Cursor.visible = false;
+                fpsCamera.enabled = true;                
+            }
         }
 
         private void Update()
