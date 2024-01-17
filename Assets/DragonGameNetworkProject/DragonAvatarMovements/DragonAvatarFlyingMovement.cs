@@ -175,7 +175,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     Vector2 canvasDim = new Vector2(canvasRect.rect.width, canvasRect.rect.height);
                     Vector2 canvasCenter = 0.5f * canvasDim;
 
-                    Vector2 inputMousePosition = canvasCenter + (_inputHandler.MousePosition - canvasCenter); // * 0.3f;
+                    Vector2 inputMousePosition = canvasCenter + (_inputHandler.MousePosition - canvasCenter) * 0.5f;
                     Vector2 mousePos;
                     RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform,
                         inputMousePosition, canvas.worldCamera, out mousePos);
