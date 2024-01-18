@@ -128,13 +128,10 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 if (_inputHandler.IsRightMouseHold)
                 {
                     Vector3 targetPosition = fpsCamera.target.position;
-
-                    Cam.transform.position = Vector3.Slerp(Cam.transform.position,
-                        targetPosition - ccTransform.forward * fpsCamera.distance, Time.deltaTime * camSwitchRotationSpeed);
-
-                    Quaternion lookAt =
-                        Quaternion.LookRotation(targetPosition - Cam.transform.position, Vector3.up);
-                    Cam.transform.rotation = Quaternion.Slerp(Cam.transform.rotation, lookAt, Time.deltaTime * camSwitchRotationSpeed);
+                    
+                    Cam.transform.position = Vector3.Lerp(Cam.transform.position,
+                        targetPosition - ccTransform.forward * fpsCamera.distance, 10.0f * Time.deltaTime);
+                    Cam.transform.LookAt(targetPosition);
                 }
             }
         }
@@ -186,7 +183,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     Vector2 canvasDim = new Vector2(canvasRect.rect.width, canvasRect.rect.height);
                     Vector2 canvasCenter = 0.5f * canvasDim;
 
-                    Vector2 inputMousePosition = canvasCenter + (_inputHandler.MousePosition - canvasCenter); // * 0.3f;
+                    Vector2 inputMousePosition = canvasCenter + (_inputHandler.MousePosition - canvasCenter) * 0.3f;
                     Vector2 mousePos;
                     RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform,
                         inputMousePosition, canvas.worldCamera, out mousePos);
@@ -209,7 +206,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     Vector3 curVelocity = rb.velocity;
                     float curVelocityMag = curVelocity.magnitude;
                     
-                    rb.velocity = Vector3.Slerp(rb.velocity, ccTransform.forward * curVelocityMag, Runner.DeltaTime);
+                    rb.velocity = ccTransform.forward * curVelocityMag;
                     // rb.MoveRotation(targetRotation);
                 }
                 else

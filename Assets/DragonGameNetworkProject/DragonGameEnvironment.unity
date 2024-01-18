@@ -683,6 +683,7 @@ GameObject:
   - component: {fileID: 42184756}
   - component: {fileID: 42184755}
   - component: {fileID: 42184754}
+  - component: {fileID: 42184753}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -706,6 +707,20 @@ Transform:
   - {fileID: 518316088}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &42184753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42184751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &42184754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1118,6 +1133,7 @@ GameObject:
   - component: {fileID: 53250915}
   - component: {fileID: 53250914}
   - component: {fileID: 53250913}
+  - component: {fileID: 53250912}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -1141,6 +1157,20 @@ Transform:
   - {fileID: 215296304}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &53250912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53250910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &53250913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2433,6 +2463,7 @@ GameObject:
   - component: {fileID: 90706761}
   - component: {fileID: 90706760}
   - component: {fileID: 90706759}
+  - component: {fileID: 90706758}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -2456,6 +2487,20 @@ Transform:
   - {fileID: 1310848196}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &90706758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90706756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &90706759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2845,6 +2890,7 @@ GameObject:
   - component: {fileID: 129232180}
   - component: {fileID: 129232179}
   - component: {fileID: 129232178}
+  - component: {fileID: 129232177}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -2869,6 +2915,20 @@ Transform:
   - {fileID: 1979044107}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &129232177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129232175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &129232178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3762,7 +3822,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2328e30d9f6d2e4fa7b348fe5b21412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activateAfterSeconds: -1
   gems:
   - {fileID: 4974421058365702803, guid: b27286b5074021e40a9da0b8bb82cf89, type: 3}
   - {fileID: 6480256129027958131, guid: 8ef38776f9b1c5e4aa49c267ba101e5c, type: 3}
@@ -3784,6 +3843,7 @@ GameObject:
   - component: {fileID: 144645733}
   - component: {fileID: 144645732}
   - component: {fileID: 144645731}
+  - component: {fileID: 144645730}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -3808,6 +3868,20 @@ Transform:
   - {fileID: 1557112844}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &144645730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144645728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &144645731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5544,6 +5618,7 @@ GameObject:
   - component: {fileID: 250167668}
   - component: {fileID: 250167667}
   - component: {fileID: 250167666}
+  - component: {fileID: 250167665}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -5567,6 +5642,20 @@ Transform:
   - {fileID: 2122171249}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &250167665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250167663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &250167666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6342,6 +6431,7 @@ GameObject:
   - component: {fileID: 256058275}
   - component: {fileID: 256058274}
   - component: {fileID: 256058273}
+  - component: {fileID: 256058272}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -6366,6 +6456,20 @@ Transform:
   - {fileID: 1301479564}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &256058272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256058270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &256058273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8206,6 +8310,7 @@ GameObject:
   - component: {fileID: 306869038}
   - component: {fileID: 306869037}
   - component: {fileID: 306869036}
+  - component: {fileID: 306869035}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -8229,6 +8334,20 @@ Transform:
   - {fileID: 1479880681}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &306869035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306869033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &306869036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8903,6 +9022,7 @@ GameObject:
   - component: {fileID: 426582334}
   - component: {fileID: 426582333}
   - component: {fileID: 426582332}
+  - component: {fileID: 426582331}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -8926,6 +9046,20 @@ Transform:
   - {fileID: 58360474}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &426582331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426582329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &426582332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11074,7 +11208,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d978ec2349fea541a919f47a589ef6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activateAfterSeconds: -1
   gems:
   - {fileID: 4974421058365702803, guid: b27286b5074021e40a9da0b8bb82cf89, type: 3}
   - {fileID: 6480256129027958131, guid: 8ef38776f9b1c5e4aa49c267ba101e5c, type: 3}
@@ -11443,6 +11576,7 @@ GameObject:
   - component: {fileID: 625029732}
   - component: {fileID: 625029731}
   - component: {fileID: 625029730}
+  - component: {fileID: 625029729}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -11467,6 +11601,20 @@ Transform:
   - {fileID: 2027993435}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &625029729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625029727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &625029730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11918,7 +12066,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d978ec2349fea541a919f47a589ef6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activateAfterSeconds: -1
   gems:
   - {fileID: 4974421058365702803, guid: b27286b5074021e40a9da0b8bb82cf89, type: 3}
   - {fileID: 6480256129027958131, guid: 8ef38776f9b1c5e4aa49c267ba101e5c, type: 3}
@@ -12682,6 +12829,7 @@ GameObject:
   - component: {fileID: 689027869}
   - component: {fileID: 689027868}
   - component: {fileID: 689027867}
+  - component: {fileID: 689027866}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -12705,6 +12853,20 @@ Transform:
   - {fileID: 295487158}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &689027866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 689027864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &689027867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13117,6 +13279,7 @@ GameObject:
   - component: {fileID: 692380304}
   - component: {fileID: 692380303}
   - component: {fileID: 692380302}
+  - component: {fileID: 692380301}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -13140,6 +13303,20 @@ Transform:
   - {fileID: 1750472596}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &692380301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692380299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &692380302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13676,6 +13853,7 @@ GameObject:
   - component: {fileID: 746901009}
   - component: {fileID: 746901008}
   - component: {fileID: 746901007}
+  - component: {fileID: 746901006}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -13700,6 +13878,20 @@ Transform:
   - {fileID: 1775701015}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &746901006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746901004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &746901007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17598,6 +17790,7 @@ GameObject:
   - component: {fileID: 1020390400}
   - component: {fileID: 1020390399}
   - component: {fileID: 1020390398}
+  - component: {fileID: 1020390397}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -17622,6 +17815,20 @@ Transform:
   - {fileID: 1344229127}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1020390397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020390395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &1020390398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18822,6 +19029,7 @@ GameObject:
   - component: {fileID: 1086121177}
   - component: {fileID: 1086121176}
   - component: {fileID: 1086121175}
+  - component: {fileID: 1086121174}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -18845,6 +19053,20 @@ Transform:
   - {fileID: 1556428611}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1086121174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086121172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &1086121175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20607,6 +20829,7 @@ GameObject:
   - component: {fileID: 1172830851}
   - component: {fileID: 1172830850}
   - component: {fileID: 1172830849}
+  - component: {fileID: 1172830848}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -20631,6 +20854,20 @@ Transform:
   - {fileID: 1038249667}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1172830848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172830846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &1172830849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21049,6 +21286,7 @@ GameObject:
   - component: {fileID: 1176342749}
   - component: {fileID: 1176342748}
   - component: {fileID: 1176342747}
+  - component: {fileID: 1176342746}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -21073,6 +21311,20 @@ Transform:
   - {fileID: 922963135}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1176342746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1176342744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &1176342747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21582,6 +21834,7 @@ GameObject:
   - component: {fileID: 1191946365}
   - component: {fileID: 1191946364}
   - component: {fileID: 1191946363}
+  - component: {fileID: 1191946362}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -21605,6 +21858,20 @@ Transform:
   - {fileID: 987556881}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1191946362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191946360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &1191946363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22509,6 +22776,7 @@ GameObject:
   - component: {fileID: 1222445484}
   - component: {fileID: 1222445483}
   - component: {fileID: 1222445482}
+  - component: {fileID: 1222445481}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -22533,6 +22801,20 @@ Transform:
   - {fileID: 1612902653}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1222445481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222445479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &1222445482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22951,6 +23233,7 @@ GameObject:
   - component: {fileID: 1223949164}
   - component: {fileID: 1223949163}
   - component: {fileID: 1223949162}
+  - component: {fileID: 1223949161}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -22975,6 +23258,20 @@ Transform:
   - {fileID: 1448818095}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1223949161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223949159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &1223949162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23611,7 +23908,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df0b2b79f94422793a52feb976d2833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activateAfterSeconds: -1
   gems:
   - {fileID: 6480256129027958131, guid: 8ef38776f9b1c5e4aa49c267ba101e5c, type: 3}
   - {fileID: 4974421058365702803, guid: b27286b5074021e40a9da0b8bb82cf89, type: 3}
@@ -24167,6 +24463,7 @@ GameObject:
   - component: {fileID: 1289804474}
   - component: {fileID: 1289804473}
   - component: {fileID: 1289804472}
+  - component: {fileID: 1289804471}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -24190,6 +24487,20 @@ Transform:
   - {fileID: 1658465363}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1289804471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289804469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &1289804472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25597,6 +25908,7 @@ GameObject:
   - component: {fileID: 1362122036}
   - component: {fileID: 1362122035}
   - component: {fileID: 1362122034}
+  - component: {fileID: 1362122033}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -25620,6 +25932,20 @@ Transform:
   - {fileID: 83004003}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1362122033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362122031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &1362122034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25996,6 +26322,7 @@ GameObject:
   - component: {fileID: 1369087585}
   - component: {fileID: 1369087584}
   - component: {fileID: 1369087583}
+  - component: {fileID: 1369087582}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -26020,6 +26347,20 @@ Transform:
   - {fileID: 573494524}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1369087582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369087580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &1369087583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26438,6 +26779,7 @@ GameObject:
   - component: {fileID: 1398164217}
   - component: {fileID: 1398164216}
   - component: {fileID: 1398164215}
+  - component: {fileID: 1398164214}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -26462,6 +26804,20 @@ Transform:
   - {fileID: 1437532041}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1398164214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398164212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &1398164215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26879,6 +27235,7 @@ GameObject:
   - component: {fileID: 1400928574}
   - component: {fileID: 1400928573}
   - component: {fileID: 1400928572}
+  - component: {fileID: 1400928571}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -26902,6 +27259,20 @@ Transform:
   - {fileID: 647732745}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1400928571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400928569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &1400928572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27210,6 +27581,7 @@ GameObject:
   - component: {fileID: 1420496220}
   - component: {fileID: 1420496219}
   - component: {fileID: 1420496218}
+  - component: {fileID: 1420496217}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -27234,6 +27606,20 @@ Transform:
   - {fileID: 602110661}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1420496217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420496215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &1420496218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27690,7 +28076,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e83227b1165c7ba42b3f202ec7dde9fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activateAfterSeconds: -1
   gems:
   - {fileID: 6480256129027958131, guid: 8ef38776f9b1c5e4aa49c267ba101e5c, type: 3}
   - {fileID: 4974421058365702803, guid: b27286b5074021e40a9da0b8bb82cf89, type: 3}
@@ -27745,6 +28130,7 @@ GameObject:
   - component: {fileID: 1446737708}
   - component: {fileID: 1446737707}
   - component: {fileID: 1446737706}
+  - component: {fileID: 1446737705}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -27769,6 +28155,20 @@ Transform:
   - {fileID: 2102146340}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1446737705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446737703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &1446737706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29190,6 +29590,7 @@ GameObject:
   - component: {fileID: 1522059377}
   - component: {fileID: 1522059376}
   - component: {fileID: 1522059375}
+  - component: {fileID: 1522059374}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -29214,6 +29615,20 @@ Transform:
   - {fileID: 10286237}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1522059374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522059372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &1522059375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30403,6 +30818,7 @@ GameObject:
   - component: {fileID: 1533659066}
   - component: {fileID: 1533659065}
   - component: {fileID: 1533659064}
+  - component: {fileID: 1533659063}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -30426,6 +30842,20 @@ Transform:
   - {fileID: 1470409124}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1533659063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1533659061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &1533659064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31021,6 +31451,7 @@ GameObject:
   - component: {fileID: 1552356299}
   - component: {fileID: 1552356298}
   - component: {fileID: 1552356297}
+  - component: {fileID: 1552356296}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -31044,6 +31475,20 @@ Transform:
   - {fileID: 995633190}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1552356296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552356294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &1552356297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32378,6 +32823,7 @@ GameObject:
   - component: {fileID: 1626004068}
   - component: {fileID: 1626004067}
   - component: {fileID: 1626004066}
+  - component: {fileID: 1626004065}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -32401,6 +32847,20 @@ Transform:
   - {fileID: 1984568570}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1626004065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626004063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &1626004066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33843,7 +34303,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2328e30d9f6d2e4fa7b348fe5b21412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activateAfterSeconds: -1
   gems:
   - {fileID: 4974421058365702803, guid: b27286b5074021e40a9da0b8bb82cf89, type: 3}
   - {fileID: 6480256129027958131, guid: 8ef38776f9b1c5e4aa49c267ba101e5c, type: 3}
@@ -34062,6 +34521,7 @@ GameObject:
   - component: {fileID: 1807627894}
   - component: {fileID: 1807627893}
   - component: {fileID: 1807627892}
+  - component: {fileID: 1807627891}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -34085,6 +34545,20 @@ Transform:
   - {fileID: 300948028}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1807627891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807627889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &1807627892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36708,6 +37182,7 @@ GameObject:
   - component: {fileID: 1931936964}
   - component: {fileID: 1931936963}
   - component: {fileID: 1931936962}
+  - component: {fileID: 1931936961}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -36732,6 +37207,20 @@ Transform:
   - {fileID: 554104338}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1931936961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931936959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &1931936962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40219,6 +40708,7 @@ GameObject:
   - component: {fileID: 2059527684}
   - component: {fileID: 2059527683}
   - component: {fileID: 2059527682}
+  - component: {fileID: 2059527681}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -40243,6 +40733,20 @@ Transform:
   - {fileID: 750197508}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2059527681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059527679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &2059527682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40660,6 +41164,7 @@ GameObject:
   - component: {fileID: 2071699618}
   - component: {fileID: 2071699617}
   - component: {fileID: 2071699616}
+  - component: {fileID: 2071699615}
   m_Layer: 0
   m_Name: Gem_SoftStar(Clone)
   m_TagString: Untagged
@@ -40683,6 +41188,20 @@ Transform:
   - {fileID: 1862320510}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2071699615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071699613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c
 --- !u!114 &2071699616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41295,6 +41814,7 @@ GameObject:
   - component: {fileID: 2116985483}
   - component: {fileID: 2116985482}
   - component: {fileID: 2116985481}
+  - component: {fileID: 2116985480}
   m_Layer: 0
   m_Name: Gem_Diamondo(Clone)
   m_TagString: Untagged
@@ -41319,6 +41839,20 @@ Transform:
   - {fileID: 484531704}
   m_Father: {fileID: 1247715208}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2116985480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116985478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Guid:
+    RawGuidValue: b27286b5074021e40a9da0b8bb82cf89
 --- !u!114 &2116985481
 MonoBehaviour:
   m_ObjectHideFlags: 0
