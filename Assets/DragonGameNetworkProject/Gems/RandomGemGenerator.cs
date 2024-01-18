@@ -6,6 +6,9 @@ using Random = UnityEngine.Random;
 
 public abstract class AbstractGemGenerator : MonoBehaviour
 {
+    [SerializeField] private float activateAfterSeconds = -1.0f;
+    
+
 #if UNITY_EDITOR
     [SerializeField] protected List<GameObject> gems;
     public abstract void GenerateGems();

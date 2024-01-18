@@ -2,20 +2,28 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PT_Poppy_mat
   m_Shader: {fileID: 4800000, guid: 69e2e8c890f00e04e945ccd10e764372, type: 3}
-  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _CUSTOMCOLORSTINTING_ON _CUSTOMWIND_ON _TRANSLUCENCYONOFF_ON
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _CUSTOMWIND_ON
+  - _TRANSLUCENCYONOFF_ON
+  m_InvalidKeywords:
+  - _ALPHAPREMULTIPLY_ON
+  - _CUSTOMCOLORSTINTING_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -63,6 +71,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _BumpScale: 1
     - _CUSTOMCOLORSTINTING: 1
@@ -91,7 +100,7 @@ Material:
     - _TransNormalDistortion: 0.1
     - _TransScattering: 2
     - _TransShadow: 0.9
-    - _Translucency: 1
+    - _Translucency: 0.5
     - _UVSec: 0
     - _WindDensity: 0.2
     - _WindMovement: 0.088
@@ -104,3 +113,4 @@ Material:
     - _FLOWERSCOLOR: {r: 4, g: 0, b: 0, a: 0}
     - _GroundColor: {r: 0.12978768, g: 0.49056602, b: 0.09487361, a: 1}
     - _TopColor: {r: 0.3505436, g: 0.5754717, b: 0.3338822, a: 1}
+  m_BuildTextureStacks: []
