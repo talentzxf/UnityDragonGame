@@ -29,7 +29,7 @@ namespace DragonGameNetworkProject.FightSystem
             if (_launchRocket)
             {
                 Enemy lockedTarget = EnemyManager.Instance.GetCurrentLockedTarget();
-                if (lockedTarget != null)
+                if (lockedTarget != null && lockedTarget.gameObject.activeSelf)
                 {
                     rocketNO = Runner.Spawn(rocketPrefab, transform.position, transform.rotation);
                     rocketNO.gameObject.GetComponent<MissleMove>().Target = lockedTarget.transform;
