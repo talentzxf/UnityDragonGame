@@ -116,8 +116,9 @@ public class FirstPersonCamera : MonoBehaviour
         }
     }
 
+    private float lerpSpeed = 10.0f;
 
-    void SyncTransform()
+    void SyncTransform(float delta)
     {
         if (target == null)
             return;
@@ -139,6 +140,7 @@ public class FirstPersonCamera : MonoBehaviour
         //     xAngle = Math.Clamp(xAngle, -89, 89);
 
         Quaternion rotation = Quaternion.Euler(xAngle, yAngle, 0);
+        
         Vector3 newPosition = targetPosition + (rotation * Vector3.forward).normalized * distance;
 
         float minCameraHeight = 0.5f;
@@ -151,17 +153,17 @@ public class FirstPersonCamera : MonoBehaviour
         
         Debug.DrawLine(targetPosition, newPosition);
 
-        transform.position = newPosition;
+        transform.position = Vector3.Slerp(transform.position, newPosition, lerpSpeed * delta);
         transform.LookAt(targetPosition);
     }
 
     private void Update()
     {
-        SyncTransform();
+        SyncTransform(Time.deltaTime);
     }
 
     private void LateUpdate()
     {
-        SyncTransform();
+        SyncTransform(Time.deltaTime);
     }
 }
