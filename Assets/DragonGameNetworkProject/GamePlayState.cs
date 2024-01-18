@@ -2,6 +2,7 @@ using DragonGameNetworkProject.DragonAvatarMovements;
 using Fusion;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DragonGameNetworkProject
 {
@@ -18,6 +19,8 @@ namespace DragonGameNetworkProject
 
         private static GamePlayState _instance;
         public static GamePlayState Instance => _instance;
+
+        public UnityEvent gameStartEvent = new();
 
         private void Awake()
         {
@@ -80,6 +83,8 @@ namespace DragonGameNetworkProject
 
                                 _audioSource.clip = gameMusic;
                                 _audioSource.Play();
+                                
+                                gameStartEvent?.Invoke();
                                 // How to close the room so nobody else can join????
                             }
 

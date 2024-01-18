@@ -2,12 +2,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System;
+using DragonGameNetworkProject;
+using Fusion;
+using UnityEngine.InputSystem.LowLevel;
 using Random = UnityEngine.Random;
 
-public abstract class AbstractGemGenerator : MonoBehaviour
+public abstract class AbstractGemGenerator : NetworkBehaviour
 {
     [SerializeField] private float activateAfterSeconds = -1.0f;
-    
+    [Networked] private TickTimer activateTimer { set; get; }
+
+    private HashSet<GameObject> gemGOs = new();
+
+    public override void Spawned()
+    {
+        base.Spawned();
+
+        if (Runner.IsSharedModeMasterClient || Runner.IsSinglePlayer)
+        {
+            if (activateAfterSeconds > 0.0f)
+            {
+                var gems = GetComponentsInChildren<GemMovement>();
+                foreach (var gem in gems)
+                {
+                    gemGOs.Add(gem.gameObject);
+                }
+
+                foreach (var gemGO in gemGOs)
+                {
+                    gemGO.SetActive(false);
+                }
+                
+                GamePlayState.Instance.gameStartEvent.AddListener(() =>
+                {
+                    activateTimer = TickTimer.CreateFromSeconds(Runner, activateAfterSeconds); 
+                });
+            }
+        }
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        if (activateTimer.Expired(Runner))
+        {
+            foreach (var gemGO in gemGOs)
+            {
+                gemGO.SetActive(true);
+            }
+        }
+    }
 
 #if UNITY_EDITOR
     [SerializeField] protected List<GameObject> gems;
