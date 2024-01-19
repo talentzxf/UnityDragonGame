@@ -120,7 +120,7 @@ public abstract class AbstractNameTag : NetworkBehaviour
         var no = GetComponent<NetworkObject>();
         if (HideLocalObjectName() && no.InputAuthority == Runner.LocalPlayer)
         {
-            isHide = true;
+            Hide();
             return;
         }
 

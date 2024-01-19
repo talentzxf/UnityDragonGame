@@ -6,7 +6,9 @@ using DragonGameNetworkProject;
 using Fusion;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
+using Image = UnityEngine.UIElements.Image;
 
 class ResultUIInfo: IComparable<ResultUIInfo>
 {
@@ -37,6 +39,9 @@ public class GameResultUI : MonoBehaviour
     private Label resultLabel;
     private Label coinCountLabel;
     private Label winnerLabel;
+
+    [SerializeField] private Texture medalTexture;
+    
     private void Awake()
     {
         uiDoc = GetComponent<UIDocument>();
@@ -85,6 +90,7 @@ public class GameResultUI : MonoBehaviour
             resultUIs.Add(playerInfo);
         }
 
+        var winner = resultUIs.FirstOrDefault();
         var leftBar = uiDoc.rootVisualElement.Q<VisualElement>("Left");
         foreach (var uiInfo in resultUIs)
         {
@@ -93,9 +99,24 @@ public class GameResultUI : MonoBehaviour
             var label = new Label();
             label.text = "Score:" + uiInfo.Points;
             playerEle.Add(label);
+
+            if (uiInfo.PlayerRef == winner.PlayerRef)
+            {
+                var medalImg = new Image();
+                medalImg.image = medalTexture;
+                medalImg.style.scale = new Vector2(1.5f, 1.0f);
+
+                medalImg.style.width = 30f;
+                medalImg.style.height = 60f;
+
+                medalImg.style.position = Position.Absolute;
+                medalImg.style.left = 20f;
+                medalImg.style.top = 20f;
+
+                playerEle.Add(medalImg);
+            }
         }
 
-        var winner = resultUIs.FirstOrDefault();
         if (runner.LocalPlayer == winner.PlayerRef)
         {
             resultLabel.text = "You Win!";

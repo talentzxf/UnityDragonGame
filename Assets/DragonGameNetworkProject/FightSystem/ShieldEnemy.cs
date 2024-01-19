@@ -41,7 +41,8 @@ namespace DragonGameNetworkProject.FightSystem
 
         public override string GetName()
         {
-            return "Shield";
+         //   return "Shield";
+            return "";
         }
         
         protected override void DoDie()

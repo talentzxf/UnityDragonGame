@@ -15,7 +15,10 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             Vertical = Input.GetAxis("Vertical");
             Horizontal = Input.GetAxis("Horizontal");
 
-            SpacePressed = Input.GetKeyDown(KeyCode.Space);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SpacePressed = true;
+            }
             if (SpacePressed)
             {
                 Debug.Log("Pressed space, begin to take off!");
@@ -54,7 +57,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 GameTimer.Instance.onGameStart.AddListener(() =>
                 {
                     _controllable = true;
-                    UIController.Instance.ShowPrompt("Press space to take off");
+                    UIController.Instance.ShowPrompt(); //"Press space to take off");
                 });                
             }
         }

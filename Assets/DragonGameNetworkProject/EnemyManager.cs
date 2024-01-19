@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using DragonGameNetworkProject.DragonAvatarMovements;
 using DragonGameNetworkProject.FightSystem;
 using Fusion;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 namespace DragonGameNetworkProject
@@ -111,7 +109,7 @@ namespace DragonGameNetworkProject
                 }
             }
             
-            if (Input.GetKeyDown(KeyCode.Tab)) // Every time press tab to lock the nearest visible enermy.
+            if (Input.GetKeyDown(KeyCode.Q)) // Every time press tab to lock the nearest visible enermy.
             {
                 _enemies.RemoveAll(item =>
                 {

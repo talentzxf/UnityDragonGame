@@ -13,6 +13,8 @@ namespace DragonGameNetworkProject
         public AudioClip gameMusic;
         public AudioClip resultMusic;
 
+        public float volumn = 0.4f;
+
         private AudioSource _audioSource;
         
         [Networked] public bool gameStarted { set; get; } = false;
@@ -35,11 +37,13 @@ namespace DragonGameNetworkProject
             _audioSource.loop = true;
 
             _audioSource.clip = titleMusic;
+            _audioSource.volume = volumn;
             _audioSource.Play();
             
             GameTimer.Instance.onGameCompleted.AddListener(() =>
             {
                 _audioSource.clip = resultMusic;
+                _audioSource.volume = volumn;
                 _audioSource.Play();
             });
         }
@@ -51,6 +55,7 @@ namespace DragonGameNetworkProject
             base.Spawned();
             _changeDetector = GetChangeDetector(ChangeDetector.Source.SimulationState);
             _audioSource.clip = waitingMusic;
+            _audioSource.volume = volumn;
             _audioSource.Play();
         }
 

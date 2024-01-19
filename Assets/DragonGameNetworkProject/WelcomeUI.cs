@@ -208,7 +208,6 @@ public class WelcomeUI : Behaviour
             GUIStyle customStyle = new GUIStyle(GUI.skin.textField);
             customStyle.fontSize = 32;
             customStyle.normal.background = null;
-            customStyle.normal.scaledBackgrounds = null;
             customStyle.margin = new RectOffset(0, 0, 20, 20);
             
             GUILayout.BeginHorizontal(GUI.skin.window);

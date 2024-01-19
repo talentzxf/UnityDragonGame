@@ -94,12 +94,22 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             ccTransform.rotation = targetRotation;
             
             animator.SetBool(Land, true);
+
+            float lastLandProgress = 0.0f;
             float landProgress = 0.0f;
             // Drop to hit point.
             while (Vector3.Distance(ccTransform.position, hit.point) > distanceThreshold || landProgress < 0.99f)
             {
                 landProgress = animator.GetFloat("LandProgress");
                 ccTransform.position = Vector3.Lerp(targetPosition, hit.point, landProgress);
+
+                if (landProgress <= lastLandProgress) // If no progress, force play.
+                {
+                    Debug.Log("Force play landing animation!");
+                    animator.Play("Landing");
+                }
+
+                lastLandProgress = landProgress;
                 
                 Debug.Log($"Second phase land progress:{landProgress}");
                 yield return null;

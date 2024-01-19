@@ -13,11 +13,11 @@
             <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="PlayerList" style="color: rgb(255, 255, 255); font-size: 18px; height: 416px; -unity-text-outline-width: 1px; -unity-text-outline-color: rgb(51, 51, 51); -unity-font-style: bold;" />
             <ui:VisualElement name="DragonControlUI" style="flex-grow: 1; flex-direction: row-reverse; align-items: center; justify-content: space-between; visibility: visible; display: flex; -unity-text-align: upper-left;">
                 <ui:ProgressBar value="22" title="Speed" name="SpeedBar" style="height: 35px; width: 263px; flex-direction: column-reverse; position: absolute; top: 108px; left: 474px;" />
-                <ui:Label tabindex="-1" text="&#x9;&#x9;Tips&#10;Takeoff&#x9;Spacebar&#10;    Dash&#x9;Spacebar&#10;    Turn&#x9;Hold Mouse Right Button    &#10;       A&#x9;Lock Target&#10;       D&#x9;Shot a Rocket" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DragonControlPrompt" style="font-size: 20px; color: rgb(255, 255, 255); -unity-text-outline-color: rgb(51, 51, 51); -unity-text-outline-width: 1px; -unity-font-style: bold; width: 400px;" />
+                <ui:Label tabindex="-1" text="&#x9;&#x9;Tips&#10;Takeoff&#x9;Spacebar&#10;    Dash&#x9;Spacebar&#10;    Turn&#x9;Hold Mouse Right Button    &#10;       Q&#x9;Lock Target&#10;       E &#x9;Shot a Rocket" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DragonControlPrompt" style="font-size: 20px; color: rgb(255, 255, 255); -unity-text-outline-color: rgb(51, 51, 51); -unity-text-outline-width: 1px; -unity-font-style: bold; width: 400px;" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="Footer" style="flex-grow: 1;">
-            <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Messages" text="zxcv" style="font-size: 16px; color: rgb(255, 213, 150); -unity-text-outline-width: 1px; -unity-text-outline-color: rgba(51, 51, 51, 0);" />
+            <ui:Label tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Messages" text="zxcv" style="font-size: 20px; color: rgb(255, 155, 0); -unity-text-outline-width: 1px; -unity-text-outline-color: rgba(51, 51, 51, 0); -unity-font-style: bold;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

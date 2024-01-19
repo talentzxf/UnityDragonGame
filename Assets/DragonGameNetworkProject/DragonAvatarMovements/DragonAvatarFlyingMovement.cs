@@ -68,7 +68,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 rb.useGravity = false; // Control gravity by myself.
 
                 UIController.Instance.ShowDragonControlUI();
-                UIController.Instance.ShowPrompt("Hold mouse right button to control");
+                UIController.Instance.ShowPrompt(); //"Hold mouse right button to control");
 
                 // Apply an init velocity.
                 BoostSpeed();

@@ -15,7 +15,7 @@ namespace DragonGameNetworkProject.FightSystem
         {
             if (HasInputAuthority)
             {
-                if (Input.GetKeyDown(KeyCode.F))
+                if (Input.GetKeyDown(KeyCode.E))
                 {
                     _launchRocket = true;
                 }

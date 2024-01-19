@@ -32,7 +32,10 @@ namespace DragonGameNetworkProject.DragonMovements
             Horizontal = Input.GetAxis("Horizontal");
             Vertical = Input.GetAxis("Vertical");
 
-            Jump = Input.GetButtonDown("Jump");
+            if (Input.GetButtonDown("Jump"))
+            {
+                Jump = true;
+            }
 
             if (Jump)
             {

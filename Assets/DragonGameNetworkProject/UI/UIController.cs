@@ -65,10 +65,10 @@ public class UIController : MonoBehaviour
         speedBar.title = "Speed:" + curSpeedMag.ToString("F2");
     }
 
-    public void ShowPrompt(string prompt)
+    public void ShowPrompt()
     {
         dragonControlPrompt.visible = true;
-        dragonControlPrompt.text = prompt;
+        // dragonControlPrompt.text = prompt;
     }
 
     public void ShowDragonControlUI()
