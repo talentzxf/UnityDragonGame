@@ -47,6 +47,10 @@ public class Bonus : NetworkBehaviour
 
     public int GetCoinCount(PlayerRef playerRef)
     {
+        if (!PlayerCoins.ContainsKey(playerRef))
+        {
+            PlayerCoins.Add(playerRef, 0);
+        }
         return PlayerCoins.Get(playerRef);
     }
 
