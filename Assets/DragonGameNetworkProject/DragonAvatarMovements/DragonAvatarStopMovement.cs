@@ -20,10 +20,13 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     rb.isKinematic = true;
                 
                 var fpsCamera = Camera.main.GetComponent<FirstPersonCamera>();
-                if(fpsCamera != null)
+                if (fpsCamera != null)
+                {
                     fpsCamera.enabled = false;
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                }
             }
-
         }
     }
 }

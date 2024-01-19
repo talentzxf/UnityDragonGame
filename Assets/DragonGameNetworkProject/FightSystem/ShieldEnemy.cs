@@ -6,7 +6,7 @@ namespace DragonGameNetworkProject.FightSystem
 {
     public class ShieldEnemy: Enemy
     {
-        private float reflectForceMag = 5.0f;
+        private float reflectForceMag = 15.0f;
         private void OnCollisionEnter(Collision other)
         {
             AvoidCollision(other);
@@ -34,7 +34,7 @@ namespace DragonGameNetworkProject.FightSystem
                 // Vector3 impulseForce = forceDir.normalized * reflectForceMag;
                 Debug.Log($"Collided with shield, add a force.{impulseForce}");
 
-                rb.AddForce(impulseForce, ForceMode.Impulse);
+                rb.AddForce(impulseForce * Time.deltaTime, ForceMode.Impulse);
             }
         }
 

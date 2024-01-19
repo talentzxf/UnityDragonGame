@@ -26,7 +26,7 @@ public class FirstPersonCamera : MonoBehaviour
             this.newTarget = playerAnimator.GetBoneTransform(HumanBodyBones.Neck);
         }
 
-        StartCoroutine(InternalLerpToDistance(distanceFactor, totalTime));
+        StartCoroutine(InternalLerpToDistance(distanceFactor, 5.0f * totalTime));
     }
 
     private IEnumerator InternalLerpToDistance(float distanceFactor, float durationSeconds)
