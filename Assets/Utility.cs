@@ -10,7 +10,7 @@ public class Utility
         playerEle.style.borderBottomLeftRadius = playerEle.style.borderBottomRightRadius =
             playerEle.style.borderTopLeftRadius =
                 playerEle.style.borderTopRightRadius = new Length(10, LengthUnit.Pixel);
-        ColorUtility.TryParseHtmlString("#FFC200", out Color bgColor);
+        ColorUtility.TryParseHtmlString("#f7e0ac", out Color bgColor);
         playerEle.style.backgroundColor = bgColor;
         playerEle.style.marginTop = playerEle.style.marginBottom =
             playerEle.style.marginLeft = playerEle.style.marginRight = new Length(20, LengthUnit.Pixel);

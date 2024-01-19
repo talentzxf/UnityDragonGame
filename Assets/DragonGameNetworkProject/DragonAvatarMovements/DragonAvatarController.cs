@@ -68,17 +68,31 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             }
         }
 
+        private GameObject avatarSelectCameraGO;
+        
         public RenderTexture TakeAvatarSnapshot()
         {
             int avatarLayerMask = LayerMask.NameToLayer("AvatarPreview");
             Utility.SetLayerRecursively(avatarGO, avatarLayerMask);
 
             // Create Camera
-            GameObject camera = new GameObject("AvatarCamera_" + _no.InputAuthority.PlayerId);
-            Camera cameraComp = camera.AddComponent<Camera>();
+            avatarSelectCameraGO = new GameObject("AvatarCamera_" + _no.InputAuthority.PlayerId);
+            Camera cameraComp = avatarSelectCameraGO.AddComponent<Camera>();
+
+            GameObject light = new GameObject();
+            Light lightComp = light.AddComponent<Light>();
+            lightComp.type = LightType.Point;
+            lightComp.intensity = 1.5f;
+            lightComp.range = 30.0f;
+            light.transform.parent = avatarSelectCameraGO.transform;
+            light.transform.position = avatarSelectCameraGO.transform.position;
+            light.transform.forward = avatarSelectCameraGO.transform.forward;
+
             var avatarTransform = avatarGO.transform;
-            camera.transform.position = avatarTransform.position + 5.0f * avatarTransform.forward + 2.0f * avatarTransform.up;
-            camera.transform.LookAt(avatarTransform.position + avatarTransform.up);
+            
+            // camera.transform.position = avatarTransform.position + 5.0f * avatarTransform.forward + 2.0f * avatarTransform.up;
+            avatarSelectCameraGO.transform.position = avatarTransform.position + new Vector3(1.23f, 3.18f, 5.06f);
+            avatarSelectCameraGO.transform.LookAt(avatarTransform.position + avatarTransform.up);
             
             cameraComp.fieldOfView = 60f;
             cameraComp.clearFlags = CameraClearFlags.Color;
@@ -92,7 +106,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 useMipMap = false
             };
             cameraComp.targetTexture = rt;
-
+            
             return rt;
         }
 
@@ -144,6 +158,11 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         {
             if (Runner == null || Runner.State != NetworkRunner.States.Running)
                 return;
+
+            if (GamePlayState.Instance.gameStarted)
+            {
+                avatarSelectCameraGO.SetActive(false);
+            }
             
             if (needPrepareUI)
             {
