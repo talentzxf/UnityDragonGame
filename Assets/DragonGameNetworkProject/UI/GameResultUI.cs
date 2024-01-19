@@ -88,7 +88,11 @@ public class GameResultUI : MonoBehaviour
         var leftBar = uiDoc.rootVisualElement.Q<VisualElement>("Left");
         foreach (var uiInfo in resultUIs)
         {
-            Utility.SetupAvatarUI(runner, leftBar, uiInfo.PlayerRef, uiInfo.Texture);
+            var playerEle = Utility.SetupAvatarUI(runner, leftBar, uiInfo.PlayerRef, uiInfo.Texture);
+
+            var label = new Label();
+            label.text = "Score:" + uiInfo.Points;
+            playerEle.Add(label);
         }
 
         var winner = resultUIs.FirstOrDefault();

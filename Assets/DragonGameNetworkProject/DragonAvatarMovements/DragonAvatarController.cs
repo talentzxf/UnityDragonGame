@@ -68,15 +68,13 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             }
         }
 
-        private GameObject avatarSelectCameraGO;
-        
         public RenderTexture TakeAvatarSnapshot()
         {
             int avatarLayerMask = LayerMask.NameToLayer("AvatarPreview");
             Utility.SetLayerRecursively(avatarGO, avatarLayerMask);
 
             // Create Camera
-            avatarSelectCameraGO = new GameObject("AvatarCamera_" + _no.InputAuthority.PlayerId);
+            var avatarSelectCameraGO = new GameObject("AvatarCamera_" + _no.InputAuthority.PlayerId);
             Camera cameraComp = avatarSelectCameraGO.AddComponent<Camera>();
 
             GameObject light = new GameObject();
@@ -106,6 +104,11 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 useMipMap = false
             };
             cameraComp.targetTexture = rt;
+            
+            GamePlayState.Instance.onGamePreparing.AddListener(() =>
+            {
+                avatarSelectCameraGO.SetActive(false);
+            });
             
             return rt;
         }
@@ -158,11 +161,6 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         {
             if (Runner == null || Runner.State != NetworkRunner.States.Running)
                 return;
-
-            if (GamePlayState.Instance.gameStarted)
-            {
-                avatarSelectCameraGO.SetActive(false);
-            }
             
             if (needPrepareUI)
             {
