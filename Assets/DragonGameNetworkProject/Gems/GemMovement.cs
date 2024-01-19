@@ -45,7 +45,7 @@ public class GemMovement : NetworkBehaviour
     
     public override void Spawned()
     {
-        if (Runner.IsSharedModeMasterClient)
+        if (Runner.IsSharedModeMasterClient || Runner.IsSinglePlayer)
         {
             base.Spawned();
 

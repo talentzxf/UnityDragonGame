@@ -67,9 +67,18 @@ public class PrepareUI : MonoBehaviour
     private static PrepareUI _instance;
     public static PrepareUI Instance => _instance;
 
-    private string PlayerUIPath = "Assets/DragonGameNetworkProject/UI/PlayerSelector.uxml";
+    private HashSet<DragonAvatarController> _controllers = new();
 
-    public VisualElement SetupAvatarUI(NetworkRunner runner, PlayerRef playerRef, Texture texture)
+    public HashSet<DragonAvatarController> Controllers => _controllers;
+
+    public NetworkRunner Runner => _runner;
+    
+    public void RegisterDragonAvatarController(DragonAvatarController controller)
+    {
+        _controllers.Add(controller);
+    }
+
+    public VisualElement SetupAvatarUI(NetworkRunner runner,PlayerRef playerRef, Texture texture)
     {
         ActivateUiDocument();
         
@@ -77,34 +86,7 @@ public class PrepareUI : MonoBehaviour
         
         var leftBar = uiDoc.rootVisualElement.Q<VisualElement>("Left");
 
-        VisualElement playerEle = new VisualElement();
-        playerEle.style.borderBottomLeftRadius = playerEle.style.borderBottomRightRadius =
-            playerEle.style.borderTopLeftRadius =
-                playerEle.style.borderTopRightRadius = new Length(10, LengthUnit.Pixel);
-        ColorUtility.TryParseHtmlString("#FFC200", out Color bgColor);
-        playerEle.style.backgroundColor = bgColor;
-        playerEle.style.marginTop = playerEle.style.marginBottom =
-            playerEle.style.marginLeft = playerEle.style.marginRight = new Length(20, LengthUnit.Pixel);
-        playerEle.style.width = new Length(33, LengthUnit.Percent);
-        playerEle.style.height = new Length(40, LengthUnit.Percent);
-
-        Image avatarImg = new Image();
-        avatarImg.image = texture;
-        
-        Label nameLabel = new Label();
-        nameLabel.text = "Player:" + _runner.GetPlayerUserId(playerRef);
-        playerEle.Add(avatarImg);
-        playerEle.Add(nameLabel);
-        leftBar.Add(playerEle);
-        
-        return playerEle;
-    }
-
-    private HashSet<DragonAvatarController> _controllers = new();
-
-    public void RegisterDragonAvatarController(DragonAvatarController controller)
-    {
-        _controllers.Add(controller);
+        return Utility.SetupAvatarUI(runner, leftBar, playerRef, texture);
     }
 
     private void Update()

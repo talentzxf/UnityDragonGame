@@ -45,6 +45,11 @@ public class Bonus : NetworkBehaviour
         spawned = true;
     }
 
+    public int GetCoinCount(PlayerRef playerRef)
+    {
+        return PlayerCoins.Get(playerRef);
+    }
+
     public void Add(PlayerRef player, int value)
     {
         if (!PlayerCoins.ContainsKey(player))

@@ -45,6 +45,11 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     collider.isTrigger = true;
                 }
             }
+
+            GameTimer.Instance.onGameCompleted.AddListener(() =>
+            {
+                SwitchTo<DragonAvatarStopMovement>();
+            });
         }
 
         private ChangeDetector _changeDetector;
@@ -63,7 +68,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             }
         }
 
-        public void SetupPrepareUI()
+        public RenderTexture TakeAvatarSnapshot()
         {
             int avatarLayerMask = LayerMask.NameToLayer("AvatarPreview");
             Utility.SetLayerRecursively(avatarGO, avatarLayerMask);
@@ -87,7 +92,13 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 useMipMap = false
             };
             cameraComp.targetTexture = rt;
-            prepareUIEle = PrepareUI.Instance.SetupAvatarUI(Runner, _no.InputAuthority, rt);
+
+            return rt;
+        }
+
+        public void SetupPrepareUI()
+        {
+            prepareUIEle = PrepareUI.Instance.SetupAvatarUI(Runner, _no.InputAuthority, TakeAvatarSnapshot());
             
             PrepareUI.Instance.RegisterDragonAvatarController(this);
 

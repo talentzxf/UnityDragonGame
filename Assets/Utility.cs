@@ -1,7 +1,34 @@
+using Fusion;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Utility
 {
+    public static VisualElement SetupAvatarUI(NetworkRunner runner, VisualElement containerEle, PlayerRef playerRef, Texture texture)
+    {
+        VisualElement playerEle = new VisualElement();
+        playerEle.style.borderBottomLeftRadius = playerEle.style.borderBottomRightRadius =
+            playerEle.style.borderTopLeftRadius =
+                playerEle.style.borderTopRightRadius = new Length(10, LengthUnit.Pixel);
+        ColorUtility.TryParseHtmlString("#FFC200", out Color bgColor);
+        playerEle.style.backgroundColor = bgColor;
+        playerEle.style.marginTop = playerEle.style.marginBottom =
+            playerEle.style.marginLeft = playerEle.style.marginRight = new Length(20, LengthUnit.Pixel);
+        playerEle.style.width = new Length(33, LengthUnit.Percent);
+        playerEle.style.height = new Length(40, LengthUnit.Percent);
+
+        Image avatarImg = new Image();
+        avatarImg.image = texture;
+        
+        Label nameLabel = new Label();
+        nameLabel.text = "Player:" + runner.GetPlayerUserId(playerRef);
+        playerEle.Add(avatarImg);
+        playerEle.Add(nameLabel);
+        containerEle.Add(playerEle);
+        
+        return playerEle;
+    }
+    
     public static void SetLayerRecursively(GameObject obj, int layerMask)
     {
         obj.layer = layerMask;
