@@ -142,6 +142,9 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
         private void Update()
         {
+            if (Runner == null || Runner.State != NetworkRunner.States.Running)
+                return;
+            
             if (needPrepareUI)
             {
                 SetupPrepareUI();

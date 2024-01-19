@@ -37,7 +37,7 @@ public class Bonus : NetworkBehaviour
             }
             else
             {
-                Add(playerRef, 0);
+                AddPlayerCoinRpc(playerRef, 0);
             }
         });
 

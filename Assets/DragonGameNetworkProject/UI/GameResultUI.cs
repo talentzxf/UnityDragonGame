@@ -40,9 +40,6 @@ public class GameResultUI : MonoBehaviour
     private void Awake()
     {
         uiDoc = GetComponent<UIDocument>();
-        resultLabel = uiDoc.rootVisualElement.Q<Label>("Result");
-        winnerLabel = uiDoc.rootVisualElement.Q<Label>("Winner");
-        coinCountLabel = uiDoc.rootVisualElement.Q<Label>("CoinCount");
     }
 
     // Start is called before the first frame update
@@ -60,6 +57,10 @@ public class GameResultUI : MonoBehaviour
 
                 uiDocument.enabled = false;
             }
+            
+            resultLabel = uiDoc.rootVisualElement.Q<Label>("Result");
+            winnerLabel = uiDoc.rootVisualElement.Q<Label>("Winner");
+            coinCountLabel = uiDoc.rootVisualElement.Q<Label>("CoinCount");
 
             SetupResultUIAvatars(PrepareUI.Instance.Runner);
         });

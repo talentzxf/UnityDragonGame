@@ -1,21 +1,17 @@
 using Fusion;
-using Mono.Cecil.Cil;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace DragonGameNetworkProject.FightSystem
 {
     public class PlayerEnemy : Enemy
     {
         private Animator _animator;
-        private NetworkObject _no;
         private int isHitVar = Animator.StringToHash("Hit");
         private int hitProgressVar = Animator.StringToHash("HitProgress");
         
         private void Awake()
         {
             _animator = GetComponent<Animator>();
-            _no = GetComponentInParent<NetworkObject>();
         }
         
         public override string GetName()
@@ -28,8 +24,17 @@ namespace DragonGameNetworkProject.FightSystem
             if (HasStateAuthority)
             {
                 _animator.SetBool(isHitVar, true);
-                Bonus.Instance.AddPlayerCoinRpc(_no.StateAuthority, -3);
-                Bonus.Instance.AddPlayerCoinRpc(doneBy, 1);
+
+                int deductValue = -3;
+
+                int currentCoinCount = Bonus.Instance.GetCoinCount(_no.StateAuthority);
+                if (currentCoinCount + deductValue > 0.0f)
+                {
+                    Bonus.Instance.AddPlayerCoinRpc(doneBy, 1);
+                }
+                
+                Bonus.Instance.AddPlayerCoinRpc(_no.StateAuthority, deductValue);
+
             }
         }
 
@@ -43,7 +48,7 @@ namespace DragonGameNetworkProject.FightSystem
             {
                 float hitProgress = _animator.GetFloat(hitProgressVar);
 
-                if (hitProgress > 0.0f)
+                if (hitProgress > 0.9f)
                 {
                     _animator.SetBool(isHitVar, false);
                 }

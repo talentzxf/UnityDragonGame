@@ -1,16 +1,10 @@
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
 using DragonGameNetworkProject;
 using DragonGameNetworkProject.DragonAvatarMovements;
-using ExitGames.Client.Photon.StructWrapping;
 using Fusion;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
-using ColorUtility = UnityEngine.ColorUtility;
 
 class ColorPicker : VisualElement
 {

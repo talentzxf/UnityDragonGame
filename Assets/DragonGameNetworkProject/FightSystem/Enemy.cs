@@ -47,22 +47,19 @@ public abstract class Enemy : NetworkBehaviour
             _no = GetComponentInParent<NetworkObject>();
     }
 
-    private void Awake()
-    {
-        _nameTag = GetComponent<AbstractNameTag>();
-        if (_nameTag == null)
-            _nameTag = GetComponentInParent<AbstractNameTag>();
-
-        _indicatorGO = Instantiate(indicatorPrefab, transform);
-        _indicatorGO.SetActive(false);
-    }
-
     private void Start()
     {
         if (this is PlayerEnemy && HasInputAuthority) // Don't lock myself.
         {
             return;
         }
+        
+        _nameTag = GetComponent<AbstractNameTag>();
+        if (_nameTag == null)
+            _nameTag = GetComponentInParent<AbstractNameTag>();
+
+        _indicatorGO = Instantiate(indicatorPrefab, transform);
+        _indicatorGO.SetActive(false);
         
         EnemyManager.Instance.RegisterEnemy(this);
 
