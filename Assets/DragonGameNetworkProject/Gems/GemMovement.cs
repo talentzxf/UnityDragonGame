@@ -109,7 +109,7 @@ public class GemMovement : NetworkBehaviour
 
                 string msg = "Player:" + Runner.GetPlayerUserId(no.InputAuthority) + " Get " + value + " points!";
                 UIController.Instance.ShowGameMsg(msg);
-                Bonus.Instance.Add(no.StateAuthority, value);
+                Bonus.Instance.AddPlayerCoinRpc(no.StateAuthority, value);
 
                 status = GemStatus.Disappeared;
                 

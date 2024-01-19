@@ -17,16 +17,22 @@ public abstract class Enemy : NetworkBehaviour
     public abstract string GetName();
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void DoDamageRpc(float damage)
+    public void DoDamageRpc(PlayerRef doneBy, float damage)
     {
         if (!IsInvincible())
         {
             hp -= damage;
+            DoDamage(doneBy);
             if (hp < 0)
             {
                 isAlive = false;
             }
         }
+    }
+
+    protected virtual void DoDamage(PlayerRef doneBy)
+    {
+        
     }
 
     protected AbstractNameTag _nameTag;

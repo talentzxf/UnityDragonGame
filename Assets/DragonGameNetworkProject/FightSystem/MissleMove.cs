@@ -26,10 +26,13 @@ namespace DragonGameNetworkProject.FightSystem
 
         private Collider _collider;
 
+        private NetworkObject _no;
         public override void Spawned()
         {
             base.Spawned();
             rb = GetComponent<Rigidbody>();
+
+            _no = GetComponent<NetworkObject>();
 
             equipped = false;
             _collider = GetComponent<Collider>();
@@ -69,7 +72,9 @@ namespace DragonGameNetworkProject.FightSystem
                         exploded = true;
 
                         if (enemy)
-                            enemy.DoDamageRpc(1000.0f);
+                        {
+                            enemy.DoDamageRpc(_no.StateAuthority, 1000.0f);
+                        }
                     }
                 }
             }

@@ -54,16 +54,24 @@ public class Bonus : NetworkBehaviour
         return PlayerCoins.Get(playerRef);
     }
 
-    public void Add(PlayerRef player, int value)
+    
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void AddPlayerCoinRpc(PlayerRef player, int value)
     {
         if (!PlayerCoins.ContainsKey(player))
         {
-            PlayerCoins.Add(player, value);
+            if(value > 0)
+                PlayerCoins.Add(player, value);
+            if(value <= 0)
+                PlayerCoins.Add(player, 0);
         }
         else
         {
             int currentValue = PlayerCoins.Get(player);
-            PlayerCoins.Set(player, currentValue + value);
+            if (currentValue + value > 0)
+                PlayerCoins.Set(player, currentValue + value);
+            else
+                PlayerCoins.Set(player, 0);
         }
     }
 
