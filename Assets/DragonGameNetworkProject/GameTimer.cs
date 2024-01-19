@@ -76,7 +76,7 @@ namespace DragonGameNetworkProject
             {
                 if (!gameTimer.Expired(Runner))
                 {
-                    UIController.Instance.SetTimerText($"Remaining game time:{gameTimer.RemainingTime(Runner)?.ToString("F2")} seconds");
+                    UIController.Instance.SetTimerText($"Remaining Time:{gameTimer.RemainingTime(Runner)?.ToString("F2")} seconds");
                 }
                 else
                 {

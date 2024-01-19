@@ -413,7 +413,7 @@ namespace Fusion {
 
 #region Assets/Photon/Fusion/Runtime/FusionCoroutine.cs
 
-﻿
+ 
 namespace Fusion {
   using UnityEngine;
   using System;

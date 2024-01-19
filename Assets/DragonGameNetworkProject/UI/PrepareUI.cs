@@ -8,11 +8,18 @@ using UnityEngine.UIElements;
 
 class ColorPicker : VisualElement
 {
-    private Color[] preDefinedColors =
+    private string[] preDefinedColorStrins = new[]
     {
-        Color.black, Color.blue, Color.cyan, Color.gray, Color.green, Color.magenta, Color.red, Color.white,
-        Color.yellow
+        "#3953a4", "#6fccdd", "#807f80", "#6abd45", "#b9529f", "#ed2024", "#fde80a", "#000000","#ffffff"
     };
+    
+    // private Color[] preDefinedColors =
+    // {
+    //     // Color.black, Color.blue, Color.cyan, Color.gray, Color.green, Color.magenta, Color.red, Color.white,
+    //     // Color.yellow
+    //     
+    //     new Color()
+    // };
     
     public ColorPicker(string label, UnityEvent<Color> onColorClicked)
     {
@@ -27,8 +34,10 @@ class ColorPicker : VisualElement
         };
         Add(labelEle);
 
-        foreach (var color in preDefinedColors)
+        foreach (var colorStr in preDefinedColorStrins)
         {
+            ColorUtility.TryParseHtmlString(colorStr, out Color color);
+            
             var button = new Button
             {
                 style =
