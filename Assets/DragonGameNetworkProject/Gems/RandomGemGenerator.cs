@@ -17,23 +17,23 @@ public abstract class AbstractGemGenerator : NetworkBehaviour
     public override void Spawned()
     {
         base.Spawned();
+        
+        var gems = GetComponentsInChildren<GemMovement>();
+        foreach (var gem in gems)
+        {
+            gemGOs.Add(gem.gameObject);
+        }
+
+        foreach (var gemGO in gemGOs)
+        {
+            gemGO.SetActive(false);
+        }
 
         if (Runner.IsSharedModeMasterClient || Runner.IsSinglePlayer)
         {
             if (activateAfterSeconds > 0.0f)
             {
-                var gems = GetComponentsInChildren<GemMovement>();
-                foreach (var gem in gems)
-                {
-                    gemGOs.Add(gem.gameObject);
-                }
-
-                foreach (var gemGO in gemGOs)
-                {
-                    gemGO.SetActive(false);
-                }
-                
-                GamePlayState.Instance.gameStartEvent.AddListener(() =>
+                GameTimer.Instance.onGameStart.AddListener(() =>
                 {
                     activateTimer = TickTimer.CreateFromSeconds(Runner, activateAfterSeconds); 
                 });
@@ -41,17 +41,20 @@ public abstract class AbstractGemGenerator : NetworkBehaviour
         }
     }
 
-    public override void FixedUpdateNetwork()
+    public void Update()
     {
+        if (Runner == null || Runner.State != NetworkRunner.States.Running)
+            return;
+        
         if (activateTimer.Expired(Runner))
         {
             foreach (var gemGO in gemGOs)
             {
                 gemGO.SetActive(true);
             }
-        }
+        }        
     }
-
+    
 #if UNITY_EDITOR
     [SerializeField] protected List<GameObject> gems;
     public abstract void GenerateGems();

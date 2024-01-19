@@ -20,8 +20,6 @@ namespace DragonGameNetworkProject
         private static GamePlayState _instance;
         public static GamePlayState Instance => _instance;
 
-        public UnityEvent gameStartEvent = new();
-
         private void Awake()
         {
             if (_instance != null && _instance != this)
@@ -83,8 +81,6 @@ namespace DragonGameNetworkProject
 
                                 _audioSource.clip = gameMusic;
                                 _audioSource.Play();
-                                
-                                gameStartEvent?.Invoke();
                                 // How to close the room so nobody else can join????
                             }
 

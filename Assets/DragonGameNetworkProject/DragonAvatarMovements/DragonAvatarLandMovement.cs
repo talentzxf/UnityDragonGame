@@ -29,10 +29,11 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
         public override void OnEnterMovement()
         {
-            rb.isKinematic = true; // Disable physics system.
-            cc.enabled = true; // Re-enable character controller.
             if (HasStateAuthority)
             {
+                rb.isKinematic = true; // Disable physics system.
+                cc.enabled = true; // Re-enable character controller.
+                
                 UIController.Instance.HideDragonControlUI();
                 StartCoroutine(DoLand(Runner.DeltaTime));
             }
