@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DragonGameNetworkProject;
 using Fusion;
 using Unity.VisualScripting;
@@ -33,9 +34,15 @@ class ResultUIInfo: IComparable<ResultUIInfo>
 public class GameResultUI : MonoBehaviour
 {
     private UIDocument uiDoc;
+    private Label resultLabel;
+    private Label coinCountLabel;
+    private Label winnerLabel;
     private void Awake()
     {
         uiDoc = GetComponent<UIDocument>();
+        resultLabel = uiDoc.rootVisualElement.Q<Label>("Result");
+        winnerLabel = uiDoc.rootVisualElement.Q<Label>("Winner");
+        coinCountLabel = uiDoc.rootVisualElement.Q<Label>("CoinCount");
     }
 
     // Start is called before the first frame update
@@ -61,14 +68,20 @@ public class GameResultUI : MonoBehaviour
     void SetupResultUIAvatars(NetworkRunner runner)
     {
         var resultUIs = new SortedSet<ResultUIInfo>();
+        ResultUIInfo localPlayerInfo = null;
         foreach (var controller in PrepareUI.Instance.Controllers)
         {
             var avatarTexture = controller.TakeAvatarSnapshot();
             var playerRef = controller.gameObject.GetComponent<NetworkObject>().StateAuthority;
-
             var points = Bonus.Instance.GetCoinCount(playerRef);
 
-            resultUIs.Add(new ResultUIInfo(avatarTexture, playerRef, points));
+            var playerInfo = new ResultUIInfo(avatarTexture, playerRef, points);
+            if (playerRef == runner.LocalPlayer)
+            {
+                localPlayerInfo = playerInfo;
+            }
+
+            resultUIs.Add(playerInfo);
         }
 
         var leftBar = uiDoc.rootVisualElement.Q<VisualElement>("Left");
@@ -76,11 +89,18 @@ public class GameResultUI : MonoBehaviour
         {
             Utility.SetupAvatarUI(runner, leftBar, uiInfo.PlayerRef, uiInfo.Texture);
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        var winner = resultUIs.FirstOrDefault();
+        if (runner.LocalPlayer == winner.PlayerRef)
+        {
+            resultLabel.text = "You Win!";
+        }
+        else
+        {
+            resultLabel.text = "You Lose!";
+        }
+
+        winnerLabel.text = $"Winner is: {runner.GetPlayerUserId(winner.PlayerRef)}";
+        coinCountLabel.text = $"You got: {localPlayerInfo?.Points??0} points!";
     }
 }
