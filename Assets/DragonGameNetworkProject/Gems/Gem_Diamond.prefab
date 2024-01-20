@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 367437278198801896}
   - component: {fileID: 8801379963799567197}
   - component: {fileID: 5577213366935923619}
+  - component: {fileID: 3075319229552720813}
   m_Layer: 0
   m_Name: 5 Side Diamond
   m_TagString: Untagged
@@ -83,6 +84,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3075319229552720813
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2869978256177248921}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.3966622, y: 2.2793615, z: 2.0999994}
+  m_Center: {x: -0.022504508, y: 0.12031917, z: -0.19482037}
 --- !u!1 &3456549927793109651
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,7 +120,6 @@ GameObject:
   - component: {fileID: 2963568037165623481}
   - component: {fileID: 2160675592062532115}
   - component: {fileID: 9158411604861663534}
-  - component: {fileID: 3531815785339886959}
   m_Layer: 0
   m_Name: Gem_Diamond
   m_TagString: Untagged
@@ -414,17 +435,3 @@ MonoBehaviour:
   MinPitch: 4
   MaxPitch: 4.5
   SfxAudioMixerGroup: {fileID: 0}
---- !u!114 &3531815785339886959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3456549927793109651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: a2750735293f8b946816457c7af42b24
