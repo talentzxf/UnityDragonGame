@@ -24,20 +24,20 @@ public abstract class AbstractGemGenerator : NetworkBehaviour
             gemGOs.Add(gem.gameObject);
         }
 
-        foreach (var gemGO in gemGOs)
-        {
-            gemGO.SetActive(false);
-        }
-
         if (Runner.IsSharedModeMasterClient || Runner.IsSinglePlayer)
         {
             if (activateAfterSeconds > 0.0f)
             {
+                foreach (var gemGO in gemGOs)
+                {
+                    gemGO.SetActive(false);
+                }
+                
                 GameTimer.Instance.onGameStart.AddListener(() =>
                 {
                     activateTimer = TickTimer.CreateFromSeconds(Runner, activateAfterSeconds); 
                 });
-            }
+            }   
         }
     }
 
