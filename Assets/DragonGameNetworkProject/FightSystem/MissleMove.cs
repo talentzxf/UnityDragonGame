@@ -14,7 +14,11 @@ namespace DragonGameNetworkProject.FightSystem
         [SerializeField] private float initSpeed = 10.0f;
 
         [SerializeField] private float rotationSpeed = 100.0f;
-        [SerializeField] private bool equipped = false;
+
+        [SerializeField] private AudioClip launchAC;
+        [SerializeField] private AudioClip rocketExplode;
+
+        private AudioSource _audioSource;
 
         public Transform Target
         {
@@ -27,15 +31,24 @@ namespace DragonGameNetworkProject.FightSystem
         private Collider _collider;
 
         private NetworkObject _no;
+
+        private GameObject audioGameObject;
         public override void Spawned()
         {
             base.Spawned();
             rb = GetComponent<Rigidbody>();
 
             _no = GetComponent<NetworkObject>();
-
-            equipped = false;
+            
             _collider = GetComponent<Collider>();
+
+            audioGameObject = new GameObject("AudioGameObject");
+            audioGameObject.transform.position = transform.position;
+            
+            _audioSource = audioGameObject.AddComponent<AudioSource>();
+            _audioSource.clip = launchAC;
+            _audioSource.loop = false;
+            _audioSource.Play();
 
             // _collider.isTrigger = true;
         }
@@ -117,6 +130,8 @@ namespace DragonGameNetworkProject.FightSystem
         }
 #endif
 
+        private bool explodeACPlayed = false;
+        
         private void Update()
         {
             if (Runner == null || Runner.State != NetworkRunner.States.Running)
@@ -132,6 +147,14 @@ namespace DragonGameNetworkProject.FightSystem
                 var explosionPrefab = Instantiate(_explodePrefab);
                 explosionPrefab.transform.position = explosionPoint;
                 explosionPrefab.transform.rotation = Quaternion.LookRotation(explosionNormal);
+
+                if (!explodeACPlayed)
+                {
+                    audioGameObject.transform.position = transform.position;
+                    _audioSource.clip = rocketExplode;
+                    _audioSource.Play();
+                    explodeACPlayed = true;
+                }
                 
                 gameObject.SetActive(false);
                 // StartCoroutine(DespawnMySelf());

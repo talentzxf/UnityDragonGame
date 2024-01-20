@@ -5,6 +5,10 @@ namespace DragonGameNetworkProject.FightSystem
 {
     public class PlayerEnemy : Enemy
     {
+        [SerializeField] private AudioClip hitAC;
+
+        private AudioSource _ac;
+        
         private Animator _animator;
         private int isHitVar = Animator.StringToHash("Hit");
         private int hitProgressVar = Animator.StringToHash("HitProgress");
@@ -12,6 +16,8 @@ namespace DragonGameNetworkProject.FightSystem
         private void Awake()
         {
             _animator = GetComponent<Animator>();
+            _ac = gameObject.AddComponent<AudioSource>();
+            _ac.loop = false;
         }
         
         public override string GetName()
@@ -34,8 +40,10 @@ namespace DragonGameNetworkProject.FightSystem
                 }
                 
                 Bonus.Instance.AddPlayerCoinRpc(_no.StateAuthority, deductValue);
-
             }
+
+            _ac.clip = hitAC;
+            _ac.Play();
         }
 
         protected override void DoDie()

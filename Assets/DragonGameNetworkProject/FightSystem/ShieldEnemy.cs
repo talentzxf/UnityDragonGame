@@ -6,6 +6,18 @@ namespace DragonGameNetworkProject.FightSystem
 {
     public class ShieldEnemy: Enemy
     {
+        [SerializeField] private AudioClip breakAC;
+
+        private GameObject audioGameObject;
+        private AudioSource _ac;
+        private void Awake()
+        {
+            audioGameObject = new GameObject("AudioGameObject");
+            _ac = audioGameObject.AddComponent<AudioSource>();
+            _ac.clip = breakAC;
+            _ac.loop = false;
+        }
+
         private float reflectForceMag = 15.0f;
         private void OnCollisionEnter(Collision other)
         {
@@ -47,8 +59,12 @@ namespace DragonGameNetworkProject.FightSystem
         
         protected override void DoDie()
         {
-            gameObject.SetActive(false);
             _nameTag.Hide();
+
+            audioGameObject.transform.position = gameObject.transform.position;
+            _ac.Play();
+            
+            gameObject.SetActive(false);
         }
     }
 }
