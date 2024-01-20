@@ -21,7 +21,12 @@ public abstract class AbstractGemGenerator : NetworkBehaviour
         var gems = GetComponentsInChildren<GemMovement>();
         foreach (var gem in gems)
         {
-            gemGOs.Add(gem.gameObject);
+            var targetGemTransform = gem.transform;
+            while (targetGemTransform.parent != transform)
+            {
+                targetGemTransform = targetGemTransform.transform.parent;
+            }
+            gemGOs.Add(targetGemTransform.gameObject);
         }
 
         if (Runner.IsSharedModeMasterClient || Runner.IsSinglePlayer)
