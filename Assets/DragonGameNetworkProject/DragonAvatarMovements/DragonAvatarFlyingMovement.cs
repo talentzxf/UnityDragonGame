@@ -204,11 +204,9 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     Vector2 mousePos;
                     RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform,
                         inputMousePosition, canvas.worldCamera, out mousePos);
-
-                    Vector3 dragonPosition = ccTransform.position;
-
                     Ray mousePointRay = CamComp.ScreenPointToRay(inputMousePosition);
 
+                    Vector3 dragonPosition = fpsCamera.target.position;
                     float cameraToProjectPlaneDistance =
                         (dragonPosition - Cam.transform.position).magnitude + projectDistance;
 
