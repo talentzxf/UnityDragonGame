@@ -101,11 +101,10 @@ namespace DragonGameNetworkProject
                 if (!gameTimer.Expired(Runner))
                 {
                     UIController.Instance.SetTimerText($"Remaining Time:{gameTimer.RemainingTime(Runner)?.ToString("F2")} seconds");
+                    BeepIfLessThen(3, gameTimer.RemainingTime(Runner)??Mathf.Infinity);
                 }
                 else
                 {
-                    BeepIfLessThen(3, gameTimer.RemainingTime(Runner)??Mathf.Infinity);
-                    
                     if (!gameCompletEventTriggered)
                     {
                         onGameCompleted?.Invoke();
