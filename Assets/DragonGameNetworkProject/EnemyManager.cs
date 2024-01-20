@@ -69,6 +69,10 @@ namespace DragonGameNetworkProject
 
         private const float MaxLockDistance = 100.0f;
 
+        [SerializeField] private AudioClip lockAC;
+
+        private AudioSource _audioSource;
+
         public static EnemyManager Instance => _instance;
 
         private CharacterMovementController _localPlayer;
@@ -140,6 +144,9 @@ namespace DragonGameNetworkProject
                     {
                         if (_lockedEnemy == null && candidateEnemy.Distance > currentDistance)
                         {
+                            _audioSource.clip = lockAC;
+                            _audioSource.Play();
+                            
                             candidateEnemy.Enemy.Lock(); // Invoke it's lock method to lock it!
                             _lockedEnemy = candidateEnemy; // Lock the nearest enermy.
                             break;
@@ -176,6 +183,9 @@ namespace DragonGameNetworkProject
             }
 
             _instance = this;
+
+            _audioSource = gameObject.AddComponent<AudioSource>();
+            _audioSource.loop = false;
         }
     }
 }
