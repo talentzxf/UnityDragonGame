@@ -98,7 +98,6 @@ GameObject:
   - component: {fileID: 8584099173381221150}
   - component: {fileID: 1615170809551779931}
   - component: {fileID: 4863179310684859643}
-  - component: {fileID: 6602710644212337238}
   m_Layer: 0
   m_Name: Gem_SoftStar 1
   m_TagString: Untagged
@@ -169,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34bce3bd5040ad2429987738d47bd10d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xDistance: 5
+  xDistance: 0
   rotationDuration: 5
   value: 5
   materialList:
@@ -414,17 +413,3 @@ MonoBehaviour:
   MinPitch: 4
   MaxPitch: 4.5
   SfxAudioMixerGroup: {fileID: 0}
---- !u!114 &6602710644212337238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8109942011184713974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1541381998, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Guid:
-    RawGuidValue: 8ef38776f9b1c5e4aa49c267ba101e5c

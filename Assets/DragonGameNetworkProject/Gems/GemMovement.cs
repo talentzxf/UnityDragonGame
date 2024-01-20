@@ -80,13 +80,13 @@ public class GemMovement : NetworkBehaviour
 
     private void StartMove()
     {
-        if (Runner.IsSharedModeMasterClient)
+        if (Runner.IsSharedModeMasterClient || Runner.IsSinglePlayer)
         {
             transform.position = startPosition;
             
             transform.DOMove(targetPosition, 2).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
 
-            transform.DOLocalRotate(new Vector3(0f, 0.0f, 360.0f), rotationDuration, RotateMode.LocalAxisAdd)
+            transform.DOLocalRotate(new Vector3(0f, 360.0f, 0.0f), rotationDuration, RotateMode.LocalAxisAdd)
                 .SetLoops(-1, LoopType.Restart)
                 .SetEase(Ease.Linear);
         }
