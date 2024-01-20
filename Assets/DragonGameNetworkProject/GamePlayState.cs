@@ -12,11 +12,11 @@ namespace DragonGameNetworkProject
         public AudioClip waitingMusic;
         public AudioClip gameMusic;
         public AudioClip resultMusic;
-
+        
         public float volumn = 0.4f;
 
         private AudioSource _audioSource;
-        
+
         [Networked] public bool gameStarted { set; get; } = false;
 
         private static GamePlayState _instance;
@@ -39,7 +39,7 @@ namespace DragonGameNetworkProject
             _audioSource.clip = titleMusic;
             _audioSource.volume = volumn;
             _audioSource.Play();
-            
+
             GameTimer.Instance.onGameCompleted.AddListener(() =>
             {
                 _audioSource.clip = resultMusic;

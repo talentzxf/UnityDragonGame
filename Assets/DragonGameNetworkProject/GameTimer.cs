@@ -11,8 +11,10 @@ namespace DragonGameNetworkProject
         public UnityEvent onGameStart;
         public UnityEvent onGameCompleted;
 
+        [SerializeField] private AudioClip coutdownBeep;
         [SerializeField] private float countDownTime = 5.0f;
         [SerializeField] private float goTime = 1.0f;
+        private AudioSource _countDownAC;
         
         private static GameTimer _instance;
         public static GameTimer Instance => _instance;
@@ -28,6 +30,10 @@ namespace DragonGameNetworkProject
             }
 
             _instance = this;
+            
+            _countDownAC = gameObject.AddComponent<AudioSource>();
+            _countDownAC.loop = false;
+            _countDownAC.clip = coutdownBeep;
         }
         
         [Networked] private TickTimer waitingTimer { get; set; }
@@ -44,6 +50,21 @@ namespace DragonGameNetworkProject
 
         private bool gameStartEventTriggered = false;
         private bool gameCompletEventTriggered = false;
+
+        private void BeepIfLessThen(int upperBound, float remainTime)
+        {
+            int integralPart = Mathf.CeilToInt(remainTime);
+            if (integralPart <= upperBound)
+            {
+                float fractalPart = remainTime - integralPart;
+
+                if (fractalPart <= Mathf.Epsilon)
+                {
+                    if(!_countDownAC.isPlaying)
+                        _countDownAC.Play();
+                }
+            }
+        }
         
         private void Update()
         {
@@ -52,13 +73,16 @@ namespace DragonGameNetworkProject
             
             if (!waitingTimer.IsRunning)
                 return;
-            
-            if (waitingTimer.RemainingTime(Runner) >= 1.0f)
+
+            float remainTime = waitingTimer.RemainingTime(Runner) ?? Mathf.Infinity;
+            if (remainTime >= 1.0f)
             {
                 UIController.Instance.SetTimerText($"Game will start in { (waitingTimer.RemainingTime(Runner) - 1.0f)?.ToString("F2")} seconds");
+
+                BeepIfLessThen(3, remainTime);
             }
 
-            if (waitingTimer.RemainingTime(Runner) <= 1.0f && !waitingTimer.Expired(Runner))
+            if (remainTime <= 1.0f && !waitingTimer.Expired(Runner))
             {
                 UIController.Instance.SetTimerText("Go!!");
 
@@ -80,6 +104,8 @@ namespace DragonGameNetworkProject
                 }
                 else
                 {
+                    BeepIfLessThen(3, gameTimer.RemainingTime(Runner)??Mathf.Infinity);
+                    
                     if (!gameCompletEventTriggered)
                     {
                         onGameCompleted?.Invoke();

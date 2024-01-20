@@ -21,6 +21,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
     {
         [SerializeField] private float MaxSpeed = 30f; //max speed for basic movement
         [SerializeField] private float BoostSpeedAcc = 5.0f;
+        [SerializeField] private AudioClip flapAC;
 
         private int isFlying = Animator.StringToHash("IsFlying");
         private int isDashing = Animator.StringToHash("IsDashing");
@@ -42,6 +43,8 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
         private float camSwitchRotationSpeed = 5.0f;
 
+        private AudioSource _avatarAudioSource;
+
         public override void Spawned()
         {
             base.Spawned();
@@ -57,6 +60,8 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 var canvasGO = GameObject.Find("Canvas");
                 canvas = canvasGO.GetComponent<Canvas>();
                 canvasRect = canvasGO.GetComponent<RectTransform>();
+
+                _avatarAudioSource = cc.gameObject.GetComponent<AudioSource>();
             }
         }
 
@@ -171,7 +176,11 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     {
                         BoostSpeed();
 
-                        animator.SetBool(isDashing, true);                        
+                        animator.SetBool(isDashing, true);
+
+                        _avatarAudioSource.loop = false;
+                        _avatarAudioSource.clip = flapAC;
+                        _avatarAudioSource.Play();
                     }
                 }
                 else
