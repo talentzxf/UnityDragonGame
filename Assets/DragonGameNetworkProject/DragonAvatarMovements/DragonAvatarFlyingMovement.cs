@@ -25,6 +25,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         private int isFlying = Animator.StringToHash("IsFlying");
         private int isDashing = Animator.StringToHash("IsDashing");
         private int flyingSpeed = Animator.StringToHash("FlyingSpeed");
+        private int dashProgress = Animator.StringToHash("DashProgress");
 
         private float projectDistance = 10f;
         private Rigidbody rb;
@@ -162,13 +163,20 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
                 if (_inputHandler.Jump)
                 {
-                    BoostSpeed();
+                    if (animator.GetFloat(dashProgress) > 0.0f)
+                    {
+                        UIController.Instance.ShowGameMsg("Can't dash while dashing");
+                    }
+                    else
+                    {
+                        BoostSpeed();
 
-                    animator.SetBool(isDashing, true);
+                        animator.SetBool(isDashing, true);                        
+                    }
                 }
                 else
                 {
-                    if (animator.GetFloat("DashProgress") > 0.0f)
+                    if (animator.GetFloat(dashProgress) > 0.0f)
                     {
                         animator.SetBool(isDashing, false);
                     }
