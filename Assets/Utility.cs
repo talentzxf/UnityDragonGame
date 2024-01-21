@@ -4,6 +4,22 @@ using UnityEngine.UIElements;
 
 public class Utility
 {
+    public static Image CreateImageInAvatarView(Texture texture)
+    {
+        var img = new Image();
+        img.image = texture;
+        img.style.scale = new Vector2(1.5f, 1.0f);
+
+        img.style.width = 30f;
+        img.style.height = 60f;
+
+        img.style.position = Position.Absolute;
+        img.style.left = 20f;
+        img.style.top = 20f;
+
+        return img;
+    }
+    
     public static VisualElement SetupAvatarUI(NetworkRunner runner, VisualElement containerEle, PlayerRef playerRef, Texture texture)
     {
         VisualElement playerEle = new VisualElement();

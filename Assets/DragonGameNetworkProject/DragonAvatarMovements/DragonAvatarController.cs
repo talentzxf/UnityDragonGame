@@ -9,11 +9,15 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 {
     public class DragonAvatarController : CharacterMovementController
     {
+        [SerializeField] public Texture readyImg;
+        
         [Networked] public bool isReady { set; get; }
         
         [Networked] private Color bodyColor { set; get; }
         [Networked] private Color hairColor { set; get; }
         [Networked] private Color bellyColor { set; get; }
+        
+        [Networked] private bool isMasterController { set; get; }
 
         public static DragonAvatarController LocalController = null;
 
@@ -49,6 +53,11 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             GameTimer.Instance.onGameCompleted.AddListener(() =>
             {
                 SwitchTo<DragonAvatarStopMovement>();
+            });
+            
+            NetworkEventsHandler.SelectedAsMasterClient.AddListener(() =>
+            {
+                isMasterController = true;
             });
         }
 
@@ -113,11 +122,15 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             return rt;
         }
 
+        private Image readyImage;
         public void SetupPrepareUI()
         {
             prepareUIEle = PrepareUI.Instance.SetupAvatarUI(Runner, _no.InputAuthority, TakeAvatarSnapshot());
             
             PrepareUI.Instance.RegisterDragonAvatarController(this);
+
+            readyImage = Utility.CreateImageInAvatarView(readyImg);
+            prepareUIEle.Add(readyImage);
 
             if (HasInputAuthority)
             {
@@ -170,7 +183,20 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 smr.materials[4].color = bellyColor;
                 needPrepareUI = false;
             }
-            
+
+            if (readyImage != null)
+            {
+                if (isReady || isMasterController)
+                {
+                    readyImage.visible = true;
+                }
+                else
+                {
+                    readyImage.visible = false;
+                }
+            }
+
+
             foreach (var change in _changeDetector.DetectChanges(this))
             {
                 switch (change)

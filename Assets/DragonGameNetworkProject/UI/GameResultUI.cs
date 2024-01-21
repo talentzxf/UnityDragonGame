@@ -102,17 +102,7 @@ public class GameResultUI : MonoBehaviour
 
             if (uiInfo.PlayerRef == winner.PlayerRef)
             {
-                var medalImg = new Image();
-                medalImg.image = medalTexture;
-                medalImg.style.scale = new Vector2(1.5f, 1.0f);
-
-                medalImg.style.width = 30f;
-                medalImg.style.height = 60f;
-
-                medalImg.style.position = Position.Absolute;
-                medalImg.style.left = 20f;
-                medalImg.style.top = 20f;
-
+                var medalImg = Utility.CreateImageInAvatarView(medalTexture);
                 playerEle.Add(medalImg);
             }
         }
