@@ -56,7 +56,9 @@ namespace DragonGameNetworkProject.FightSystem
             {
                 float hitProgress = _animator.GetFloat(hitProgressVar);
 
-                if (hitProgress > 0.9f)
+                var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+                
+                if (hitProgress > 0.9f || !animatorStateInfo.IsName("Hit"))
                 {
                     _animator.SetBool(isHitVar, false);
                 }
