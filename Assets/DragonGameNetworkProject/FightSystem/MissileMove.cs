@@ -88,9 +88,12 @@ namespace DragonGameNetworkProject.FightSystem
 
                         if (enemy)
                         {
-                            enemy.DoDamageRpc(_no.StateAuthority, 1000.0f);
+                            if (enemy is PlayerEnemy)
+                            {
+                                CenterPromptText.Instance.ShowCenterPrompt($"Your missile hit:{enemy.GetName()}, you might get 1 point!");
+                            }
                             
-                            CenterPromptText.Instance.ShowCenterPrompt($"Your missile hit:{Runner.GetPlayerUserId(_no.StateAuthority)}, you got 1 point!");
+                            enemy.DoDamageRpc(_no.StateAuthority, 1000.0f);
                         }
                     }
                 }

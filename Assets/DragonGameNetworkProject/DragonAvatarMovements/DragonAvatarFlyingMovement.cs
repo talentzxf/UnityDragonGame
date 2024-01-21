@@ -131,7 +131,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             {
                 _inputHandler.Update();
 
-                if (_inputHandler.IsRightMouseHold)
+                if (!_inputHandler.IsRightMouseHold)
                 {
                     Vector3 targetPosition = fpsCamera.target.position;
                     
@@ -191,7 +191,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                     }
                 }
 
-                if (_inputHandler.IsRightMouseHold)
+                if (!_inputHandler.IsRightMouseHold)
                 {
                     fpsCamera.enabled = false;
                     Cursor.lockState = CursorLockMode.Confined;
