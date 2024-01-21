@@ -153,6 +153,8 @@ public class WelcomeUI : Behaviour
             showAlert = false;
         }
     }
+
+    [SerializeField] private Texture logo;
     
     protected virtual void OnGUI()
     {
@@ -172,6 +174,9 @@ public class WelcomeUI : Behaviour
 
         GUI.skin = FusionScalableIMGUI.GetScaledSkin(BaseSkin, out var height, out var width, out var padding,
             out var margin, out var leftBoxMargin);
+
+        width = width * 2.0f;
+        leftBoxMargin /= 2.0f;
 
         if (showAlert)
         {
@@ -218,7 +223,15 @@ public class WelcomeUI : Behaviour
                         customStyle.alignment = TextAnchor.MiddleCenter;
                         customStyle.margin = new RectOffset(0, 0, 30, 30);
                         
-                        GUILayout.Label("小龙龙的奇幻之旅\nLittle Dragon's Fantastic Journey", customStyle);
+                        GUIContent imageContent = new GUIContent(logo);
+
+                        float scale = 0.5f;
+                        int logoWidth = (int)(logo.width * scale);
+                        int logoHeight = (int)(logo.height * scale);
+                        
+                        GUILayout.Label(imageContent, GUILayout.Width(logoWidth), GUILayout.Height(logoHeight));
+
+                        GUILayout.Label("\n小龙龙的奇幻之旅\nLittle Dragon's Fantastic Journey", customStyle);
                     }
                     GUILayout.EndHorizontal();
                     

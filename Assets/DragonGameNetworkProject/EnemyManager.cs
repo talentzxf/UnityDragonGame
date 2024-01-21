@@ -41,6 +41,9 @@ namespace DragonGameNetworkProject
 
         public void Update()
         {
+            if (_enemyTransform == null)
+                return;
+            
             Vector3 enemyPosition = _enemyTransform.position;
             _distance = Vector3.Distance(enemyPosition, PlayerTransform.position);
             _isVisibleOnScreen = Utility.IsVisibleOnScreen(Camera.main, enemyPosition, out _);
