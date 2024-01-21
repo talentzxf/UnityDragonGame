@@ -204,19 +204,22 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 {
                     fpsCamera.enabled = false;
                     Cursor.lockState = CursorLockMode.Confined;
-                    // Cursor.visible = true;
+                    Cursor.visible = false;
                     frontSightImg.gameObject.SetActive(true);
 
                     Vector2 canvasDim = new Vector2(canvasRect.rect.width, canvasRect.rect.height);
                     Vector2 canvasCenter = 0.5f * canvasDim;
 
-                    Vector2 inputMousePosition = canvasCenter + (_inputHandler.MousePosition - canvasCenter) * 0.7f;
+                    RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform,
+                        _inputHandler.MousePosition, canvas.worldCamera, out Vector2 frontSightMousePos);
+                    frontSightRT.anchoredPosition = frontSightMousePos;
+                    
+                    Vector2 inputMousePosition = canvasCenter + (_inputHandler.MousePosition - canvasCenter) * 0.5f;
                     Vector2 mousePos;
                     RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform,
                         inputMousePosition, canvas.worldCamera, out mousePos);
                     Ray mousePointRay = CamComp.ScreenPointToRay(inputMousePosition);
-                    frontSightRT.anchoredPosition = inputMousePosition;
-
+                    
                     Vector3 dragonPosition = fpsCamera.target.position;
                     float cameraToProjectPlaneDistance =
                         (dragonPosition - Cam.transform.position).magnitude + projectDistance;
