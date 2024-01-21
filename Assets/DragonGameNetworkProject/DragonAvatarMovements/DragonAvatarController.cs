@@ -84,6 +84,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
 
             // Create Camera
             var avatarSelectCameraGO = new GameObject("AvatarCamera_" + _no.InputAuthority.PlayerId);
+            avatarSelectCameraGO.transform.parent = avatarGO.transform;
             Camera cameraComp = avatarSelectCameraGO.AddComponent<Camera>();
 
             GameObject light = new GameObject();

@@ -4,6 +4,7 @@ using DragonGameNetworkProject.DragonMovements;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace DragonGameNetworkProject.DragonAvatarMovements
 {
@@ -44,6 +45,9 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         private float camSwitchRotationSpeed = 5.0f;
 
         private AudioSource _avatarAudioSource;
+        
+        private Image frontSightImg;
+        private RectTransform frontSightRT;
 
         public override void Spawned()
         {
@@ -62,6 +66,9 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 canvasRect = canvasGO.GetComponent<RectTransform>();
 
                 _avatarAudioSource = cc.gameObject.GetComponent<AudioSource>();
+                
+                frontSightImg = canvas.transform.Find("FrontSight").GetComponent<Image>();
+                frontSightRT = frontSightImg.GetComponent<RectTransform>();
             }
         }
 
@@ -121,7 +128,9 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 animator.SetBool(isFlying, false);
 
                 Cursor.visible = false;
-                fpsCamera.enabled = true;                
+                fpsCamera.enabled = true;
+                
+                frontSightImg.gameObject.SetActive(false);
             }
         }
 
@@ -195,16 +204,18 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 {
                     fpsCamera.enabled = false;
                     Cursor.lockState = CursorLockMode.Confined;
-                    Cursor.visible = true;
+                    // Cursor.visible = true;
+                    frontSightImg.gameObject.SetActive(true);
 
                     Vector2 canvasDim = new Vector2(canvasRect.rect.width, canvasRect.rect.height);
                     Vector2 canvasCenter = 0.5f * canvasDim;
 
-                    Vector2 inputMousePosition = canvasCenter + (_inputHandler.MousePosition - canvasCenter) * 0.3f;
+                    Vector2 inputMousePosition = canvasCenter + (_inputHandler.MousePosition - canvasCenter) * 0.7f;
                     Vector2 mousePos;
                     RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform,
                         inputMousePosition, canvas.worldCamera, out mousePos);
                     Ray mousePointRay = CamComp.ScreenPointToRay(inputMousePosition);
+                    frontSightRT.anchoredPosition = inputMousePosition;
 
                     Vector3 dragonPosition = fpsCamera.target.position;
                     float cameraToProjectPlaneDistance =
@@ -228,6 +239,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 {
                     Cursor.visible = false;
                     fpsCamera.enabled = true;
+                    frontSightImg.gameObject.SetActive(false);
                 }
             }
         }

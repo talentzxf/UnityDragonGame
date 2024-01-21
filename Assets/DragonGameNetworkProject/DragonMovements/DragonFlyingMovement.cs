@@ -92,7 +92,7 @@ namespace DragonGameNetworkProject.DragonMovements
         public bool isHardCoreControl = false;
         private float projectDistance = 10f;
 
-        public float initVelocity = 10.0f;
+        public float initVelocity = 15.0f;
 
         [Networked] public Vector3 rigidbodyVelocity { set; get; }
 
@@ -463,13 +463,13 @@ namespace DragonGameNetworkProject.DragonMovements
                 {
                     fpsCamera.enabled = false;
                     Cursor.lockState = CursorLockMode.Confined;
-                    Cursor.visible = true;
-                    // frontSightImg.gameObject.SetActive(true);
+                    // Cursor.visible = true;
+                    frontSightImg.gameObject.SetActive(true);
 
                     Vector2 canvasDim = new Vector2(canvasRect.rect.width, canvasRect.rect.height);
                     Vector2 canvasCenter = 0.5f * canvasDim;
                     
-                    Vector2 inputMousePosition = canvasCenter + (input.MousePosition - canvasCenter) * 0.15f;
+                    Vector2 inputMousePosition = canvasCenter + (input.MousePosition - canvasCenter) * 0.3f;
                     Vector2 mousePos;
                     RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform,
                         inputMousePosition, canvas.worldCamera, out mousePos);

@@ -9,7 +9,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         {
             base.OnEnterMovement();
 
-            if (HasStateAuthority)
+            // if (HasStateAuthority)
             {
                 cc.enabled = false;
 
