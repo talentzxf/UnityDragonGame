@@ -160,16 +160,17 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             if (_no.HasInputAuthority)
             {
                 LocalController = this;
-                
-                bodyColor = smr.materials[3].color;
-                hairColor = smr.materials[2].color;
-                bellyColor = smr.materials[4].color;
+
+                bodyColor = smr.materials[3].GetColor(ColorId);
+                hairColor = smr.materials[2].GetColor(ColorId);
+                bellyColor = smr.materials[4].GetColor(ColorId);
             }
 
             needPrepareUI = true;
         }
         
         private bool needPrepareUI = false;
+        private static readonly int ColorId = Shader.PropertyToID("_Color");
 
         private void Update()
         {
@@ -179,9 +180,9 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             if (needPrepareUI)
             {
                 SetupPrepareUI();
-                smr.materials[3].color = bodyColor;
-                smr.materials[2].color = hairColor;
-                smr.materials[4].color = bellyColor;
+                smr.materials[3].SetColor(ColorId, bodyColor);
+                smr.materials[2].SetColor(ColorId, hairColor);
+                smr.materials[4].SetColor(ColorId, bellyColor);
                 needPrepareUI = false;
             }
 
@@ -203,13 +204,13 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 switch (change)
                 {
                     case nameof(bodyColor):
-                        smr.materials[3].color = bodyColor;
+                        smr.materials[3].SetColor(ColorId, bodyColor);
                         break;
                     case nameof(hairColor):
-                        smr.materials[2].color = hairColor;
+                        smr.materials[2].SetColor(ColorId, hairColor);
                         break;
                     case nameof(bellyColor):
-                        smr.materials[4].color = bellyColor;
+                        smr.materials[4].SetColor(ColorId, bellyColor);
                         break;
                 }
             }

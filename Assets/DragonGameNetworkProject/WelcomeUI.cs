@@ -175,7 +175,7 @@ public class WelcomeUI : Behaviour
 
         if (showAlert)
         {
-            GUI.ModalWindow(0, new Rect(Screen.width / 2 - 150, Screen.height / 2 - 75, 300, 150), ShowAlertWindow, "Alert");
+            GUI.ModalWindow(0, new Rect(Screen.width / 2 - 150, Screen.height / 2 - 75, 300, 300), ShowAlertWindow, "Alert");
             return;
         }
 
@@ -250,10 +250,10 @@ public class WelcomeUI : Behaviour
                         }
                     }
                     
-                    if (GUILayout.Button("Start Single Player", GUILayout.Height(height)))
-                    {
-                        nds.StartSinglePlayer();
-                    }
+                    // if (GUILayout.Button("Start Single Player", GUILayout.Height(height)))
+                    // {
+                    //     nds.StartSinglePlayer();
+                    // }
                 }
                 else
                 {
