@@ -6,12 +6,12 @@ using MoreMountains.Feedbacks;
 using Unity.VisualScripting;
 using UnityEngine;
 
-enum GemStatus
-{
-    IsActive,
-    IsDisappearing,
-    Disappeared
-}
+// enum GemStatus
+// {
+//     IsActive,
+//     IsDisappearing,
+//     Disappeared
+// }
 
 public class GemMovement : NetworkBehaviour
 {
@@ -41,7 +41,9 @@ public class GemMovement : NetworkBehaviour
 
     private MMFeedbacks _mmFeedbacks;
     private MMFeedbackScale scaleFeedBack;
-    [Networked] private GemStatus status { get; set; } = GemStatus.IsActive;
+    // [Networked] private GemStatus status { get; set; } = GemStatus.IsActive;
+    
+    [Networked] private bool hasDisappeared { get; set; }
     
     public override void Spawned()
     {
@@ -92,14 +94,20 @@ public class GemMovement : NetworkBehaviour
         }
     }
 
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    private void HideGemRpc()
+    {
+        hasDisappeared = true;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (status != GemStatus.IsActive) // Prevent re-entry.
+        if (hasDisappeared) // Prevent re-entry.
         {
             return;
         }
         
-        if (HasStateAuthority)
+        // if (HasStateAuthority)
         {
             if (other.tag == "Player")
             {
@@ -107,42 +115,21 @@ public class GemMovement : NetworkBehaviour
                 if (no == null)
                     return;
 
-                string msg = "Player:" + Runner.GetPlayerUserId(no.InputAuthority) + " Get " + value + " points!";
-                UIController.Instance.ShowGameMsg(msg);
-                Bonus.Instance.AddPlayerCoinRpc(no.StateAuthority, value);
-
-                status = GemStatus.Disappeared;
-                
-                _mmFeedbacks.PlayFeedbacks();
-
-                if (scaleFeedBack != null)
+                if (no.HasStateAuthority)
                 {
-                    status = GemStatus.IsDisappearing;
-                }
-                else
-                {
-                    status = GemStatus.Disappeared;
+                    string msg = "Player:" + Runner.GetPlayerUserId(no.InputAuthority) + " Get " + value + " points!";
+                    UIController.Instance.ShowGameMsg(msg);
+                    Bonus.Instance.AddPlayerCoinRpc(no.StateAuthority, value);
+
+                    collider.enabled = false;
+                    _mmFeedbacks.PlayFeedbacks();
+                    
+                    HideGemRpc(); // Tell the state authority, this gem is disabled.
                 }
             }
         }
     }
-
-    public override void FixedUpdateNetwork()
-    {
-        base.FixedUpdateNetwork();
-
-        if (HasStateAuthority)
-        {
-            if (status == GemStatus.IsDisappearing)
-            {
-                if (scaleFeedBack == null || !scaleFeedBack.FeedbackPlaying)
-                {
-                    status = GemStatus.Disappeared;
-                }
-            }
-        }
-    }
-
+    
     public void Update()
     {
         if (_changeDetector == null) // Game has not started.
@@ -152,29 +139,15 @@ public class GemMovement : NetworkBehaviour
         {
             meshRenderer.material = materialList[materIdx];
         }
-        
-        foreach (var change in _changeDetector.DetectChanges(this))
+
+        if (hasDisappeared)
         {
-            switch (change)
+            if (scaleFeedBack == null || !scaleFeedBack.FeedbackPlaying)
             {
-                case nameof(status):
-                    switch (status)
-                    {
-                        case GemStatus.IsActive:
-                            meshRenderer.enabled = true;
-                            collider.enabled = true;
-                            break;
-                        case GemStatus.IsDisappearing:
-                            meshRenderer.enabled = true;
-                            collider.enabled = false;
-                            break;
-                        case GemStatus.Disappeared:
-                            meshRenderer.enabled = false;
-                            collider.enabled = false;
-                        break;
-                    }
-                    break;
+                collider.enabled = false;
+                meshRenderer.enabled = false;
             }
         }
+
     }
 }
