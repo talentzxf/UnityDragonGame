@@ -19,6 +19,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
         
         [Networked] private bool isMasterController { set; get; }
 
+        [SerializeField] private Vector3 prepareCameraOffset = new Vector3(-1.37f, 2.12f, -4.4f);
         public static DragonAvatarController LocalController = null;
 
         public void SetBodyColor(Color bodyColor)
@@ -82,13 +83,14 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             }
         }
 
+        private GameObject avatarSelectCameraGO;
         public RenderTexture TakeAvatarSnapshot()
         {
             int avatarLayerMask = LayerMask.NameToLayer("AvatarPreview");
             Utility.SetLayerRecursively(avatarGO, avatarLayerMask);
 
             // Create Camera
-            var avatarSelectCameraGO = new GameObject("AvatarCamera_" + _no.InputAuthority.PlayerId);
+            avatarSelectCameraGO = new GameObject("AvatarCamera_" + _no.InputAuthority.PlayerId);
             avatarSelectCameraGO.transform.parent = avatarGO.transform;
             Camera cameraComp = avatarSelectCameraGO.AddComponent<Camera>();
 
@@ -104,7 +106,7 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             var avatarTransform = avatarGO.transform;
             
             // camera.transform.position = avatarTransform.position + 5.0f * avatarTransform.forward + 2.0f * avatarTransform.up;
-            avatarSelectCameraGO.transform.position = avatarTransform.position + new Vector3(1.23f, 3.18f, 5.06f);
+            avatarSelectCameraGO.transform.position = avatarTransform.position + prepareCameraOffset;
             avatarSelectCameraGO.transform.LookAt(avatarTransform.position + avatarTransform.up);
             
             cameraComp.fieldOfView = 60f;
@@ -189,6 +191,12 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
                 smr.materials[2].SetColor(ColorId, hairColor);
                 smr.materials[4].SetColor(ColorId, bellyColor);
                 needPrepareUI = false;
+            }
+            else
+            {
+                var avatarTransform = avatarGO.transform;
+                avatarSelectCameraGO.transform.position = avatarTransform.position + prepareCameraOffset;
+                avatarSelectCameraGO.transform.LookAt(avatarTransform.position + avatarTransform.up);
             }
 
             if (readyImage != null)
