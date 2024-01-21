@@ -36,6 +36,11 @@ namespace DragonGameNetworkProject.DragonAvatarMovements
             this.bellyColor = bellyColor;
         }
 
+        public bool IsValid()
+        {
+            return _no.IsValid;
+        }
+
         private SkinnedMeshRenderer smr;
         private void Awake()
         {

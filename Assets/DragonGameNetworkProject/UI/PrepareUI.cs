@@ -103,7 +103,7 @@ public class PrepareUI : MonoBehaviour
         
             foreach (var controller in _controllers)
             {
-                if (!controller.isReady && !controller.HasInputAuthority)
+                if (!controller.isReady && !controller.HasInputAuthority && controller.IsValid())
                 {
                     allReady = false;
                 }
