@@ -205,22 +205,23 @@ public class WelcomeUI : Behaviour
             }
             GUILayout.EndVertical();
             
-            GUIStyle customStyle = new GUIStyle(GUI.skin.textField);
-            customStyle.fontSize = 32;
-            customStyle.normal.background = null;
-            customStyle.margin = new RectOffset(0, 0, 20, 20);
-            
-            GUILayout.BeginHorizontal(GUI.skin.window);
-            var color = GUI.backgroundColor;
-            GUI.backgroundColor = Color.clear;
-            GUILayout.Label("小龙龙的奇幻之旅", customStyle);
-            GUI.backgroundColor = color;
-            GUILayout.EndHorizontal();
-            
             GUILayout.BeginVertical(GUI.skin.window);
             {
                 if (currentstage == NetworkBootStrap.Stage.Disconnected)
                 {
+                    GUILayout.BeginHorizontal();
+                    {
+                        GUIStyle customStyle = new GUIStyle(GUI.skin.label);
+                        customStyle.fontSize = 32;
+                        customStyle.hover = customStyle.normal;
+                        // customStyle.border = new RectOffset(0, 0, 0, 0);
+                        customStyle.alignment = TextAnchor.MiddleCenter;
+                        customStyle.margin = new RectOffset(0, 0, 30, 30);
+                        
+                        GUILayout.Label("小龙龙的奇幻之旅\nLittle Dragon's Fantastic Journey", customStyle);
+                    }
+                    GUILayout.EndHorizontal();
+                    
                     GUILayout.BeginHorizontal();
                     {
                         GUILayout.Label("Room:", GUILayout.Height(height), GUILayout.Width(width * .33f));
