@@ -33,13 +33,9 @@ namespace DragonGameNetworkProject.FightSystem
 
                 int deductValue = -3;
 
-                int currentCoinCount = Bonus.Instance.GetCoinCount(_no.StateAuthority);
-                if (currentCoinCount + deductValue > 0.0f)
-                {
-                    Bonus.Instance.AddPlayerCoinRpc(doneBy, 1);
-                }
-                
-                Bonus.Instance.AddPlayerCoinRpc(_no.StateAuthority, deductValue);
+                Bonus.Instance.AddCoinFromToRpc(_no.StateAuthority, deductValue, doneBy, 1);
+
+                CenterPromptText.Instance.ShowCenterPrompt($"You are hit by {Runner.GetPlayerUserId(doneBy)}, lose {deductValue} points!");
             }
 
             _ac.clip = hitAC;
@@ -55,10 +51,8 @@ namespace DragonGameNetworkProject.FightSystem
             if (HasStateAuthority)
             {
                 float hitProgress = _animator.GetFloat(hitProgressVar);
-
-                var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
                 
-                if (hitProgress > 0.9f || !animatorStateInfo.IsName("Hit"))
+                if (hitProgress > 0.9f)
                 {
                     _animator.SetBool(isHitVar, false);
                 }

@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 
 namespace DragonGameNetworkProject.FightSystem
 {
-    public class MissleMove : NetworkBehaviour
+    public class MissileMove : NetworkBehaviour
     {
         [SerializeField] private GameObject _explodePrefab;
 
@@ -16,6 +16,7 @@ namespace DragonGameNetworkProject.FightSystem
         [SerializeField] private float rotationSpeed = 100.0f;
 
         [SerializeField] private AudioClip launchAC;
+        [SerializeField] private float missileVolume = 0.5f;
         [SerializeField] private AudioClip rocketExplode;
 
         private AudioSource _audioSource;
@@ -46,6 +47,7 @@ namespace DragonGameNetworkProject.FightSystem
             audioGameObject.transform.position = transform.position;
             
             _audioSource = audioGameObject.AddComponent<AudioSource>();
+            _audioSource.volume = missileVolume;
             _audioSource.clip = launchAC;
             _audioSource.loop = false;
             _audioSource.Play();
@@ -87,6 +89,8 @@ namespace DragonGameNetworkProject.FightSystem
                         if (enemy)
                         {
                             enemy.DoDamageRpc(_no.StateAuthority, 1000.0f);
+                            
+                            CenterPromptText.Instance.ShowCenterPrompt($"Your missile hit:{Runner.GetPlayerUserId(_no.StateAuthority)}, you got 1 point!");
                         }
                     }
                 }

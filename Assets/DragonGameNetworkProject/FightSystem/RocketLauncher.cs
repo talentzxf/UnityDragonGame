@@ -32,7 +32,7 @@ namespace DragonGameNetworkProject.FightSystem
                 if (lockedTarget != null && lockedTarget.gameObject.activeSelf)
                 {
                     rocketNO = Runner.Spawn(rocketPrefab, transform.position, transform.rotation);
-                    rocketNO.gameObject.GetComponent<MissleMove>().Target = lockedTarget.transform;
+                    rocketNO.gameObject.GetComponent<MissileMove>().Target = lockedTarget.transform;
                 }
             }
 

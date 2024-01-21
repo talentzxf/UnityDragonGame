@@ -4,6 +4,7 @@ using UnityEngine;
 public class Bonus : NetworkBehaviour
 {
     [Networked, Capacity(20)] private NetworkDictionary<PlayerRef, int> PlayerCoins => default;
+    private object CoinLock = new();
 
     private static Bonus _instance;
     public static Bonus Instance => _instance;
@@ -58,20 +59,38 @@ public class Bonus : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void AddPlayerCoinRpc(PlayerRef player, int value)
     {
-        if (!PlayerCoins.ContainsKey(player))
+        lock (CoinLock)
         {
-            if(value > 0)
-                PlayerCoins.Add(player, value);
-            if(value <= 0)
-                PlayerCoins.Add(player, 0);
-        }
-        else
-        {
-            int currentValue = PlayerCoins.Get(player);
-            if (currentValue + value > 0)
-                PlayerCoins.Set(player, currentValue + value);
+            if (!PlayerCoins.ContainsKey(player))
+            {
+                if (value > 0)
+                    PlayerCoins.Add(player, value);
+                if (value <= 0)
+                    PlayerCoins.Add(player, 0);
+            }
             else
-                PlayerCoins.Set(player, 0);
+            {
+                int currentValue = PlayerCoins.Get(player);
+                if (currentValue + value > 0)
+                    PlayerCoins.Set(player, currentValue + value);
+                else
+                    PlayerCoins.Set(player, 0);
+            }
+        }
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void AddCoinFromToRpc(PlayerRef from, int fromCount, PlayerRef to, int toCount)
+    {
+        lock(CoinLock)
+        {
+            int currentCoinCount = GetCoinCount(from);
+            if (currentCoinCount + fromCount > 0.0f)
+            {
+                AddPlayerCoinRpc(to, toCount);
+            }
+                
+            AddPlayerCoinRpc(from, fromCount);            
         }
     }
 
