@@ -160,11 +160,15 @@ public class PrepareUI : MonoBehaviour
             
             uiDoc.rootVisualElement.Q<Label>("GameMode").text = "GameMode: Collect Coins";
             uiDoc.rootVisualElement.Q<Label>("GameTime").text = GameTimer.Instance.TotalTime + "s";
-        
+
             _runner = runner;
         });
     }
 
+    private Button showGameTips;
+    private VisualElement gameTipsEle;
+    private Button gameTipsCloseBtn;
+    
     public void ActivateUiDocument()
     {
         if (uiDoc.enabled && enabled && gameObject.activeSelf)
@@ -180,6 +184,19 @@ public class PrepareUI : MonoBehaviour
         colorPickerContainer.Add(new ColorPicker("Belly Color", onBellyColorPicked));
 
         readyOrStartBtn = uiDoc.rootVisualElement.Q<Button>("StartOrReady");
+
+        showGameTips = uiDoc.rootVisualElement.Q<Button>("ShowTips");
+        gameTipsEle = uiDoc.rootVisualElement.Q<VisualElement>("GameTips");
+        gameTipsCloseBtn = uiDoc.rootVisualElement.Q<Button>("TipsCloseBtn");
+
+        showGameTips.clicked += () =>
+        {
+            gameTipsEle.style.visibility = Visibility.Visible;
+        };
+        gameTipsCloseBtn.clicked += () =>
+        {
+            gameTipsEle.style.visibility = Visibility.Hidden;
+        };
         
         readyOrStartBtn.clicked += () =>
         {
