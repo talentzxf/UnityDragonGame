@@ -1,0 +1,27 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PrintStateAuthority : MonoBehaviour 
+{
+    private MonoBehaviour _networkObject;
+    private void Awake()
+    {
+        _networkObject = GetComponent<MonoBehaviour>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // if (_networkObject.StateAuthority == null)
+        // {
+        //     Debug.Log("Dragon State Authority is null");
+        // }
+        //
+        // if (_networkObject.HasInputAuthority == null)
+        // {
+        //     Debug.Log("Dragon Input Authority is null");
+        // }
+    }
+}
