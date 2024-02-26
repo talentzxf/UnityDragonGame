@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &260477865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141282414854288291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf7aa4aa2663f5347bca7af8c649ee23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 20, z: 0}
+--- !u!1001 &3427169765905144549
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1590531125044280159, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a07567af35187684db97f609cca7a791, type: 2}
+    - target: {fileID: 2329731606381899634, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329731606381899634, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.814
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329731606381899634, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.146
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329731606381899634, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.445
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329731606381899634, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.50000054
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329731606381899634, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329731606381899634, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.86602515
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329731606381899634, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329731606381899634, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329731606381899634, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329731606381899634, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2331007470575954246, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: m_Name
+      value: Collectible_Book_StaminaPotion
+      objectReference: {fileID: 0}
+    - target: {fileID: 2436422213425464022, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: selectedToolbar
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2436422213425464022, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: items.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2436422213425464022, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: items.Array.data[0].id
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2436422213425464022, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: items.Array.data[0].changeAttributes
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2436422213425464022, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: items.Array.data[0].attributes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2436422213425464022, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: items.Array.data[0].attributes.Array.data[0].name
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2436422213425464022, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: items.Array.data[0].attributes.Array.data[0].value
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2436422213425464022, guid: b769512fcd708466094821a599100467,
+        type: 3}
+      propertyPath: onPressActionInputWithTarget.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2331007470575954241, guid: b769512fcd708466094821a599100467, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: b769512fcd708466094821a599100467, type: 3}
+--- !u!1 &1141282414854288291 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2331007470575954246, guid: b769512fcd708466094821a599100467,
+    type: 3}
+  m_PrefabInstance: {fileID: 3427169765905144549}
+  m_PrefabAsset: {fileID: 0}

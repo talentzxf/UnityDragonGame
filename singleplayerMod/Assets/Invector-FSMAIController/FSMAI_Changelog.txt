@@ -1,0 +1,276 @@
+Thank you for support our asset!
+
+*IMPORTANT* This asset requires Unity 2019.4.32f1 LTS or higher.
+
+If you have any question about how it works or if you are experiencing any trouble, 
+feel free to email us at: inv3ctor@gmail.com
+Please do not Upload or share this asset as a package without permission.
+
+If you downloaded this asset illegally for studies or prototype purposes, 
+please reconsider purchase if you want to publish your work, you can buy on the AssetStore or the vStore
+or send us a email and we can figure something out, you can even post your work on our Forum, 
+we will be happy to help with feedback and advertise your game on our Reel videos.
+
+It has been more than 5 years since the release of v1.0 and we continue to work on this only because of your support, 
+otherwise we will have to find day jobs and we would never had time to work on this, so thank you!
+
+ASSETSTORE: https://assetstore.unity.com/packages/tools/ai/fsm-ai-template-123618
+VSTORE: https://sellfy.com/invector
+FORUM: http://invector.proboards.com/
+YOUTUBE: https://www.youtube.com/channel/UCSEoY03WFn7D0m1uMi6DxZQ
+WEBSITE: http://www.invector.xyz/
+PATREON: https://www.patreon.com/invector
+DOCUMENTATION: https://www.invector.xyz/aidocumentation
+
+Invector Team - 2023
+
+Invector's FSM AI and Third Person Controller Compatibility List:
+
+Third Person Templates (ALL) v2.6.3 goes with FSM AI v1.1.9
+Third Person Templates (ALL) v2.6.2 goes with FSM AI v1.1.8
+Third Person Templates (ALL) v2.6.1b goes with FSM AI v1.1.7b
+Third Person Templates (ALL) v2.6.0 to v2.6.1a goes with FSM AI v1.1.7
+Third Person Templates (ALL) v2.5.7 goes with FSM AI v1.1.6
+Third Person Templates (ALL) v2.5.6 goes with FSM AI v1.1.5
+Third Person Templates (ALL) v2.5.5 goes with FSM AI v1.1.4
+Third Person Templates (ALL) v2.5.4 goes with FSM AI v1.1.3
+Third Person Templates (ALL) v2.5.3 goes with FSM AI v1.1.2
+Third Person Templates (ALL) v2.5.1 and v2.5.2 goes with FSM AI v1.1.1
+Third Person Templates (ALL) v2.5.0 goes with FSM AI v1.1.0
+Basic & Melee 2.4.2 - Shooter 1.3.2 goes with FSM AI v1.0.1 and v1.0.2
+Basic & Melee 2.4.1 - Shooter 1.3.1 goes with FSM AI v1.0
+Basic & Melee 2.4.0 - Shooter 1.3.0 goes with FSM AI v0.3
+Basic & Melee 2.3.3 - Shooter 1.2.3 goes with FSM AI v0.2
+
+
+
+FSM AI v1.1.9 Hotfix 08/11/2023
+
+- Fix Partial classes with the same name causing error or missing script on Unity 2021+
+- Fix warning related to rigidbody.Iskinematic
+- Change RagdollContainer been created for each AI, now it shares the ObjectContainer in the scene
+- Fix all missing events in the AI prefabs
+- Fix all missing actions in the example FSM Behaviors
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.1.8b Hotfix 08/11/2022
+
+- [FSM-AI]  Improvements when reviving the AI 
+- [FSM-AI]  Add Revive AI Example Scene
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.1.8a Hotfix 19/08/2022
+
+- Change Private methods to Protected for better third party add-ons compatibility
+- Fix Warning regarding BehaviorPreferences 
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.1.8 Hotfix 10/05/2022
+
+- Fix missing materials on the AI Grenade prefab
+- Fix vShooterAttack Action not triggering the shoot due to a animator normalize issue 
+- Add 'OnlyShotWhenInAngle' option for the vShooterAttack Action
+- Add Decision 'IsInShotAngle'
+- Add support for FSM AI Cover to use the Shooter Cover Add-on (open the vAICover and read the instructions at the top)
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.1.7a UPDATE 24/01/2022
+
+- Fix AI idle rotation 
+- Improvements in Aim methods  
+- Improvements in 'vGoToTarget' action
+- Improvements in 'vAIShooterAttack' action
+- Improvements in 'vPatrol' action
+- Add Action 'AimToTarget'
+- Add IsInTriggerWithTag and IsInTriggerWithName methods to check if AI is on a Trigger
+- Add GetTargetsInRange method to return all targets detected from AI
+- Add Option for StrafeMoveTo method without update Rotation (leaving the rotation free to be controlled from other methods)
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.1.7 UPDATE 27/09/2021
+
+- Update shared template files to version 2.6.0a
+- Update all FSM Behaviors by removing the old Custom States and using the Actions ChaseTarget, MeleeCombat and ShooterCombat instead
+- Update TurnOnSpot animations and internal routine following the improvements of the Shooter Template
+- Improvements on the IK Adjust system following the improvements of the Shooter Template
+- Removed Custom States Deprecated from the project
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.1.6a UPDATE 16/07/2021
+- Remove unnecessary files
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.1.6 UPDATE 28/05/2021
+- Update shared template files to version 2.5.7
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.1.5b HOTFIX xx/02/2021
+
+- Update shared template files to version 2.5.6a
+- Add FSM Shooter Companion Example to Cover/Companion demo scene
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.1.5a HOTFIX 04/02/2021
+
+- Update shared template files to version 2.5.6a
+- Fix the chance of deleting the AnyState from the FSM Window if selecting all the states
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.1.5 Update 03/02/2021
+
+- Add Shooter with Shield example (check Addons folder)
+- Add example to switch between IK Adjust Lists (check shooter with shield example)
+- Update shared template files to version 2.5.6
+- Fix IK Adjust Window not drawing the handlers on Unity 2020+
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.1.4 Update 31/12/2020
+
+- Add more Events to FSM Behavior Controller
+- Update shared template files to version 2.5.5
+- Fix 'RemoveComponentsAfterDie' not working
+- Fix missing editor in the Animator AttackControl Behavior
+
+* Happy New Year!
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.1.3 HOTFIX/IMPROVEMENTS - 19/10/2020
+
+- Add AI Ranged Magic Prefab Example
+- Add FSM Action 'Trigger Generic Attack'
+- Add FSM Action 'Trigger Sound' 
+- Add detection settings methods to be access via events/scripts
+- Add updateQuality (path, find target, canSeeTarget) methods to be access via events/scripts
+- Add Revive method to revive the AI (Example in the AI Examples scene - Melee vs Melee in the ring)
+- Fix IK Adjust Handlers not drawing on 2020.x
+- Fix FSM Color Preferences not drawing on 2019 or higher 
+- Minor improvements 
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.1.2 HOTFIX/IMPROVEMENTS - 08/07/2020
+
+- Fix character creator window not creating a character when the prefab is in the scene
+- Fix errors when importing the shared files with version 2.5.2 of the Third Person Templates
+- Change some classes to public virtual and abstract so it's easier to expand the code
+- Improved Aim IK 
+- Improved Shot Frequency logic 
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.1.1 HOTFIX/IMPROVEMENTS - 06/05/2020
+
+- Add example on how to expand the AI Controller using a Partial Class - Check the vControlAI_ExpandExample script
+- Add Custom Decision example - Check the vCanMoveToTarget_Example script
+- Add Custom Action example - Check the vMoveToTarget_Example script
+- Improve method to MoveTo and StrafeTo by adding a speed parameter, walk speed is set by default
+- Improve FSM Node with the option "ResetCurrentDestination" checked by default (ex: flee executes faster)
+- Fix bug when deleting transitions from the AnyState
+- Fix Node not being created where the cursor position is located
+- Fix Missing actions & decisions when duplicating a FSM Behavior
+- Fix Error when creating new Actions or Decisions when using Unity 2019.x
+- Fix errors when trying to use this package with the Characters Templates v2.5.1
+
+* Next update will have improvements on the locomotion and shooter features
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.1.0 CORE UPDATE & IMPROVEMENTS 03/12/2019
+
+- Update shared files to Third Person Templates (Basic, Melee & Shooter) v2.5.0
+- New Welcome Window
+- New methods to FindTarget
+- Add new Decision HasWaypoint
+- Improvements EventWithDelay 
+- Improvements on AI Aiming behavior
+- Improvements in the LookTo behavior
+- Improvements in some actions, lookTo and findTarget
+- Fix error when openning the FSM Window without any FSM selected
+- Fix error when trying to create new Action & Decisions via FSM Menu
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.0.2 OVERALL IMPROVEMENTS 06/09/2019
+
+- Add Melee Companion FSM example (check companion demo scene)
+- Add PlayAnimation Action
+- Add GoToDamageSender Action
+- Add LookToDamageSender Action
+- Add SetDamageSenderAsTarget Action
+- Add RotateToTarget Action
+- Add CheckNoiseDistance Decision
+- Add snapping to the grid for the states in the FSM window
+- Add description and category for each Action and Decitions
+- Add support to add target without a vHealthController, targets now just need a Collider
+- Add 'isImmortal' option in the HealthController
+- Add 'LockRotation' AnimatorTag support
+- Add option to quickly create Custom Actions & Decisions directly from the FSM Window
+- Add Mac OS support to navigate through the FSM Window using CMD+RightClick or Alt+RightClick
+- CustomStates are no longer supported, use Actions and Decision instead (ex: use the action ChaseTarget instead of the custom node Chase)
+- Improvements in the FSM Window (all actions and decisions now have descriptions)
+- Improvements in the Headtrack
+- Improvements in the Jump 
+- Updated Documentation
+- Fix Debug Visual Detection not working on 1.0.1 due to the new IK Adjustments feature
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.0.1 NEW IK ADJUST FEATURE - HOTFIXS 14/08/2019
+
+- Add IKAdjust new feature to dynamically improve/create new poses for each weapon on 4 different states (standing, standingCrouch, aiming, aimingCrouch)
+- Add BodySnap Attachments new feature to make it easier to transfer attachments from one character to another (check shooterMelee demo scene & documentation)
+- Removed 'AllowMovementAt' from MeleeAttackControl, you can now use the tags LockMovement and LockRotation on specific attacks
+- Add AnimatorTagAdvanced, you can now check a tag using the normalized time of an animation, ex: from 0.2 to 0.7 you can use the tag 'LockRotation' on an attack
+- Fix damage field not being display in the vObjectDamage inspector
+- Fix AI Headtrack issues
+- Fix ShooterWeapon DamageByDistance not working
+- Fix FSM Window Editor not drawing the decisions on 2019.x
+- Improved MessageSender can now send messages to parent
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v1.0 STABLE RELEASE 30/04/2019
+
+- Add Companion AI behavior
+- Add Cover behavior 
+- Add Multiple Throw behavior (Fire Grenade & Smoke Grenade example)
+- Add Shooter secundary shot behavior (grenade launcher example)
+- Add shorcut to center the FSM States back to the center-screen (Press 'F') or use the button in the top-right corner 
+- Add AI with Bow in the AI_Examples
+- New Actions added (GetCover, ShooterAttack, GoToFriend, )
+- New Decisions added (HasTarget, TargetIsAttacking, TargetIsCrouched, RandomDecision, CheckTargetDistance, CheckDamage)
+- New demo scene showing Companion, Cover & Throw behavior
+- Add Crouch for the FPS Example Controller
+- Debug tab improved with more options
+- Overhaul improvements
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v0.3 BETA - 28/12/2018
+- Updated core files (Basic, Melee & Shooter)
+- Update All Animations & Animator Controller
+- Add vAnimatorTag & vAnimatorEvents (check online documentation)
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v0.2 BETA - 13/09/2018
+- New node editor skin 
+- Add option to Mute a Transition 
+- Bug Fixes on demo scenes
+
+-----------------------------------------------------------------------------------------------------
+
+FSM AI v0.1 BETA - 13/09/2018
+- First Release

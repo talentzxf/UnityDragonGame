@@ -1,0 +1,12 @@
+- The content inside each folder requires each template to work. 
+
+If you don't own the MeleeCombat Template or the Shooter Template, you can delete the folder to avoid any errors.
+
+- When using the Inventory, you can use the component vCheckItemIsEquipped to check if a specific item or specific ItemType is equipped 
+so you can enable/disable specific buttons, for example, when using a shooter weapon disable the melee attack and block button and enable the shot button.
+
+- When using the No-Inventory, use the vCollectShooterMeleeControl Events to enable/disable UI Buttons, it has less filters then the vCheckItemIsEquipped 
+so you can only verify is a melee or shooter weapons is equipped/unequiped.
+
+- To enable the Action button, go to your character inspector and open the GenericAction Events OnEnterTriggerAction/OnExitTriggerAction to enable/disable the Action button UI.
+It's important to keep the UI object inside your player, so you can reference the events without losing the assigned parameters in the inspector if you change the scene.
